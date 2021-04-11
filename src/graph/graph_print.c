@@ -13,8 +13,10 @@ void	graph_print_vertices(t_graph *graph)
 		ft_printf("id: %s value: %d\n", vertex->id, vertex->value);
 		i++;
 	}
-	ft_printf("source: id: %s value: %d\n", graph->source->id, graph->source->value);
-	ft_printf("sink: id: %s value: %d\n", graph->sink->id, graph->sink->value);
+	ft_printf("source: id: %s value: %d\n",
+		graph->source->id, graph->source->value);
+	ft_printf("sink: id: %s value: %d\n",
+		graph->sink->id, graph->sink->value);
 }
 
 void	graph_print_edges(t_graph *graph)

@@ -15,6 +15,8 @@ t_graph	*graph_new(void)
 		free(graph);
 		return (NULL);
 	}
+	graph->has_source = 0;
+	graph->has_sink = 0;
 	graph->source = NULL;
 	graph->sink = NULL;
 	graph->vertex_count = 0;

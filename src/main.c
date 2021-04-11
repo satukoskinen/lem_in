@@ -37,25 +37,33 @@ void	free_resources(t_graph **graph, t_array **input)
 	graph_del(graph);
 }
 
+int	init_resources(t_graph **graph, t_array **input)
+{
+	*graph = graph_new();
+	if (*graph == NULL)
+		return (0);
+	*input = array_new(INIT_SIZE, sizeof(char *));
+	if (*input == NULL)
+	{
+		graph_del(graph);
+		return (0);
+	}
+	return (1);
+}
+
 int	main(void)
 {
 	t_graph	*graph;
 	t_array	*input;
 
-	graph = graph_new();
-	if (graph == NULL)
+	if (!init_resources(&graph, &input))
 		return (error("Error\n"));
-	input = array_new(INIT_SIZE, sizeof(char *));
-	if (input == NULL)
-	{
-		graph_del(&graph);
-		return (error("Error\n"));
-	}
 	if (parse_input(graph, &input) != 1)
 	{
 		free_resources(&graph, &input);
 		return (error("Error on reading input\n"));
 	}
+
 	graph_print_vertices(graph);
 	graph_print_edges(graph);
 	print_input(input);

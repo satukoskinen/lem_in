@@ -30,9 +30,15 @@ static int	parse_special_room(t_graph *graph, enum e_line_type *type)
 	vertex = (t_vertex *)array_get(graph->vertices,
 			array_size(graph->vertices) - 1);
 	if (*type == ROOM_SRC)
+	{
 		vertex->is_source = 1;
+		graph->has_source = 1;
+	}
 	else
+	{
 		vertex->is_sink = 1;
+		graph->has_sink = 1;
+	}
 	*type = ROOM;
 	return (1);
 }
@@ -41,8 +47,6 @@ static int	parse_room(t_graph *graph, char *line, enum e_line_type *type)
 {
 	char	*ptr;
 	int		ret;
-	int		coord_x;
-	int		coord_y;
 
 	if (line[0] == 'L')
 		return (-1);
@@ -58,11 +62,9 @@ static int	parse_room(t_graph *graph, char *line, enum e_line_type *type)
 	if (ret == 1 && (*type == ROOM_SRC || *type == ROOM_SINK))
 		parse_special_room(graph, type);
 	*ptr = ' ';
-	coord_x = ft_atoi(ptr + 1);
 	ptr = ft_strchr(ptr + 1, ' ');
 	if (ptr == NULL)
 		return (-1);
-	coord_y = ft_atoi(ptr + 1);
 	ptr = ft_strchr(ptr + 1, ' ');
 	if (ptr == NULL)
 		return (ret);
@@ -72,20 +74,17 @@ static int	parse_room(t_graph *graph, char *line, enum e_line_type *type)
 
 static int	parse_command(t_graph *graph, char *cmd, enum e_line_type *type)
 {
-	if (ft_strcmp(cmd, "##start") == 0 || ft_strcmp(cmd, "##end") == 0)
+	if (ft_strcmp(cmd, "##start") == 0)
 	{
-		if (ft_strcmp(cmd, "##start") == 0)
-		{
-			if (*type != ROOM || graph->source != NULL)
-				return (-1);
-			*type = ROOM_SRC;
-		}
-		else
-		{
-			if (*type != ROOM || graph->sink != NULL)
-				return (-1);
-			*type = ROOM_SINK;
-		}
+		if (*type != ROOM || graph->has_source)
+			return (-1);
+		*type = ROOM_SRC;
+	}
+	else if (ft_strcmp(cmd, "##end") == 0)
+	{
+		if (*type != ROOM || graph->has_sink)
+			return (-1);
+		*type = ROOM_SINK;
 	}
 	return (1);
 }
