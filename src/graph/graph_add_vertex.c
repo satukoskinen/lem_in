@@ -39,6 +39,7 @@ int	graph_add_vertex(t_graph *graph, char *id, int value)
 	if (vertex.id == NULL)
 		return (-1);
 	vertex.value = value;
+	vertex.dist = -1;
 	vertex.is_sink = 0;
 	vertex.is_source = 0;
 	vertex.adj_list = NULL;

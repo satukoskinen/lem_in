@@ -5,11 +5,11 @@
 
 int	error(char *msg)
 {
-	ft_putstr(msg);
+	ft_putstr_fd(msg, 2);
 	return (1);
 }
 
-void	print_input(t_array *input)
+void	print_array(t_array *input)
 {
 	char	*line;
 	size_t	i;
@@ -23,7 +23,7 @@ void	print_input(t_array *input)
 	}
 }
 
-void	free_resources(t_graph **graph, t_array **input)
+void	free_resources(t_graph **graph, t_array **input, t_array **output)
 {
 	size_t	i;
 
@@ -34,10 +34,11 @@ void	free_resources(t_graph **graph, t_array **input)
 		i++;
 	}
 	array_del(input);
+	array_del(output);
 	graph_del(graph);
 }
 
-int	init_resources(t_graph **graph, t_array **input)
+int	init_resources(t_graph **graph, t_array **input, t_array **output)
 {
 	*graph = graph_new();
 	if (*graph == NULL)
@@ -48,6 +49,13 @@ int	init_resources(t_graph **graph, t_array **input)
 		graph_del(graph);
 		return (0);
 	}
+	*output = array_new(INIT_SIZE, sizeof(char *));
+	if (*output == NULL)
+	{
+		graph_del(graph);
+		array_del(input);
+		return (0);
+	}
 	return (1);
 }
 
@@ -55,19 +63,26 @@ int	main(void)
 {
 	t_graph	*graph;
 	t_array	*input;
+	t_array	*output;
 
-	if (!init_resources(&graph, &input))
+	if (init_resources(&graph, &input, &output) != 1)
 		return (error("Error\n"));
 	if (parse_input(graph, &input) != 1)
 	{
-		free_resources(&graph, &input);
+		free_resources(&graph, &input, &output);
 		return (error("Error on reading input\n"));
 	}
-
-	graph_print_vertices(graph);
-	graph_print_edges(graph);
-	print_input(input);
-	free_resources(&graph, &input);
+	if (process_graph(graph, &output) != 1)
+	{
+		free_resources(&graph, &input, &output);
+		return (error("Error on processing graph\n"));
+	}
+//	graph_print_vertices(graph);
+//	graph_print_edges(graph);
+	print_array(input);
+	ft_putstr("\n");
+	print_array(output);
+	free_resources(&graph, &input, &output);
 	return (0);
 }
 

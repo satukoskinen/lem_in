@@ -26,18 +26,19 @@ static int	parse_link(t_graph *graph, char *line)
 static int	parse_special_room(t_graph *graph, enum e_line_type *type)
 {
 	t_vertex	*vertex;
+	size_t		index;
 
-	vertex = (t_vertex *)array_get(graph->vertices,
-			array_size(graph->vertices) - 1);
+	index = array_size(graph->vertices) - 1;
+	vertex = (t_vertex *)array_get(graph->vertices, index);
 	if (*type == ROOM_SRC)
 	{
 		vertex->is_source = 1;
-		graph->has_source = 1;
+		graph->source_index = index;
 	}
 	else
 	{
 		vertex->is_sink = 1;
-		graph->has_sink = 1;
+		graph->sink_index = index;
 	}
 	*type = ROOM;
 	return (1);
@@ -76,13 +77,13 @@ static int	parse_command(t_graph *graph, char *cmd, enum e_line_type *type)
 {
 	if (ft_strcmp(cmd, "##start") == 0)
 	{
-		if (*type != ROOM || graph->has_source)
+		if (*type != ROOM || graph->source_index >= 0)
 			return (-1);
 		*type = ROOM_SRC;
 	}
 	else if (ft_strcmp(cmd, "##end") == 0)
 	{
-		if (*type != ROOM || graph->has_sink)
+		if (*type != ROOM || graph->sink_index >= 0)
 			return (-1);
 		*type = ROOM_SINK;
 	}

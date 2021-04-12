@@ -20,15 +20,17 @@ SRC = $(GRAPH_SRC) $(addprefix src/, \
 	main.c \
 	parse_input.c \
 	parse_line.c \
+	process_graph.c \
+	find_shortest_path.c \
 )
 
 OBJ = $(subst $(SRC_DIR), $(OBJ_DIR), $(SRC:.c=.o))
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 CPPFLAGS = -I . -I include -I src/graph -I libft -I libft/array
 LDLIBS = -lft
-LDFLAGS = -L libft #-fsanitize=address
+LDFLAGS = -L libft -fsanitize=address
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP_DIR)/$*.d
 COMPILE.c = $(CC) $(DEPFLAGS) $(CFLAGS) $(CPPFLAGS) -c
 

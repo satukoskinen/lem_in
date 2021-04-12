@@ -24,40 +24,6 @@ static int	parse_ant_count(t_array **input)
 	return (ant_count);
 }
 
-static t_vertex	*get_graph_source(t_graph *graph)
-{
-	size_t		i;
-	t_vertex	*vertex;
-
-	i = 0;
-	vertex = NULL;
-	while (i < array_size(graph->vertices))
-	{
-		vertex = (t_vertex *)array_get(graph->vertices, i);
-		if (vertex->is_source)
-			return (vertex);
-		i++;
-	}
-	return (NULL);
-}
-
-static t_vertex	*get_graph_sink(t_graph *graph)
-{
-	size_t		i;
-	t_vertex	*vertex;
-
-	i = 0;
-	vertex = NULL;
-	while (i < array_size(graph->vertices))
-	{
-		vertex = (t_vertex *)array_get(graph->vertices, i);
-		if (vertex->is_sink)
-			return (vertex);
-		i++;
-	}
-	return (NULL);
-}
-
 int	parse_input(t_graph *graph, t_array **input)
 {
 	int					ant_count;
@@ -75,10 +41,10 @@ int	parse_input(t_graph *graph, t_array **input)
 		return (-1);
 	if (graph->vertex_count == 0 || graph->edge_count == 0)
 		return (-1);
-	graph->source = get_graph_source(graph);
-	graph->sink = get_graph_sink(graph);
-	if (graph->source == NULL || graph->sink == NULL)
+	else if (graph->source_index == -1 || graph->sink_index == -1)
 		return (-1);
+	graph->source = (t_vertex *)array_get(graph->vertices, graph->source_index);
+	graph->sink = (t_vertex *)array_get(graph->vertices, graph->sink_index);
 	graph->source->value = ant_count;
 	return (1);
 }

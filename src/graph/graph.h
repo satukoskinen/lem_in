@@ -13,6 +13,7 @@ typedef struct s_vertex
 {
 	char			*id;
 	int				value;
+	int				dist;
 	int				is_source;
 	int				is_sink;
 	t_array			*adj_list;
@@ -24,8 +25,8 @@ typedef struct s_graph
 	t_array		*vertices;
 	t_vertex	*source;
 	t_vertex	*sink;
-	int			has_source;
-	int			has_sink;
+	int			source_index;
+	int			sink_index;
 	int			vertex_count;
 	int			edge_count;
 }				t_graph;
