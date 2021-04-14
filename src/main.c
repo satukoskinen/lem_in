@@ -34,6 +34,12 @@ void	free_resources(t_graph **graph, t_array **input, t_array **output)
 		i++;
 	}
 	array_del(input);
+	i = 0;
+	while(i < array_size(*output))
+	{
+		free(*(char **)array_get(*output, i));
+		i++;
+	}
 	array_del(output);
 	graph_del(graph);
 }
@@ -77,10 +83,10 @@ int	main(void)
 		free_resources(&graph, &input, &output);
 		return (error("Error on processing graph\n"));
 	}
-//	graph_print_vertices(graph);
-//	graph_print_edges(graph);
-	print_array(input);
-	ft_putstr("\n");
+	graph_print_vertices(graph);
+	graph_print_edges(graph);
+//	print_array(input);
+//	ft_putstr("\n");
 	print_array(output);
 	free_resources(&graph, &input, &output);
 	return (0);
@@ -95,11 +101,11 @@ int main(void)
 	graph = graph_new();
 	if (graph == NULL)
 		return (error("Error\n"));
-	graph_add_vertex(graph, "V0", 0);
-	graph_add_vertex(graph, "V1", 0);
+	graph_add_vertex(graph, "V0", 0, 1);
+	graph_add_vertex(graph, "V1", 0, 1);
 	graph_add_edge(graph, "V0", "V1");
 	graph_add_edge(graph, "V1", "V0");
-	graph_add_vertex(graph, "V2", 0);
+	graph_add_vertex(graph, "V2", 0, 1);
 	graph_add_edge(graph, "V0", "V2");
 	graph_print_vertices(graph);
 	graph_print_edges(graph);

@@ -36,7 +36,7 @@ int	find_shortest_path(t_vertex *src, t_vertex *dst, t_array **output)
 		while (i < array_size(vertex->adj_list))
 		{
 			adjacent = *(t_vertex **)array_get(vertex->adj_list, i);
-			if (adjacent->dist == -1)
+			if (adjacent->prev == NULL)
 			{
 				adjacent->dist = vertex->dist + 1;
 				adjacent->prev = vertex;
@@ -53,7 +53,8 @@ int	find_shortest_path(t_vertex *src, t_vertex *dst, t_array **output)
 	}
 	array_del(&queue);
 	if (dst->dist == -1)
-		return (0);
-	save_path_to_output(dst, output);
-	return (1);
+		return (-1);
+	if (output != NULL)
+		save_path_to_output(dst, output);
+	return (dst->dist);
 }

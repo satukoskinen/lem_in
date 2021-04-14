@@ -29,27 +29,53 @@ int	graph_contains_vertex(t_graph *graph, char *v_id)
 		return (1);
 }
 
-int	graph_add_vertex(t_graph *graph, char *id, int value)
+t_vertex	*vertex_new(char *id, int value, int capacity)
 {
-	t_vertex	vertex;
+	t_vertex *vertex;
+
+	if (id == NULL)
+		return (NULL);
+	vertex = (t_vertex *)malloc(sizeof(t_vertex));
+	if (vertex == NULL)
+		return (NULL);
+	vertex->id = id;
+	vertex->value = value;
+	vertex->capacity = capacity;
+	vertex->dist = -1;
+	vertex->is_sink = 0;
+	vertex->is_source = 0;
+	vertex->adj_list = NULL;
+	vertex->prev = NULL;
+	vertex->in = NULL;
+	vertex->out = NULL;
+	return (vertex);
+}
+
+int	graph_add_vertex(t_graph *graph, char *id, int value, int capacity)
+{
+	t_vertex	*vertex;
 
 	if (graph_contains_vertex(graph, id))
 		return (0);
-	vertex.id = ft_strdup(id);
-	if (vertex.id == NULL)
+	vertex = vertex_new(ft_strdup(id), value, capacity);
+	if (vertex == NULL)
 		return (-1);
-	vertex.value = value;
-	vertex.dist = -1;
-	vertex.is_sink = 0;
-	vertex.is_source = 0;
-	vertex.adj_list = NULL;
-	vertex.prev = NULL;
-	array_add(&graph->vertices, &vertex);
+	vertex->in = vertex_new(ft_strjoin(id, "_in"), value, -1);
+	vertex->out = vertex_new(ft_strjoin(id, "_out"), value, -1);
+	if (vertex->in == NULL || vertex->out == NULL)
+		return (-1);
+	array_add(&graph->vertices, vertex);
 	if (graph->vertices == NULL)
 	{
-		free(vertex.id);
+		free(vertex->id);
+		free(vertex->in->id);
+		free(vertex->in);
+		free(vertex->out->id);
+		free(vertex->out);
+		free(vertex);
 		return (-1);
 	}
+	free(vertex);
 	graph->vertex_count += 1;
 	return (1);
 }

@@ -15,6 +15,13 @@ t_graph	*graph_new(void)
 		free(graph);
 		return (NULL);
 	}
+	graph->edges = array_new(INIT_SIZE, sizeof(t_edge));
+	if (graph->edges == NULL)
+	{
+		free(graph->vertices);
+		free(graph);
+		return (NULL);
+	}
 	graph->source_index = -1;
 	graph->sink_index = -1;
 	graph->source = NULL;

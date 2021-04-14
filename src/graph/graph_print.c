@@ -22,21 +22,35 @@ void	graph_print_vertices(t_graph *graph)
 void	graph_print_edges(t_graph *graph)
 {
 	size_t		i;
-	size_t		j;
-	t_vertex	*vertex;
-	t_vertex	*adj;
+	t_edge		*edge;
 
 	i = 0;
-	while (i < array_size(graph->vertices))
+	while (i < array_size(graph->edges))
 	{
-		vertex = (t_vertex *)array_get(graph->vertices, i);
-		j = 0;
-		while (vertex->adj_list != NULL && j < array_size(vertex->adj_list))
-		{
-			adj = *(t_vertex **)array_get(vertex->adj_list, j);
-			ft_printf("%s -> %s\n", vertex->id, adj->id);
-			j++;
-		}
+		edge = (t_edge *)array_get(graph->edges, i);
+		ft_printf("%s -> %s, flow %d, capacity %d\n", edge->src->id, edge->dst->id, edge->flow, edge->capacity);
 		i++;
 	}
 }
+
+// void	graph_print_edges(t_graph *graph)
+// {
+// 	size_t		i;
+// 	size_t		j;
+// 	t_vertex	*vertex;
+// 	t_vertex	*adj;
+
+// 	i = 0;
+// 	while (i < array_size(graph->vertices))
+// 	{
+// 		vertex = (t_vertex *)array_get(graph->vertices, i);
+// 		j = 0;
+// 		while (vertex->adj_list != NULL && j < array_size(vertex->adj_list))
+// 		{
+// 			adj = *(t_vertex **)array_get(vertex->adj_list, j);
+// 			ft_printf("%s -> %s\n", vertex->id, adj->id);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
