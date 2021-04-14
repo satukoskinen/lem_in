@@ -1,0 +1,33 @@
+5
+##start
+s 0 0
+a_in 1 1
+a_out 1 1
+b_in 2 1
+b_out 2 1
+d_in 1 0
+d_out 1 0
+c_in 2 0
+c_out 2 0
+##end
+t 3 0
+s-a_in
+s-d_in
+#s-a_out
+#s-d_out
+a_out-c_in
+a_out-b_in
+a_out-d_in
+d_out-c_in
+d_out-a_in
+b_out-c_in
+b_out-t
+c_out-t
+b_in-t
+c_in-t
+a_in-a_out
+b_in-b_out
+b_in-c_out
+c_in-c_out
+d_in-d_out
+d_in-c_out
