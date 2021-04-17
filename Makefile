@@ -23,6 +23,9 @@ SRC = $(GRAPH_SRC) $(addprefix src/, \
 	process_graph.c \
 	find_shortest_path.c \
 	max_flow_edmonds_karp.c \
+	get_edge.c \
+	save_paths.c \
+	move_ants.c \
 )
 
 OBJ = $(subst $(SRC_DIR), $(OBJ_DIR), $(SRC:.c=.o))

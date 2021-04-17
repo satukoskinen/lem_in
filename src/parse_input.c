@@ -24,6 +24,10 @@ static int	parse_ant_count(t_array **input)
 	return (ant_count);
 }
 
+/*
+** parse input
+*/
+
 int	parse_input(t_graph *graph, t_array **input)
 {
 	int					ant_count;

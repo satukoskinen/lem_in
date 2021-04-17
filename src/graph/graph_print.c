@@ -10,7 +10,7 @@ void	graph_print_vertices(t_graph *graph)
 	while (i < array_size(graph->vertices))
 	{
 		vertex = (t_vertex *)array_get(graph->vertices, i);
-		ft_printf("id: %s value: %d\n", vertex->id, vertex->value);
+		ft_printf("id: %s value: %d prev: %p\n", vertex->id, vertex->value, vertex->prev);
 		i++;
 	}
 	ft_printf("source: id: %s value: %d\n",

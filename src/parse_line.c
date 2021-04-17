@@ -91,6 +91,10 @@ static int	parse_command(t_graph *graph, char *cmd, enum e_line_type *type)
 	return (1);
 }
 
+/*
+** parse one line of input based on the type
+*/
+
 int	parse_line(t_graph *graph, t_array **input, enum e_line_type *type)
 {
 	char	*line;

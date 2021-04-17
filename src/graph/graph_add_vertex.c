@@ -40,6 +40,10 @@ t_vertex	*vertex_new(char *id, int value, int capacity)
 		return (NULL);
 	vertex->id = id;
 	vertex->value = value;
+	if (vertex->capacity != -1)
+		vertex->has_capacity = 1;
+	else
+		vertex->has_capacity = 0;
 	vertex->capacity = capacity;
 	vertex->dist = -1;
 	vertex->is_sink = 0;
