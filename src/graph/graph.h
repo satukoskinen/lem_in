@@ -44,13 +44,17 @@ typedef struct s_edge
 	int			capacity;
 }				t_edge;
 
-t_graph	*graph_new(void);
-int		graph_add_vertex(t_graph *graph, char *id, int value, int capacity);
-int		graph_add_edge(t_graph *graph, char *v1_id, char *v2_id, int);
-int		graph_contains_vertex(t_graph *graph, char *v_id);
-int		graph_contains_edge(t_graph *graph, char *v1_id, char *v2_id);
-void	graph_print_vertices(t_graph *graph);
-void	graph_print_edges(t_graph *graph);
-void	graph_del(t_graph **graph);
+t_graph		*graph_new(void);
+int			graph_add_vertex(t_graph *graph, char *id,
+				int value, int capacity);
+int			graph_add_edge(t_graph *graph, char *v1_id, char *v2_id,
+				int capacity);
+int			graph_contains_vertex(t_graph *graph, char *v_id);
+int			graph_contains_edge(t_graph *graph, char *v1_id, char *v2_id);
+void		graph_print_vertices(t_graph *graph);
+void		graph_print_edges(t_graph *graph);
+void		graph_del(t_graph **graph);
+t_vertex	*graph_get_vertex(t_graph *graph, char *id);
+t_edge		*graph_get_edge(t_graph *graph, char *src_id, char *dst_id);
 
 #endif

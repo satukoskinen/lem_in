@@ -3,13 +3,13 @@
 #include "graph.h"
 #include <stdlib.h>
 
-int	error(char *msg)
+static int	error(char *msg)
 {
 	ft_putstr_fd(msg, 2);
 	return (1);
 }
 
-void	print_array(t_array *input)
+static void	print_array(t_array *input)
 {
 	char	*line;
 	size_t	i;
@@ -23,7 +23,7 @@ void	print_array(t_array *input)
 	}
 }
 
-void	free_resources(t_graph **graph, t_array **input, t_array **output)
+static void	free_resources(t_graph **graph, t_array **input, t_array **output)
 {
 	size_t	i;
 
@@ -35,7 +35,7 @@ void	free_resources(t_graph **graph, t_array **input, t_array **output)
 	}
 	array_del(input);
 	i = 0;
-	while(i < array_size(*output))
+	while (i < array_size(*output))
 	{
 		free(*(char **)array_get(*output, i));
 		i++;
@@ -44,7 +44,7 @@ void	free_resources(t_graph **graph, t_array **input, t_array **output)
 	graph_del(graph);
 }
 
-int	init_resources(t_graph **graph, t_array **input, t_array **output)
+static int	init_resources(t_graph **graph, t_array **input, t_array **output)
 {
 	*graph = graph_new();
 	if (*graph == NULL)
@@ -87,11 +87,12 @@ int	main(void)
 		free_resources(&graph, &input, &output);
 		return (error("Error on processing graph\n"));
 	}
-//	graph_print_vertices(graph);
-//	graph_print_edges(graph);
 	print_array(input);
 	ft_putstr("\n");
 	print_array(output);
 	free_resources(&graph, &input, &output);
 	return (0);
 }
+
+//	graph_print_vertices(graph);
+//	graph_print_edges(graph);

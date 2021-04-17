@@ -14,6 +14,8 @@ GRAPH_SRC = $(addprefix src/graph/, \
 	graph_add_edge.c \
 	graph_del.c \
 	graph_print.c \
+	graph_get_edge.c \
+	graph_get_vertex.c \
 )
 
 SRC = $(GRAPH_SRC) $(addprefix src/, \
@@ -23,7 +25,6 @@ SRC = $(GRAPH_SRC) $(addprefix src/, \
 	process_graph.c \
 	find_shortest_path.c \
 	max_flow_edmonds_karp.c \
-	get_edge.c \
 	save_paths.c \
 	move_ants.c \
 )

@@ -2,26 +2,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-static t_vertex	*array_get_vertex(t_array *array, char *v_id)
-{
-	t_vertex	*vertex;
-	size_t		i;
-
-	if (array == NULL)
-		return (NULL);
-	i = 0;
-	vertex = (t_vertex *)array_get(array, i);
-	while (vertex != NULL)
-	{
-		if (ft_strcmp(vertex->id, v_id) == 0)
-			break ;
-		i++;
-		vertex = (t_vertex *)array_get(array, i);
-	}
-	return (vertex);
-}
-
-int graph_contains_edge(t_graph *graph, char *src_id, char *dst_id)
+int	graph_contains_edge(t_graph *graph, char *src_id, char *dst_id)
 {
 	t_edge	*edge;
 	size_t	i;
@@ -29,33 +10,22 @@ int graph_contains_edge(t_graph *graph, char *src_id, char *dst_id)
 	i = 0;
 	while (i < array_size(graph->edges))
 	{
-		edge = (t_edge*)array_get(graph->edges, i);
-		if (ft_strcmp(edge->src->id, src_id) == 0 && ft_strcmp(edge->dst->id, dst_id) == 0)
+		edge = (t_edge *)array_get(graph->edges, i);
+		if (ft_strcmp(edge->src->id, src_id) == 0
+			&& ft_strcmp(edge->dst->id, dst_id) == 0)
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-// int	graph_contains_edge(t_graph *graph, char *v1_id, char *v2_id)
-// {
-// 	t_vertex	*v1;
-// 	t_vertex	*v2;
-// 	size_t		i;
-
-// 	v1 = array_get_vertex(graph->vertices, v1_id);
-// 	if (v1 == NULL || v1->adj_list == NULL)
-// 		return (0);
-// 	i = 0;
-// 	while (i < array_size(v1->adj_list))
-// 	{
-// 		v2 = *(t_vertex **)array_get(v1->adj_list, i);
-// 		if (ft_strcmp(v2->id, v2_id) == 0)
-// 			return (1);
-// 		i++;
-// 	}
-// 	return (0);
-// }
+void	init_edge(t_edge *edge, t_vertex *src, t_vertex *dst, int capacity)
+{
+	edge->src = src;
+	edge->dst = dst;
+	edge->flow = 0;
+	edge->capacity = capacity;
+}
 
 int	graph_add_edge(t_graph *graph, char *v1_id, char *v2_id, int capacity)
 {
@@ -63,8 +33,8 @@ int	graph_add_edge(t_graph *graph, char *v1_id, char *v2_id, int capacity)
 	t_vertex	*v2;
 	t_edge		edge;
 
-	v1 = array_get_vertex(graph->vertices, v1_id);
-	v2 = array_get_vertex(graph->vertices, v2_id);
+	v1 = graph_get_vertex(graph, v1_id);
+	v2 = graph_get_vertex(graph, v2_id);
 	if (v1 == NULL || v2 == NULL)
 		return (0);
 	if (graph_contains_edge(graph, v1->out->id, v2->in->id))
@@ -78,10 +48,7 @@ int	graph_add_edge(t_graph *graph, char *v1_id, char *v2_id, int capacity)
 	array_add(&v1->adj_list, &v2);
 	if (v1->adj_list == NULL)
 		return (-1);
-	edge.src = v1->out;
-	edge.dst = v2->in;
-	edge.flow = 0;
-	edge.capacity = capacity;
+	init_edge(&edge, v1->out, v2->in, capacity);
 	array_add(&graph->edges, &edge);
 	if (graph->edges == NULL)
 		return (-1);

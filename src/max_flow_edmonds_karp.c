@@ -1,57 +1,60 @@
 #include "lem_in.h"
 #include "libft.h"
 
-int	find_shortest_path_flow(t_graph *graph, t_vertex *src, t_vertex *dst)
+static int	check_adjacent_vertices(t_graph *graph, t_array *queue,
+t_vertex *vertex, t_vertex *dst)
 {
-	t_array		*queue;
-	t_vertex	*vertex;
 	t_vertex	*adjacent;
 	t_edge		*edge;
 	size_t		i;
 
-	queue = array_new(INIT_SIZE, sizeof(t_vertex *));
+	i = 0;
+	while (i < array_size(vertex->adj_list))
+	{
+		adjacent = *(t_vertex **)array_get(vertex->adj_list, i);
+		edge = graph_get_edge(graph, vertex->out->id, adjacent->in->id);
+		if (adjacent->prev == NULL && edge->flow < edge->capacity)
+		{
+			adjacent->prev = vertex;
+			if (ft_strcmp(adjacent->id, dst->id) == 0)
+			{
+				array_del(&queue);
+				return (1);
+			}
+			array_add(&queue, &adjacent);
+		}
+		i++;
+	}
+	return (0);
+}
+
+static int	find_augmenting_flow(t_graph *graph, t_vertex *src, t_vertex *dst)
+{
+	t_array		*queue;
+	t_vertex	*vertex;
+	int			reached_dst;
+
+	queue = array_new(graph->vertex_count, sizeof(t_vertex *));
 	if (queue == NULL)
 		return (0);
 	src->prev = src;
-	if (array_add(&queue, &src) == NULL)
-	{
-		array_del(&queue);
-		return (-1);
-	}
+	array_add(&queue, &src);
 	while (array_size(queue) > 0)
 	{
 		vertex = *(t_vertex **)array_get(queue, 0);
 		array_remove(queue, 0);
-		i = 0;
-		while (i < array_size(vertex->adj_list))
-		{
-			adjacent = *(t_vertex **)array_get(vertex->adj_list, i);
-			edge = get_edge(graph, vertex->out->id, adjacent->in->id);
-			if (adjacent->prev == NULL && edge->flow < edge->capacity)
-			{
-				adjacent->prev = vertex;
-				if (ft_strcmp(adjacent->id, dst->id) == 0)
-				{
-					array_del(&queue);
-					return (1);
-				}
-				if (array_add(&queue, &adjacent) == NULL)
-				{
-					array_del(&queue);
-					return (-1);
-				}
-			}
-			i++;
-		}
+		reached_dst = check_adjacent_vertices(graph, queue, vertex, dst);
+		if (reached_dst)
+			return (1);
 	}
 	array_del(&queue);
 	return (0);
 }
 
-void	reset_graph_paths(t_graph *graph)
+static void	reset_graph_paths(t_graph *graph)
 {
-	size_t	i;
-	t_vertex *vertex;
+	size_t		i;
+	t_vertex	*vertex;
 
 	i = 0;
 	while (i < array_size(graph->vertices))
@@ -62,12 +65,12 @@ void	reset_graph_paths(t_graph *graph)
 	}
 }
 
-void	update_edge_flow(t_graph *graph, char *src_id, char *dst_id,
+static void	update_edge_flow(t_graph *graph, t_vertex *src, t_vertex *dst,
 int delta_flow)
 {
 	t_edge	*edge;
 
-	edge = get_edge(graph, src_id, dst_id);
+	edge = graph_get_edge(graph, src->out->id, dst->in->id);
 	edge->flow = edge->flow + delta_flow;
 }
 
@@ -75,33 +78,29 @@ int delta_flow)
 ** calculate the max flow of the network
 */
 
-int	max_flow_edmonds_karp(t_vertex *src, t_vertex *dst, t_graph *graph)
+int	max_flow_edmonds_karp(t_graph *graph, t_vertex *src, t_vertex *dst)
 {
 	int			flow;
-	int			augmenting_flow;
+	int			augment_flow;
 	t_vertex	*vertex;
 
 	flow = 0;
 	while (1)
 	{
 		reset_graph_paths(graph);
-		augmenting_flow = find_shortest_path_flow(graph, src, dst);
-		if (augmenting_flow <= 0)
+		augment_flow = find_augmenting_flow(graph, src, dst);
+		if (augment_flow <= 0)
 			break ;
-		flow += augmenting_flow;
+		flow += augment_flow;
 		vertex = dst;
 		while (ft_strcmp(vertex->id, src->id) != 0)
 		{
-//			ft_printf("update edge flow %s %s\n", vertex->prev->id, vertex->id);
-			update_edge_flow(graph, vertex->prev->out->id,
-				vertex->in->id, augmenting_flow);
-			update_edge_flow(graph, vertex->out->id,
-				vertex->prev->in->id, -augmenting_flow);
+			update_edge_flow(graph, vertex->prev, vertex, augment_flow);
+			update_edge_flow(graph, vertex, vertex->prev, -augment_flow);
 			vertex = vertex->prev;
 		}
-//		graph_print_edges(graph);
 	}
-	if (augmenting_flow == -1)
+	if (augment_flow == -1)
 		return (-1);
 	else
 		return (flow);
