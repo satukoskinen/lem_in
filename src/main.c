@@ -3,13 +3,13 @@
 #include "graph.h"
 #include <stdlib.h>
 
-int	error(char *msg)
+static int	error(char *msg)
 {
 	ft_putstr_fd(msg, 2);
 	return (1);
 }
 
-void	print_array(t_array *input)
+static void	print_array(t_array *input)
 {
 	char	*line;
 	size_t	i;
@@ -23,7 +23,7 @@ void	print_array(t_array *input)
 	}
 }
 
-void	free_resources(t_graph **graph, t_array **input, t_array **output)
+static void	free_resources(t_graph **graph, t_array **input, t_array **output)
 {
 	size_t	i;
 
@@ -34,11 +34,17 @@ void	free_resources(t_graph **graph, t_array **input, t_array **output)
 		i++;
 	}
 	array_del(input);
+	i = 0;
+	while (i < array_size(*output))
+	{
+		free(*(char **)array_get(*output, i));
+		i++;
+	}
 	array_del(output);
 	graph_del(graph);
 }
 
-int	init_resources(t_graph **graph, t_array **input, t_array **output)
+static int	init_resources(t_graph **graph, t_array **input, t_array **output)
 {
 	*graph = graph_new();
 	if (*graph == NULL)
@@ -59,6 +65,10 @@ int	init_resources(t_graph **graph, t_array **input, t_array **output)
 	return (1);
 }
 
+/*
+** main
+*/
+
 int	main(void)
 {
 	t_graph	*graph;
@@ -77,8 +87,6 @@ int	main(void)
 		free_resources(&graph, &input, &output);
 		return (error("Error on processing graph\n"));
 	}
-//	graph_print_vertices(graph);
-//	graph_print_edges(graph);
 	print_array(input);
 	ft_putstr("\n");
 	print_array(output);
@@ -86,22 +94,5 @@ int	main(void)
 	return (0);
 }
 
-/*
-//	system("leaks lem_in");
-int main(void)
-{
-	t_graph *graph;
-
-	graph = graph_new();
-	if (graph == NULL)
-		return (error("Error\n"));
-	graph_add_vertex(graph, "V0", 0);
-	graph_add_vertex(graph, "V1", 0);
-	graph_add_edge(graph, "V0", "V1");
-	graph_add_edge(graph, "V1", "V0");
-	graph_add_vertex(graph, "V2", 0);
-	graph_add_edge(graph, "V0", "V2");
-	graph_print_vertices(graph);
-	graph_print_edges(graph);
-}
-*/
+//	graph_print_vertices(graph);
+//	graph_print_edges(graph);

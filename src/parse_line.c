@@ -12,10 +12,10 @@ static int	parse_link(t_graph *graph, char *line)
 	if (ptr == NULL)
 		return (-1);
 	*ptr = '\0';
-	ret = graph_add_edge(graph, line, ptr + 1);
+	ret = graph_add_edge(graph, line, ptr + 1, 1);
 	if (ret != 1)
 		return (-1);
-	ret = graph_add_edge(graph, ptr + 1, line);
+	ret = graph_add_edge(graph, ptr + 1, line, 1);
 	*ptr = '-';
 	if (ret != 1)
 		return (-1);
@@ -30,6 +30,7 @@ static int	parse_special_room(t_graph *graph, enum e_line_type *type)
 
 	index = array_size(graph->vertices) - 1;
 	vertex = (t_vertex *)array_get(graph->vertices, index);
+	vertex->capacity = -1;
 	if (*type == ROOM_SRC)
 	{
 		vertex->is_source = 1;
@@ -59,7 +60,7 @@ static int	parse_room(t_graph *graph, char *line, enum e_line_type *type)
 		return (ret);
 	}
 	*ptr = '\0';
-	ret = graph_add_vertex(graph, line, 0);
+	ret = graph_add_vertex(graph, line, 0, 1);
 	if (ret == 1 && (*type == ROOM_SRC || *type == ROOM_SINK))
 		parse_special_room(graph, type);
 	*ptr = ' ';
@@ -89,6 +90,10 @@ static int	parse_command(t_graph *graph, char *cmd, enum e_line_type *type)
 	}
 	return (1);
 }
+
+/*
+** parse one line of input based on the type
+*/
 
 int	parse_line(t_graph *graph, t_array **input, enum e_line_type *type)
 {
