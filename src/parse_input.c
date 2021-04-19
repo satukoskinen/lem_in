@@ -47,8 +47,8 @@ int	parse_input(t_graph *graph, t_array **input)
 		return (-1);
 	else if (graph->source_index == -1 || graph->sink_index == -1)
 		return (-1);
-	graph->source = (t_vertex *)array_get(graph->vertices, graph->source_index);
-	graph->sink = (t_vertex *)array_get(graph->vertices, graph->sink_index);
+	graph->source = *(t_vertex **)array_get(graph->vertices, graph->source_index);
+	graph->sink = *(t_vertex **)array_get(graph->vertices, graph->sink_index);
 	graph->source->value = ant_count;
 	return (1);
 }

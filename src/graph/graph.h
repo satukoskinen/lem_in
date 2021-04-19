@@ -38,17 +38,19 @@ typedef struct s_graph
 
 typedef struct s_edge
 {
-	t_vertex	*src;
-	t_vertex	*dst;
-	int			flow;
-	int			capacity;
-}				t_edge;
+	t_vertex		*src;
+	t_vertex		*dst;
+	int				flow;
+	int				capacity;
+	struct s_edge	*reverse_edge;
+}					t_edge;
 
 t_graph		*graph_new(void);
 int			graph_add_vertex(t_graph *graph, char *id,
 				int value, int capacity);
 int			graph_add_edge(t_graph *graph, char *v1_id, char *v2_id,
 				int capacity);
+int			graph_add_inner_edge(t_graph *graph, char *id, int capacity);
 int			graph_contains_vertex(t_graph *graph, char *v_id);
 int			graph_contains_edge(t_graph *graph, char *v1_id, char *v2_id);
 void		graph_print_vertices(t_graph *graph);

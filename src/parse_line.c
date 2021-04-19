@@ -29,7 +29,7 @@ static int	parse_special_room(t_graph *graph, enum e_line_type *type)
 	size_t		index;
 
 	index = array_size(graph->vertices) - 1;
-	vertex = (t_vertex *)array_get(graph->vertices, index);
+	vertex = *(t_vertex **)array_get(graph->vertices, index);
 	vertex->capacity = -1;
 	if (*type == ROOM_SRC)
 	{

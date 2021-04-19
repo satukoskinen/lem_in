@@ -59,6 +59,8 @@ static t_array	*get_max_flow_paths(t_graph *graph)
 	max_flow = max_flow_edmonds_karp(graph, graph->source, graph->sink);
 	if (max_flow <= 0)
 		return (NULL);
+	//ft_printf("max flow is %d\n", max_flow);
+	//graph_print_edges(graph);
 	max_flow_paths = save_paths(graph, graph->source, graph->sink, max_flow);
 	return (max_flow_paths);
 }
@@ -71,13 +73,13 @@ int	process_graph(t_graph *graph, t_array **output)
 	shortest_path = get_shortest_path(graph);
 	if (shortest_path == NULL)
 		return (-1);
+	print_paths(shortest_path);
 	max_flow_paths = get_max_flow_paths(graph);
 	if (max_flow_paths == NULL)
 	{
 		free_array(&shortest_path);
 		return (-1);
 	}
-	print_paths(shortest_path);
 	print_paths(max_flow_paths);
 	move_ants(graph, shortest_path, max_flow_paths, output);
 	free_array(&shortest_path);

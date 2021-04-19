@@ -1,0 +1,18 @@
+10
+##start
+start 0 0
+##end
+end 10 10
+1 1 1
+2 2 2
+node 4 4
+5 5 5
+6 6 6
+start-1
+start-2
+1-node
+2-node
+node-5
+node-6
+5-end
+6-end

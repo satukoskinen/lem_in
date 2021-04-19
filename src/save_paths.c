@@ -59,6 +59,7 @@ t_array **paths)
 		edge = graph_get_edge(graph, sink_adj->out->id, sink->in->id);
 		if (edge->flow > 0)
 		{
+
 			path = save_flow_path(graph, src, sink, sink_adj);
 			if (path == NULL)
 				return (0);

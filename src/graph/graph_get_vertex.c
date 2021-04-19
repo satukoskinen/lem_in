@@ -9,13 +9,12 @@ t_vertex	*graph_get_vertex(t_graph *graph, char *id)
 	if (graph == NULL || graph->vertices == NULL)
 		return (NULL);
 	i = 0;
-	vertex = (t_vertex *)array_get(graph->vertices, i);
-	while (vertex != NULL)
+	while (i < array_size(graph->vertices))
 	{
+		vertex = *(t_vertex **)array_get(graph->vertices, i);
 		if (ft_strcmp(vertex->id, id) == 0)
-			break ;
+			return (vertex);
 		i++;
-		vertex = (t_vertex *)array_get(graph->vertices, i);
 	}
-	return (vertex);
+	return (NULL);
 }

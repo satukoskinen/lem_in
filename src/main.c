@@ -87,6 +87,8 @@ int	main(void)
 		free_resources(&graph, &input, &output);
 		return (error("Error on processing graph\n"));
 	}
+//	graph_print_vertices(graph);
+//	graph_print_edges(graph);
 	print_array(input);
 	ft_putstr("\n");
 	print_array(output);
@@ -94,5 +96,4 @@ int	main(void)
 	return (0);
 }
 
-//	graph_print_vertices(graph);
-//	graph_print_edges(graph);
+

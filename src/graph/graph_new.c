@@ -9,7 +9,7 @@ t_graph	*graph_new(void)
 	graph = (t_graph *)malloc(sizeof(t_graph));
 	if (graph == NULL)
 		return (NULL);
-	graph->vertices = array_new(INIT_SIZE, sizeof(t_vertex));
+	graph->vertices = array_new(INIT_SIZE, sizeof(t_vertex *));
 	if (graph->vertices == NULL)
 	{
 		free(graph);

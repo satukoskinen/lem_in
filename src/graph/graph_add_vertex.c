@@ -56,28 +56,30 @@ t_vertex	*vertex_new(char *id, int value, int capacity)
 
 int	graph_add_vertex(t_graph *graph, char *id, int value, int capacity)
 {
-	t_vertex	vertex;
+	t_vertex	*vertex;
 
 	if (graph_contains_vertex(graph, id))
 		return (0);
 	id = ft_strdup(id);
 	if (id == NULL)
 		return (-1);
-	init_vertex(&vertex, id, value, capacity);
-	vertex.in = vertex_new(ft_strjoin(id, "_in"), value, -1);
-	vertex.out = vertex_new(ft_strjoin(id, "_out"), value, -1);
-	if (vertex.in == NULL || vertex.out == NULL)
+	vertex = vertex_new(id, value, capacity);
+	vertex->in = vertex_new(ft_strjoin(id, "_in"), value, -1);
+	vertex->out = vertex_new(ft_strjoin(id, "_out"), value, -1);
+	if (vertex->in == NULL || vertex->out == NULL)
 		return (-1);
 	array_add(&graph->vertices, &vertex);
 	if (graph->vertices == NULL)
 	{
-		free(vertex.id);
-		free(vertex.in->id);
-		free(vertex.in);
-		free(vertex.out->id);
-		free(vertex.out);
+		free(vertex->id);
+		free(vertex->in->id);
+		free(vertex->in);
+		free(vertex->out->id);
+		free(vertex->out);
+		free(vertex);
 		return (-1);
 	}
 	graph->vertex_count += 1;
+	graph_add_inner_edge(graph, id, 1);
 	return (1);
 }
