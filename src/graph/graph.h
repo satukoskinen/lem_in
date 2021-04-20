@@ -57,6 +57,7 @@ void		graph_print_vertices(t_graph *graph);
 void		graph_print_edges(t_graph *graph);
 void		graph_del(t_graph **graph);
 t_vertex	*graph_get_vertex(t_graph *graph, char *id);
-t_edge		*graph_get_edge(t_graph *graph, char *src_id, char *dst_id);
+t_edge		*graph_get_edge_by_id(t_graph *graph, char *src_id, char *dst_id);
+t_edge		*graph_get_edge(t_vertex *src, t_vertex *dst);
 
 #endif

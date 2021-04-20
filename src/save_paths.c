@@ -1,19 +1,19 @@
 #include "lem_in.h"
 #include "libft.h"
 
-static t_vertex	*get_next_vertex(t_graph *graph, t_vertex *vertex)
+static t_vertex	*get_next_vertex(t_vertex *vertex)
 {
-	t_vertex	*adj;
-	t_edge		*edge;
-	size_t		i;
+	t_edge	*adj_edge;
+	t_edge	*edge;
+	size_t	i;
 
 	i = 0;
 	while (i < array_size(vertex->adj_list))
 	{
-		adj = *(t_vertex **)array_get(vertex->adj_list, i);
-		edge = graph_get_edge(graph, adj->out->id, vertex->in->id);
+		adj_edge = *(t_edge **)array_get(vertex->adj_list, i);
+		edge = graph_get_edge(adj_edge->dst->out, vertex->in);
 		if (edge->flow > 0)
-			return (adj);
+			return (adj_edge->dst);
 		i++;
 	}
 	return (NULL);
@@ -33,7 +33,7 @@ t_vertex *sink_adj)
 	vertex = sink_adj;
 	while (1)
 	{
-		vertex = get_next_vertex(graph, vertex);
+		vertex = get_next_vertex(vertex);
 		if (vertex == NULL)
 			break ;
 		array_add(&path, &vertex);
@@ -47,19 +47,19 @@ t_vertex *sink_adj)
 static int	save_flow_paths(t_graph *graph, t_vertex *src, t_vertex *sink,
 t_array **paths)
 {
-	t_array		*path;
-	t_vertex	*sink_adj;
-	t_edge		*edge;
-	size_t		i;
+	t_array	*path;
+	t_edge	*sink_adj_edge;
+	t_edge	*edge;
+	size_t	i;
 
 	i = 0;
 	while (i < array_size(sink->adj_list))
 	{
-		sink_adj = *(t_vertex **)array_get(sink->adj_list, i);
-		edge = graph_get_edge(graph, sink_adj->out->id, sink->in->id);
+		sink_adj_edge = *(t_edge **)array_get(sink->adj_list, i);
+		edge = graph_get_edge(sink_adj_edge->dst->out, sink->in);
 		if (edge->flow > 0)
 		{
-			path = save_flow_path(graph, src, sink, sink_adj);
+			path = save_flow_path(graph, src, sink, sink_adj_edge->dst);
 			if (path == NULL)
 				return (0);
 			array_add(paths, &path);

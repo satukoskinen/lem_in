@@ -3,20 +3,20 @@
 
 int	check_adjacent_vertices(t_array *queue, t_vertex *vertex, t_vertex *dst)
 {
-	t_vertex	*adjacent;
+	t_edge	*adjacent_edge;
 	size_t		i;
 
 	i = 0;
 	while (i < array_size(vertex->adj_list))
 	{
-		adjacent = *(t_vertex **)array_get(vertex->adj_list, i);
-		if (adjacent->dist == -1)
+		adjacent_edge = *(t_edge **)array_get(vertex->adj_list, i);
+		if (adjacent_edge->dst->dist == -1)
 		{
-			adjacent->dist = vertex->dist + 1;
-			adjacent->prev = vertex;
-			if (ft_strcmp(adjacent->id, dst->id) == 0)
+			adjacent_edge->dst->dist = vertex->dist + 1;
+			adjacent_edge->dst->prev = vertex;
+			if (ft_strcmp(adjacent_edge->dst->id, dst->id) == 0)
 				return (1);
-			array_add(&queue, &adjacent);
+			array_add(&queue, &adjacent_edge->dst);
 		}
 		i++;
 	}

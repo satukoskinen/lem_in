@@ -10,7 +10,7 @@ int	graph_contains_edge(t_graph *graph, char *src_id, char *dst_id)
 	i = 0;
 	while (i < array_size(graph->edges))
 	{
-		edge = (t_edge *)array_get(graph->edges, i);
+		edge = *(t_edge **)array_get(graph->edges, i);
 		if (ft_strcmp(edge->src->id, src_id) == 0
 			&& ft_strcmp(edge->dst->id, dst_id) == 0)
 			return (1);
@@ -19,39 +19,85 @@ int	graph_contains_edge(t_graph *graph, char *src_id, char *dst_id)
 	return (0);
 }
 
+/*
 static void	init_edge(t_edge *edge, t_vertex *src, t_vertex *dst, int capacity)
 {
 	edge->src = src;
 	edge->dst = dst;
 	edge->flow = 0;
 	edge->capacity = capacity;
+	edge->reverse_edge = NULL;
+}
+*/
+
+static t_edge	*edge_new(t_vertex *src, t_vertex *dst, int capacity)
+{
+	t_edge	*edge;
+
+	edge = (t_edge *)malloc(sizeof(t_edge));
+	if (edge == NULL)
+		return (NULL);
+	edge->src = src;
+	edge->dst = dst;
+	edge->flow = 0;
+	edge->capacity = capacity;
+	edge->reverse_edge = NULL;
+	return (edge);
 }
 
 static int	graph_add_one_edge(t_graph *graph, t_vertex *v1,
 t_vertex *v2, int capacity)
 {
-	t_edge		edge;
+	t_edge	*edge;
 
 	if (v1 == NULL || v2 == NULL)
 		return (0);
 	if (graph_contains_edge(graph, v1->id, v2->id))
 		return (0);
+	edge = edge_new(v1, v2, capacity);
+	if (edge == NULL)
+		return (-1);
 	if (v1->adj_list == NULL)
 	{
-		v1->adj_list = array_new(INIT_SIZE, sizeof(t_vertex *));
+		v1->adj_list = array_new(INIT_SIZE, sizeof(t_edge *));
 		if (v1->adj_list == NULL)
 			return (-1);
 	}
-	array_add(&v1->adj_list, &v2);
+	array_add(&v1->adj_list, &edge);
 	if (v1->adj_list == NULL)
 		return (-1);
-	init_edge(&edge, v1, v2, capacity);
 	array_add(&graph->edges, &edge);
 	if (graph->edges == NULL)
 		return (-1);
 	graph->edge_count += 1;
 	return (1);
 }
+
+// static int	graph_add_one_edge(t_graph *graph, t_vertex *v1,
+// t_vertex *v2, int capacity)
+// {
+// 	t_edge		edge;
+
+// 	if (v1 == NULL || v2 == NULL)
+// 		return (0);
+// 	if (graph_contains_edge(graph, v1->id, v2->id))
+// 		return (0);
+// 	if (v1->adj_list == NULL)
+// 	{
+// 		v1->adj_list = array_new(INIT_SIZE, sizeof(t_vertex *));
+// 		if (v1->adj_list == NULL)
+// 			return (-1);
+// 	}
+// 	array_add(&v1->adj_list, &v2);
+// 	if (v1->adj_list == NULL)
+// 		return (-1);
+// 	init_edge(&edge, v1, v2, capacity);
+// 	array_add(&graph->edges, &edge);
+// 	if (graph->edges == NULL)
+// 		return (-1);
+// 	graph->edge_count += 1;
+// 	return (1);
+// }
 
 int	graph_add_inner_edge(t_graph *graph, char *id, int capacity)
 {
