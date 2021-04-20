@@ -27,7 +27,8 @@ static void	init_edge(t_edge *edge, t_vertex *src, t_vertex *dst, int capacity)
 	edge->capacity = capacity;
 }
 
-static int	graph_add_one_edge(t_graph *graph, t_vertex *v1, t_vertex *v2, int capacity)
+static int	graph_add_one_edge(t_graph *graph, t_vertex *v1,
+t_vertex *v2, int capacity)
 {
 	t_edge		edge;
 

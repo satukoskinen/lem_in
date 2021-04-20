@@ -13,7 +13,6 @@ t_vertex *vertex, t_vertex *dst)
 	{
 		adjacent = *(t_vertex **)array_get(vertex->adj_list, i);
 		edge = graph_get_edge(graph, vertex->id, adjacent->id);
-		//ft_printf("vertex %s adj %s edje flow %d\n", vertex->id, adjacent->id, edge->flow);
 		if (adjacent->prev == NULL && edge->flow < edge->capacity)
 		{
 			adjacent->prev = vertex;
@@ -35,7 +34,6 @@ static int	find_augmenting_flow(t_graph *graph, t_vertex *src, t_vertex *dst)
 	t_vertex	*vertex;
 	int			reached_dst;
 
-	//ft_printf("find augmenting flow\n");
 	queue = array_new(graph->vertex_count, sizeof(t_vertex *));
 	if (queue == NULL)
 		return (0);
@@ -68,6 +66,7 @@ static void	reset_graph_paths(t_graph *graph)
 		i++;
 	}
 }
+
 /*
 static void	update_edge_flow(t_graph *graph, t_vertex *src, t_vertex *dst,
 int delta_flow)
@@ -103,6 +102,7 @@ int delta_flow)
 	}
 }
 */
+
 static void	update_edge_flow(t_graph *graph, t_vertex *src, t_vertex *dst,
 int delta_flow)
 {
@@ -129,7 +129,6 @@ int	max_flow_edmonds_karp(t_graph *graph, t_vertex *src, t_vertex *dst)
 	{
 		reset_graph_paths(graph);
 		augment_flow = find_augmenting_flow(graph, src, dst);
-		//ft_printf("augment_flow is %d\n", augment_flow);
 		if (augment_flow <= 0)
 			break ;
 		flow += augment_flow;
@@ -139,7 +138,6 @@ int	max_flow_edmonds_karp(t_graph *graph, t_vertex *src, t_vertex *dst)
 			update_edge_flow(graph, vertex->prev, vertex, augment_flow);
 			vertex = vertex->prev;
 		}
-		//graph_print_edges(graph);
 	}
 	if (augment_flow == -1)
 		return (-1);

@@ -54,6 +54,16 @@ t_vertex	*vertex_new(char *id, int value, int capacity)
 	return (vertex);
 }
 
+void	free_vertex(t_vertex *vertex)
+{
+	free(vertex->id);
+	free(vertex->in->id);
+	free(vertex->in);
+	free(vertex->out->id);
+	free(vertex->out);
+	free(vertex);
+}
+
 int	graph_add_vertex(t_graph *graph, char *id, int value, int capacity)
 {
 	t_vertex	*vertex;
@@ -71,12 +81,7 @@ int	graph_add_vertex(t_graph *graph, char *id, int value, int capacity)
 	array_add(&graph->vertices, &vertex);
 	if (graph->vertices == NULL)
 	{
-		free(vertex->id);
-		free(vertex->in->id);
-		free(vertex->in);
-		free(vertex->out->id);
-		free(vertex->out);
-		free(vertex);
+		free_vertex(vertex);
 		return (-1);
 	}
 	graph->vertex_count += 1;

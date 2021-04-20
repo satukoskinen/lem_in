@@ -3,6 +3,8 @@
 
 # include "graph.h"
 
+# define PRINT_DEBUG 1
+
 enum e_line_type
 {
 	ROOM,
