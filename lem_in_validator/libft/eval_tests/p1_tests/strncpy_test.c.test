@@ -1,0 +1,95 @@
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include "../libft.h"
+
+int		strncpy_test(void)
+{
+	int tests_passed = 0;
+
+	char *dst1 = malloc(sizeof(char) * 7);
+	char *dst2 = malloc(sizeof(char) * 7);
+	char *src1 = "xxxxxx";
+
+	char *ret1 = ft_strncpy(dst1, src1, 6);
+	char *ret2 = strncpy(dst2, src1, 6);
+
+	if (strcmp(ret1, ret2) == 0)
+		tests_passed++;
+	else
+		printf("\nERROR 1: strcmp(ret1, ret2) != 0");
+
+	if (strcmp(dst1, dst2) == 0)
+		tests_passed++;
+	else
+		printf("\nERROR 2: strcmp(dst1, dst2) != 0");
+	free(dst1);
+	free(dst2);
+
+	dst1 = malloc(sizeof(char) * 10);
+	dst2 = malloc(sizeof(char) * 10);
+	ret1 = ft_strncpy(dst1, src1, 10);
+	ret2 = strncpy(dst2, src1, 10);
+
+	if (memcmp(ret1, ret2, 10) == 0)
+		tests_passed++;
+	else
+		printf("\nERROR 3: memcmp(ret1, ret2, 10) != 0");
+	
+	if (memcmp(dst1, dst2, 10) == 0)
+		tests_passed++;
+	else
+		printf("\nERROR 4: memcmp(dst1, dst2, 10) != 0");
+	free(dst1);
+	free(dst2);	
+
+	dst1 = malloc(sizeof(char) * 10);
+	dst2 = malloc(sizeof(char) * 10);
+	ret1 = ft_strncpy(dst1, src1, 15);
+	ret2 = strncpy(dst2, src1, 15);
+
+	if (memcmp(ret1, ret2, 10) == 0)
+		tests_passed++;
+	else
+		printf("\nERROR 5: memcmp(ret1, ret2, 10) != 0");
+	
+	if (memcmp(dst1, dst2, 10) == 0)
+		tests_passed++;
+	else
+		printf("\nERROR 6: memcmp(dst1, dst2, 10) != 0");
+
+	ret1 = ft_strncpy(dst1, "", 1);
+	ret2 = strncpy(dst2, "", 1);
+
+	if (memcmp(ret1, ret2, 10) == 0)
+		tests_passed++;
+	else
+		printf("\nERROR 7: memcmp(ret1, ret2, 10) != 0");
+	
+	if (memcmp(dst1, dst2, 10) == 0)
+		tests_passed++;
+	else
+		printf("\nERROR 8: memcmp(dst1, dst2, 10) != 0");
+
+	ret1 = ft_strncpy(dst1, "x", 0);
+	ret2 = strncpy(dst2, "x", 0);
+
+	if (memcmp(ret1, ret2, 10) == 0)
+		tests_passed++;
+	else
+		printf("\nERROR 9: memcmp(ret1, ret2, 10) != 0");
+	
+	if (memcmp(dst1, dst2, 10) == 0)
+		tests_passed++;
+	else
+		printf("\nERROR 10: memcmp(dst1, dst2, 10) != 0");
+	free(dst1);
+	free(dst2);
+
+	if (tests_passed == 10)
+	{
+		printf("\tOK\n");
+        return (1);
+	}
+    return (0);
+}
