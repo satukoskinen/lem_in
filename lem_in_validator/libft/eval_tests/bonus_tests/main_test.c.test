@@ -1,0 +1,23 @@
+#include "tests.h"
+#include <stdio.h>
+
+int		main(void)
+{
+	printf("lstnew_test:");
+	lstnew_test();
+	printf("lstdelone_test:");
+	lstdelone_test();
+	printf("lstdel_test:");
+	lstdel_test();
+	printf("lstadd_test:");
+	lstadd_test();
+	printf("lstiter_test:");
+	lstiter_test();
+	printf("lstmap_test:");
+	lstmap_test();
+
+/*	while (1)
+**		;
+*/
+	return (0);
+}

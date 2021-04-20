@@ -1,6 +1,6 @@
+#include <stdlib.h>
 #include "lem_in.h"
 #include "libft.h"
-#include <stdlib.h>
 
 static void	print_paths(t_array *paths)
 {
@@ -71,14 +71,16 @@ int	process_graph(t_graph *graph, t_array **output)
 	shortest_path = get_shortest_path(graph);
 	if (shortest_path == NULL)
 		return (-1);
+	if (PRINT_DEBUG)
+		print_paths(shortest_path);
 	max_flow_paths = get_max_flow_paths(graph);
 	if (max_flow_paths == NULL)
 	{
 		free_array(&shortest_path);
 		return (-1);
 	}
-	print_paths(shortest_path);
-	print_paths(max_flow_paths);
+	if (PRINT_DEBUG)
+		print_paths(max_flow_paths);
 	move_ants(graph, shortest_path, max_flow_paths, output);
 	free_array(&shortest_path);
 	free_array(&max_flow_paths);

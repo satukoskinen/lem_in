@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include "lem_in.h"
-#include "graph.h"
 #include "libft.h"
 
 static int	parse_link(t_graph *graph, char *line)
@@ -29,7 +28,7 @@ static int	parse_special_room(t_graph *graph, enum e_line_type *type)
 	size_t		index;
 
 	index = array_size(graph->vertices) - 1;
-	vertex = (t_vertex *)array_get(graph->vertices, index);
+	vertex = *(t_vertex **)array_get(graph->vertices, index);
 	vertex->capacity = -1;
 	if (*type == ROOM_SRC)
 	{
@@ -106,9 +105,9 @@ int	parse_line(t_graph *graph, t_array **input, enum e_line_type *type)
 		return (ret);
 	if (*type == ROOM_SRC || *type == ROOM_SINK)
 		ret = parse_room(graph, line, type);
-	else if (strncmp(line, "##", 2) == 0)
+	else if (ft_strncmp(line, "##", 2) == 0)
 		ret = parse_command(graph, line, type);
-	else if (strncmp(line, "#", 1) == 0)
+	else if (ft_strncmp(line, "#", 1) == 0)
 		ret = 1;
 	else if (*type == LINK)
 		ret = parse_link(graph, line);

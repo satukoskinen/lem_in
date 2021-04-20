@@ -1,0 +1,11 @@
+#ifndef TESTS_H
+# define TESTS_H
+
+int		lstnew_test(void);
+int		lstdelone_test(void);
+int		lstdel_test(void);
+int		lstadd_test(void);
+int		lstiter_test(void);
+int		lstmap_test(void);
+
+#endif

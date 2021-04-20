@@ -1,6 +1,5 @@
-#include "libft.h"
 #include "lem_in.h"
-#include "graph.h"
+#include "libft.h"
 #include <stdlib.h>
 
 static int	error(char *msg)
@@ -93,6 +92,3 @@ int	main(void)
 	free_resources(&graph, &input, &output);
 	return (0);
 }
-
-//	graph_print_vertices(graph);
-//	graph_print_edges(graph);
