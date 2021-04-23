@@ -38,8 +38,8 @@ int	validate_output(t_graph *graph, int ant_count)
 	}
 	if (ret == -1)
 		return (error("Error occurred\n", -1));
-	ft_printf("Rounds: %d, nodes: %d, edges: %d (including all aux. edges)\n",
-		rounds, graph->vertex_count, graph->edge_count);
+	ft_printf("Rounds: %d, nodes: %d, edges: %d (including aux. edges)\n",
+		rounds - 1, graph->vertex_count, graph->edge_count);
 	if (graph->source->value != ant_count + 1)
 		return (error("Not all ants were moved\n", 0));
 	if (ants_in_graph(graph))
