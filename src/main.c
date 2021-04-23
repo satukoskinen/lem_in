@@ -101,5 +101,6 @@ int	main(void)
 	ft_putstr("\n");
 	print_array(output);
 	free_resources(&graph, &input, &output);
+	system("leaks lem_in");
 	return (0);
 }

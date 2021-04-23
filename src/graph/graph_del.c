@@ -6,6 +6,7 @@ void	graph_del(t_graph **graph)
 {
 	size_t		i;
 	t_vertex	*vertex;
+	t_edge		*edge;
 
 	i = 0;
 	while (i < array_size((*graph)->vertices))
@@ -26,6 +27,13 @@ void	graph_del(t_graph **graph)
 		i++;
 	}
 	array_del(&(*graph)->vertices);
+	i = 0;
+	while (i < array_size((*graph)->edges))
+	{
+		edge = *(t_edge **)array_get((*graph)->edges, i);
+		free(edge);
+		i++;
+	}
 	array_del(&(*graph)->edges);
 	free(*graph);
 	*graph = NULL;

@@ -62,7 +62,14 @@ int	process_graph(t_graph *graph, t_array **output)
 	}
 	ants_per_path = optimize_path_use(graph->source->value,
 			shortest_paths, max_flow_paths, &paths_to_use);
+	if (ants_per_path == NULL)
+	{
+		free_array(&shortest_paths);
+		free_array(&max_flow_paths);
+		return (-1);
+	}
 	move_ants(graph, paths_to_use, ants_per_path, output);
+	free(ants_per_path);
 	free_array(&shortest_paths);
 	free_array(&max_flow_paths);
 	return (1);
