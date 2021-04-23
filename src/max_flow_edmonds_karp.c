@@ -11,7 +11,8 @@ t_vertex *vertex, t_vertex *dst)
 	while (i < array_size(vertex->adj_list))
 	{
 		adjacent_edge = *(t_edge **)array_get(vertex->adj_list, i);
-		if (adjacent_edge->dst->prev == NULL && adjacent_edge->flow < adjacent_edge->capacity)
+		if (adjacent_edge->dst->prev == NULL
+			&& adjacent_edge->flow < adjacent_edge->capacity)
 		{
 			adjacent_edge->dst->prev = vertex;
 			if (ft_strcmp(adjacent_edge->dst->id, dst->in->id) == 0)
@@ -65,6 +66,47 @@ static void	reset_graph_paths(t_graph *graph)
 	}
 }
 
+static void	update_edge_flow(t_vertex *src, t_vertex *dst, int delta_flow)
+{
+	t_edge	*edge;
+
+	edge = graph_get_edge(src, dst);
+	edge->flow = edge->flow + delta_flow;
+	edge = graph_get_edge(dst, src);
+	edge->flow = edge->flow - delta_flow;
+}
+
+/*
+** calculate the max flow of the network
+*/
+
+int	max_flow_edmonds_karp(t_graph *graph, t_vertex *src, t_vertex *dst)
+{
+	int			flow;
+	int			augment_flow;
+	t_vertex	*vertex;
+
+	flow = 0;
+	while (1)
+	{
+		reset_graph_paths(graph);
+		augment_flow = find_augmenting_flow(graph, src, dst);
+		if (augment_flow <= 0)
+			break ;
+		flow += augment_flow;
+		vertex = dst->in;
+		while (ft_strcmp(vertex->id, src->out->id) != 0)
+		{
+			update_edge_flow(vertex->prev, vertex, augment_flow);
+			vertex = vertex->prev;
+		}
+	}
+	if (augment_flow == -1)
+		return (-1);
+	else
+		return (flow);
+}
+
 /*
 static void	update_edge_flow(t_graph *graph, t_vertex *src, t_vertex *dst,
 int delta_flow)
@@ -100,47 +142,3 @@ int delta_flow)
 	}
 }
 */
-
-static void	update_edge_flow(t_vertex *src, t_vertex *dst,
-int delta_flow)
-{
-	t_edge	*edge;
-
-	edge = graph_get_edge(src, dst);
-	edge->flow = edge->flow + delta_flow;
-	edge = graph_get_edge(dst, src);
-	edge->flow = edge->flow - delta_flow;
-}
-
-/*
-** calculate the max flow of the network
-*/
-
-int	max_flow_edmonds_karp(t_graph *graph, t_vertex *src, t_vertex *dst)
-{
-	int			flow;
-	int			augment_flow;
-	t_vertex	*vertex;
-
-	flow = 0;
-	while (1)
-	{
-		reset_graph_paths(graph);
-		augment_flow = find_augmenting_flow(graph, src, dst);
-		//ft_printf("augmenting flow is %d\n", augment_flow);
-		if (augment_flow <= 0)
-			break ;
-		flow += augment_flow;
-		vertex = dst->in;
-		while (ft_strcmp(vertex->id, src->out->id) != 0)
-		{
-			update_edge_flow(vertex->prev, vertex, augment_flow);
-			vertex = vertex->prev;
-		}
-	}
-	//ft_printf("augmenting flow is %d ret is %d\n", augment_flow, flow);
-	if (augment_flow == -1)
-		return (-1);
-	else
-		return (flow);
-}

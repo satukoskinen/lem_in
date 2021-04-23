@@ -39,50 +39,31 @@ static void	free_array(t_array **arr)
 	array_del(arr);
 }
 
-static t_array	*get_shortest_path(t_graph *graph)
-{
-	int		shortest_path_len;
-	t_array	*shortest_path;
-
-	shortest_path_len = find_shortest_path(graph, graph->source, graph->sink);
-	if (shortest_path_len == -1)
-		return (NULL);
-	shortest_path = save_paths(graph, graph->source, graph->sink, 1);
-	return (shortest_path);
-}
-
-static t_array	*get_max_flow_paths(t_graph *graph)
-{
-	int		max_flow;
-	t_array	*max_flow_paths;
-
-	max_flow = max_flow_edmonds_karp(graph, graph->source, graph->sink);
-	if (max_flow <= 0)
-		return (NULL);
-	max_flow_paths = save_paths(graph, graph->source, graph->sink, max_flow);
-	return (max_flow_paths);
-}
-
 int	process_graph(t_graph *graph, t_array **output)
 {
-	t_array	*shortest_path;
+	t_array	*shortest_paths;
 	t_array	*max_flow_paths;
+	t_array	*paths_to_use;
+	int		*ants_per_path;
 
-	shortest_path = get_shortest_path(graph);
-	if (shortest_path == NULL)
+	shortest_paths = get_shortest_paths(graph);
+	if (shortest_paths == NULL)
 		return (-1);
-	if (PRINT_DEBUG)
-		print_paths(shortest_path);
 	max_flow_paths = get_max_flow_paths(graph);
 	if (max_flow_paths == NULL)
 	{
-		free_array(&shortest_path);
+		free_array(&shortest_paths);
 		return (-1);
 	}
 	if (PRINT_DEBUG)
+	{
+		print_paths(shortest_paths);
 		print_paths(max_flow_paths);
-	move_ants(graph, shortest_path, max_flow_paths, output);
-	free_array(&shortest_path);
+	}
+	ants_per_path = optimize_path_use(graph->source->value,
+			shortest_paths, max_flow_paths, &paths_to_use);
+	move_ants(graph, paths_to_use, ants_per_path, output);
+	free_array(&shortest_paths);
 	free_array(&max_flow_paths);
 	return (1);
 }
