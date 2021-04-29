@@ -80,11 +80,12 @@ static void	update_edge_flow(t_vertex *src, t_vertex *dst, int delta_flow)
 ** calculate the max flow of the network
 */
 
-int	max_flow_edmonds_karp(t_graph *graph, t_vertex *src, t_vertex *dst)
+int	max_flow_edmonds_karp(t_graph *graph, t_vertex *src, t_vertex *dst, t_array **path_combinations)
 {
 	int			flow;
 	int			augment_flow;
 	t_vertex	*vertex;
+	t_array		*paths;
 
 	flow = 0;
 	while (1)
@@ -100,6 +101,8 @@ int	max_flow_edmonds_karp(t_graph *graph, t_vertex *src, t_vertex *dst)
 			update_edge_flow(vertex->prev, vertex, augment_flow);
 			vertex = vertex->prev;
 		}
+		paths = save_flow_paths(graph, src, dst, (size_t)flow);
+		array_add(path_combinations, &paths);
 	}
 	if (augment_flow == -1)
 		return (-1);

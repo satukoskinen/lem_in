@@ -45,7 +45,7 @@ t_vertex *sink, t_vertex *sink_adj)
 	return (NULL);
 }
 
-static t_array	*save_flow_paths(t_graph *graph, t_vertex *src,
+t_array	*save_flow_paths(t_graph *graph, t_vertex *src,
 t_vertex *sink, size_t count)
 {
 	t_array	*paths;
@@ -81,9 +81,9 @@ t_array	*get_max_flow_paths(t_graph *graph)
 	int		max_flow;
 	t_array	*paths;
 
-	max_flow = max_flow_edmonds_karp(graph, graph->source, graph->sink);
+	paths = array_new(INIT_SIZE, sizeof(t_array *));
+	max_flow = max_flow_edmonds_karp(graph, graph->source, graph->sink, &paths);
 	if (max_flow <= 0)
 		return (NULL);
-	paths = save_flow_paths(graph, graph->source, graph->sink, (size_t)max_flow);
 	return (paths);
 }

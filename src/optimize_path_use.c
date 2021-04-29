@@ -204,83 +204,13 @@ int	optimize_simple_paths(t_array *path_combinations, t_array **paths_to_use, in
 	return (min_cost);
 }
 
-int	*optimize_path_use(int ant_count, t_array *shortest_paths,
-t_array *max_flow_paths, t_array *shortest_simple_paths, t_array **paths_to_use)
+int	*optimize_path_use(int ant_count, t_array *paths, t_array **paths_to_use)
 {
-	int		*s_ants_per_path;
-	int		*mf_ants_per_path;
-	int		s_path_cost;
-	int		simple_path_cost;
-	int		mf_path_cost;
+	int		*ants_per_path;
+	int		cost;
 	t_array	*simple_paths_to_use;
 
-	simple_path_cost = optimize_paths(shortest_paths, &s_ants_per_path, ant_count);
-	s_path_cost = optimize_simple_paths(shortest_simple_paths, &simple_paths_to_use, &s_ants_per_path, ant_count);
-	if (s_path_cost == -1)
-		return (NULL);
-	mf_path_cost = optimize_paths(max_flow_paths, &mf_ants_per_path, ant_count);
-	if (mf_path_cost == -1)
-	{
-		free(s_ants_per_path);
-		return (NULL);
-	}
-	if (mf_path_cost < s_path_cost)
-	{
-		*paths_to_use = max_flow_paths;
-		free(s_ants_per_path);
-		return (mf_ants_per_path);
-	}
-	else
-	{
-		*paths_to_use = simple_paths_to_use;
-		free(mf_ants_per_path);
-		return (s_ants_per_path);
-	}
+	cost = optimize_simple_paths(paths, &simple_paths_to_use, &ants_per_path, ant_count);
+	*paths_to_use = simple_paths_to_use;
+	return (ants_per_path);
 }
-
-// void	optimize_ants_per_path_1(int *ants_per_path, int *path_lengths, int ant_count, size_t path_count)
-// {
-// 	int	s_path_cost;
-// 	int	n;
-// 	int	n_path_cost;
-// 	size_t	i;
-// 	size_t	j;
-// 	int		path_len_diff;
-// 	int		path_cost_diff;
-
-// 	ft_memset(ants_per_path, 0, sizeof(int) * path_count);
-// 	s_path_cost = path_lengths[0] + (ant_count - 1);
-// 	n = 2;
-// 	n_path_cost = split_to_n_cost(n, &path_lengths[1], ant_count);
-// 	if (path_count == 2 || s_path_cost < n_path_cost)
-// 	{
-// 		ants_per_path[0] = ant_count;
-// 		return ;
-// 	}
-// 	i = 1;
-// 	while (i < path_count - 1 && ant_count > 0)
-// 	{
-// 		path_len_diff = path_lengths[i + 1] - path_lengths[i];
-// 		if (path_len_diff > ant_count)
-// 			path_len_diff = ant_count;
-// 		ants_per_path[i] = path_len_diff;
-// 		ant_count = ant_count - path_len_diff;
-// 		j = 1;
-// 		while (j < i && ant_count > 0)
-// 		{
-// 			path_cost_diff = path_lengths[i] - path_lengths[i - 1];
-// 			if (path_cost_diff > ant_count)
-// 				path_cost_diff = ant_count;
-// 			ants_per_path[j] = ants_per_path[j] + path_cost_diff;
-// 			ant_count = ant_count - path_cost_diff;
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	while (ant_count > 0)
-// 	{
-// 		i = get_smallest_cost_path(&ants_per_path[1], &path_lengths[1], path_count - 1);
-// 		ants_per_path[i] = ants_per_path[i] + 1;
-// 		ant_count--;
-// 	}
-// }
