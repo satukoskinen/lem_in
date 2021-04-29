@@ -64,7 +64,7 @@ t_array **output)
 		{
 			path = *(t_array **)array_get(paths, i);
 			ants_per_path[i] = move_ants_in_path(path, &line,
-					ants_per_path[i], ant_count);
+				ants_per_path[i], ant_count);
 			if (ants_per_path[i] == -1)
 				return (0);
 			i++;

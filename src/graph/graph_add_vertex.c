@@ -14,11 +14,11 @@ void	init_vertex(t_vertex *vertex, char *id, int value, int capacity)
 {
 	vertex->id = id;
 	vertex->value = value;
+	vertex->capacity = capacity;
 	if (vertex->capacity != -1)
 		vertex->has_capacity = 1;
 	else
 		vertex->has_capacity = 0;
-	vertex->capacity = capacity;
 	vertex->dist = -1;
 	vertex->is_sink = 0;
 	vertex->is_source = 0;

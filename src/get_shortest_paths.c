@@ -29,7 +29,7 @@ t_vertex *sink, t_vertex *sink_adj)
 }
 
 static t_array	*save_shortest_paths(t_graph *graph, t_vertex *src,
-t_vertex *sink, int count)
+t_vertex *sink, size_t count)
 {
 	t_array	*paths;
 	t_array	*path;

@@ -32,8 +32,8 @@ typedef struct s_graph
 	t_vertex	*sink;
 	int			source_index;
 	int			sink_index;
-	int			vertex_count;
-	int			edge_count;
+	size_t		vertex_count;
+	size_t		edge_count;
 }				t_graph;
 
 typedef struct s_edge

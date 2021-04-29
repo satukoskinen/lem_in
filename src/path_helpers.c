@@ -16,3 +16,27 @@ t_array	*insert_path_to_array(t_array **paths, t_array **path)
 	}
 	return (array_add(paths, path));
 }
+
+void	print_paths(t_array *paths)
+{
+	t_array		*path;
+	t_vertex	*vertex;
+	size_t		i;
+	size_t		j;
+
+	ft_printf("number of paths: %d\n", array_size(paths));
+	i = 0;
+	while (i < array_size(paths))
+	{
+		path = *(t_array **)array_get(paths, i);
+		ft_printf("path %d: size %d\n", i, array_size(path));
+		j = 0;
+		while (j < array_size(path))
+		{
+			vertex = *(t_vertex **)array_get(path, j);
+			ft_printf("vertex %d: id %s\n", j, vertex->id);
+			j++;
+		}
+		i++;
+	}
+}

@@ -3,7 +3,7 @@
 
 # include "graph.h"
 
-# define PRINT_DEBUG 1
+# define PRINT_DEBUG 0
 
 enum e_line_type
 {
@@ -31,8 +31,14 @@ int		move_ants(t_graph *graph, t_array *paths, int *ants_per_path,
 			t_array **output);
 
 int		*optimize_path_use(int ant_count, t_array *shortest_path,
-			t_array *max_flow_paths, t_array **path_to_use);
+			t_array *max_flow_paths, t_array *shortest_simple_paths, t_array **path_to_use);
 
 t_array	*insert_path_to_array(t_array **paths, t_array **path);
+
+t_array	*find_all_simple_paths(t_graph *graph, t_vertex *src, t_vertex *dst);
+
+t_array	*get_shortest_path_combinations(t_graph *graph, t_array *all_simple_paths, t_array *max_flow_paths);
+
+void	print_paths(t_array *paths);
 
 #endif
