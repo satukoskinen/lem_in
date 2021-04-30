@@ -80,11 +80,12 @@ static void	update_edge_flow(t_vertex *src, t_vertex *dst, int delta_flow)
 ** calculate the max flow of the network
 */
 
-int	max_flow_edmonds_karp(t_graph *graph, t_vertex *src, t_vertex *dst)
+int	max_flow_edmonds_karp(t_graph *graph, t_vertex *src, t_vertex *dst, t_array **path_combinations)
 {
 	int			flow;
 	int			augment_flow;
 	t_vertex	*vertex;
+	t_array		*paths;
 
 	flow = 0;
 	while (1)
@@ -100,45 +101,11 @@ int	max_flow_edmonds_karp(t_graph *graph, t_vertex *src, t_vertex *dst)
 			update_edge_flow(vertex->prev, vertex, augment_flow);
 			vertex = vertex->prev;
 		}
+		paths = save_flow_paths(graph, src, dst, (size_t)flow);
+		array_add(path_combinations, &paths);
 	}
 	if (augment_flow == -1)
 		return (-1);
 	else
 		return (flow);
 }
-
-/*
-static void	update_edge_flow(t_graph *graph, t_vertex *src, t_vertex *dst,
-int delta_flow)
-{
-	t_edge	*edge;
-	char	*reverse_src_id;
-	char	*reverse_dst_id;
-	size_t	i;
-
-	edge = graph_get_edge(graph, src->id, dst->id);
-	edge->flow = edge->flow + delta_flow;
-	reverse_src_id = ft_strdup(src->id);
-	reverse_dst_id = ft_strdup(dst->id);
-	i = ft_strlen(reverse_src_id) - 1;
-	while (reverse_src_id[i] != '_')
-		i--;
-	if (ft_strncmp(reverse_dst_id, reverse_src_id, i) == 0)
-	{
-		edge = graph_get_edge(graph, dst->id, src->id);
-		edge->flow = edge->flow - delta_flow;
-	}
-	else
-	{
-		reverse_src_id[i] = '\0';
-		reverse_src_id = ft_strjoin(reverse_src_id, "_in");
-		i = ft_strlen(reverse_dst_id) - 1;
-		while (reverse_dst_id[i] != '_')
-		i--;
-		reverse_dst_id[i] = '\0';
-		reverse_dst_id = ft_strjoin(reverse_dst_id, "_out");
-		edge = graph_get_edge(graph, reverse_dst_id, reverse_src_id);
-		edge->flow = edge->flow - delta_flow;
-	}
-}
-*/
