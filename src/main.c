@@ -1,7 +1,6 @@
 #include "lem_in.h"
 #include "libft.h"
 #include <stdlib.h>
-#include <time.h>
 
 static int	error(char *msg)
 {
@@ -74,29 +73,19 @@ int	main(void)
 	t_graph	*graph;
 	t_array	*input;
 	t_array	*output;
-	clock_t	tic, toc;
 
 	if (init_resources(&graph, &input, &output) != 1)
 		return (error("Error\n"));
-//	ft_putstr("read input...\n");
-	tic = clock();
 	if (parse_input(graph, &input) != 1)
 	{
 		free_resources(&graph, &input, &output);
 		return (error("Error on reading input\n"));
 	}
-	toc = clock();
-//	ft_printf("elapsed: %f seconds\n", (double)(toc - tic) / CLOCKS_PER_SEC);
-//	ft_putstr("process graph...\n");
-	tic = clock();
 	if (process_graph(graph, &output) != 1)
 	{
 		free_resources(&graph, &input, &output);
 		return (error("Error on processing graph\n"));
 	}
-	toc = clock();
-//	ft_printf("elapsed: %f seconds\n", (double)(toc - tic) / CLOCKS_PER_SEC);
-//	ft_putstr("print...\n");
 	print_array(input);
 	ft_putstr("\n");
 	print_array(output);
