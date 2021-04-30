@@ -23,19 +23,26 @@ SRC = $(GRAPH_SRC) $(addprefix src/, \
 	parse_input.c \
 	parse_line.c \
 	process_graph.c \
+	get_shortest_paths.c \
+	get_max_flow_paths.c \
 	find_shortest_path.c \
+	find_all_simple_paths.c \
 	max_flow_edmonds_karp.c \
-	save_paths.c \
+	optimize_path_use.c \
 	move_ants.c \
+	path_helpers.c \
+	get_path_combinations.c \
 )
 
 OBJ = $(subst $(SRC_DIR), $(OBJ_DIR), $(SRC:.c=.o))
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
-CPPFLAGS = -I . -I include -I src/graph -I libft -I libft/array
+#CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Wpedantic -Wtype-limits \
+                -Wunreachable-code -Wpadded -Wshadow -fPIC -Wconversion
+CPPFLAGS = -I . -I src -I src/graph -I libft -I libft/array
 LDLIBS = -lft
-LDFLAGS = -L libft #-fsanitize=address
+LDFLAGS = -L libft -fsanitize=address
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP_DIR)/$*.d
 COMPILE.c = $(CC) $(DEPFLAGS) $(CFLAGS) $(CPPFLAGS) -c
 

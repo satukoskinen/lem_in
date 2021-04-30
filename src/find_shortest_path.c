@@ -1,22 +1,27 @@
 #include "graph.h"
 #include "libft.h"
 
-int	check_adjacent_vertices(t_array *queue, t_vertex *vertex, t_vertex *dst)
+static int	check_adjacent_vertices(t_array *queue, t_vertex *vertex,
+t_vertex *dst)
 {
-	t_vertex	*adjacent;
-	size_t		i;
+	t_edge	*adjacent_edge;
+	size_t	i;
 
 	i = 0;
 	while (i < array_size(vertex->adj_list))
 	{
-		adjacent = *(t_vertex **)array_get(vertex->adj_list, i);
-		if (adjacent->dist == -1)
+		adjacent_edge = *(t_edge **)array_get(vertex->adj_list, i);
+		if (ft_strcmp(adjacent_edge->dst->id, dst->id) == 0)
 		{
-			adjacent->dist = vertex->dist + 1;
-			adjacent->prev = vertex;
-			if (ft_strcmp(adjacent->id, dst->id) == 0)
-				return (1);
-			array_add(&queue, &adjacent);
+			adjacent_edge->dst->dist = vertex->dist + 1;
+			adjacent_edge->dst->prev = vertex;
+			return (1);
+		}
+		else if (adjacent_edge->dst->dist == -1)
+		{
+			adjacent_edge->dst->dist = vertex->dist + 1;
+			adjacent_edge->dst->prev = vertex;
+			array_add(&queue, &adjacent_edge->dst);
 		}
 		i++;
 	}
@@ -31,7 +36,7 @@ int	find_shortest_path(t_graph *graph, t_vertex *src, t_vertex *dst)
 
 	queue = array_new(graph->vertex_count, sizeof(t_vertex *));
 	if (queue == NULL)
-		return (0);
+		return (-1);
 	src->dist = 0;
 	src->prev = NULL;
 	array_add(&queue, &src);

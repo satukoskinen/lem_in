@@ -33,12 +33,12 @@ static int	parse_special_room(t_graph *graph, enum e_line_type *type)
 	if (*type == ROOM_SRC)
 	{
 		vertex->is_source = 1;
-		graph->source_index = index;
+		graph->source_index = (int)index;
 	}
 	else
 	{
 		vertex->is_sink = 1;
-		graph->sink_index = index;
+		graph->sink_index = (int)index;
 	}
 	*type = ROOM;
 	return (1);

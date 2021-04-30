@@ -15,7 +15,7 @@ t_graph	*graph_new(void)
 		free(graph);
 		return (NULL);
 	}
-	graph->edges = array_new(INIT_SIZE, sizeof(t_edge));
+	graph->edges = array_new(INIT_SIZE, sizeof(t_edge *));
 	if (graph->edges == NULL)
 	{
 		free(graph->vertices);

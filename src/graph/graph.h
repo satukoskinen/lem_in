@@ -7,7 +7,7 @@
 
 # include "array.h"
 
-# define INIT_SIZE 5
+# define INIT_SIZE 10
 
 typedef struct s_vertex
 {
@@ -32,8 +32,8 @@ typedef struct s_graph
 	t_vertex	*sink;
 	int			source_index;
 	int			sink_index;
-	int			vertex_count;
-	int			edge_count;
+	size_t		vertex_count;
+	size_t		edge_count;
 }				t_graph;
 
 typedef struct s_edge
@@ -52,11 +52,12 @@ int			graph_add_edge(t_graph *graph, char *v1_id, char *v2_id,
 				int capacity);
 int			graph_add_inner_edge(t_graph *graph, char *id, int capacity);
 int			graph_contains_vertex(t_graph *graph, char *v_id);
-int			graph_contains_edge(t_graph *graph, char *v1_id, char *v2_id);
+int			graph_contains_edge(t_vertex *src, t_vertex *dst);
 void		graph_print_vertices(t_graph *graph);
 void		graph_print_edges(t_graph *graph);
 void		graph_del(t_graph **graph);
 t_vertex	*graph_get_vertex(t_graph *graph, char *id);
-t_edge		*graph_get_edge(t_graph *graph, char *src_id, char *dst_id);
+t_edge		*graph_get_edge_by_id(t_graph *graph, char *src_id, char *dst_id);
+t_edge		*graph_get_edge(t_vertex *src, t_vertex *dst);
 
 #endif

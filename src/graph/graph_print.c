@@ -28,7 +28,7 @@ void	graph_print_edges(t_graph *graph)
 	i = 0;
 	while (i < array_size(graph->edges))
 	{
-		edge = (t_edge *)array_get(graph->edges, i);
+		edge = *(t_edge **)array_get(graph->edges, i);
 		ft_printf("%s -> %s, flow %d, capacity %d\n",
 			edge->src->id, edge->dst->id, edge->flow, edge->capacity);
 		i++;
