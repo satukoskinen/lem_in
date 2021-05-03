@@ -79,19 +79,17 @@ static int	init_node(t_graph_node *node, enum e_line_type *type, ssize_t id, cha
 	return (1);
 }
 
-static int	validate_coordinates(char *line)
+static int	validate_coordinates(char *line, t_coordinates *coordinates)
 {
-	int	value;
-
-	value = ft_atoi(line);
-	if (value == 0 && *line != '0')
+	coordinates->x = ft_atoi(line);
+	if (coordinates->x == 0 && *line != '0')
 		return (0);
 	while (ft_isdigit(*line))
 		line++;
 	if (*line != '\0')
 		line++;
-	value = ft_atoi(line);
-	if (value == 0 && *line != '0')
+	coordinates->y = ft_atoi(line);
+	if (coordinates->y == 0 && *line != '0')
 		return (0);
 	while (ft_isdigit(*line))
 		line++;
@@ -105,6 +103,7 @@ static int	parse_room(t_graph *graph, char *line, enum e_line_type *type)
 {
 	char			*ptr;
 	t_graph_node	node;
+	t_coordinates	coordinates;
 
 	if (line[0] == 'L')
 		return (-1);
@@ -118,13 +117,13 @@ static int	parse_room(t_graph *graph, char *line, enum e_line_type *type)
 	if (!init_node(&node, type, (ssize_t)graph->nodes.len, line))
 		return (-1);
 	*type = ROOM;
+	if (!validate_coordinates(ptr + 1, &coordinates))
+		return (-1);
+	((t_node_attr*)node.attr)->coordinates = coordinates;
 	if (graph_add_node(graph, node) == -1)
 		return (-1);
 	*ptr = ' ';
-	if (validate_coordinates(ptr + 1))
-		return (1);
-	else
-		return (-1);
+	return (1);
 }
 
 static int	parse_command(t_graph *graph, char *cmd, enum e_line_type *type)

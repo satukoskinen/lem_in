@@ -14,7 +14,8 @@ ssize_t print_node(void *data, size_t i)
 
 	tmp = data;
 	attr = tmp->attr;
-	ft_printf("name %s id %d value %d\n", attr->name, tmp->id, attr->value);
+	ft_printf("name %s id %d value %d x %d y %d\n",
+		attr->name, tmp->id, attr->value, attr->coordinates.x, attr->coordinates.y);
 	return ((ssize_t)i);
 }
 

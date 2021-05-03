@@ -15,17 +15,25 @@ enum e_line_type
 	LINK
 };
 
-typedef struct	s_node_attr
+typedef struct s_coordinates
 {
-	char		*name;
-	int			value;
-}				t_node_attr;
+	int			x;
+	int			y;
+}				t_coordinates;
 
-typedef struct	s_edge_attr
+
+typedef struct s_node_attr
 {
-	ssize_t		flow;
-	ssize_t		capacity;
-}				t_edge_attr;
+	char			*name;
+	int				value;
+	t_coordinates	coordinates;
+}					t_node_attr;
+
+typedef struct s_edge_attr
+{
+	ssize_t	flow;
+	ssize_t	capacity;
+}			t_edge_attr;
 
 int	parse_input(t_graph *graph, t_parr *input);
 int	parse_line(t_graph *graph, t_parr *input, enum e_line_type *type);
