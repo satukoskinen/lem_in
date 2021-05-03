@@ -1,7 +1,8 @@
+#include <stdlib.h>
 #include "lem_in.h"
 #include "libft.h"
 
-static int	parse_ant_count(t_parr *input)
+static int	parse_ant_count(t_array **input)
 {
 	char	*line;
 	int		ret;
@@ -13,11 +14,8 @@ static int	parse_ant_count(t_parr *input)
 		return (-1);
 	ant_count = ft_atoi(line);
 	if (ant_count == 0 && line[0] != '0')
-	{
-		free(line);
-		return (-1);
-	}
-	if (!parr_add_last(input, line))
+		ant_count = -1;
+	if (array_add(input, &line) == NULL)
 	{
 		free(line);
 		return (-1);
@@ -25,12 +23,15 @@ static int	parse_ant_count(t_parr *input)
 	return (ant_count);
 }
 
-int	parse_input(t_graph *graph, t_parr *input)
+/*
+** parse input
+*/
+
+int	parse_input(t_graph *graph, t_array **input)
 {
 	int					ant_count;
 	int					ret;
 	enum e_line_type	type;
-	t_graph_node		*src;
 
 	ant_count = parse_ant_count(input);
 	if (ant_count == -1)
@@ -41,9 +42,13 @@ int	parse_input(t_graph *graph, t_parr *input)
 		ret = parse_line(graph, input, &type);
 	if (ret == -1)
 		return (-1);
-	if (graph_find_node(graph, SOURCE) == NULL || graph_find_node(graph, SINK) == NULL)
+	if (graph->vertex_count == 0 || graph->edge_count == 0)
 		return (-1);
-	src = graph_find_node(graph, SOURCE);
-	((t_node_attr *)src->attr)->value = ant_count;
+	else if (graph->source_index == -1 || graph->sink_index == -1)
+		return (-1);
+	graph->source = *(t_vertex **)array_get(graph->vertices,
+			(size_t)graph->source_index);
+	graph->sink = *(t_vertex **)array_get(graph->vertices, (size_t)graph->sink_index);
+	graph->source->value = ant_count;
 	return (1);
 }

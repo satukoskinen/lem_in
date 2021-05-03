@@ -1,94 +1,48 @@
 #include "lem_in.h"
 #include "libft.h"
-#include <stdlib.h>
 
-static int	error(char *msg)
+ssize_t	print_string(void *data, size_t i)
 {
-	ft_putstr_fd(msg, 2);
+	ft_printf("%s\n", (char *)data);
+	return ((ssize_t)i);
+}
+
+ssize_t print_node(void *data, size_t i)
+{
+	t_graph_node	*tmp;
+	t_node_attr		*attr;
+
+	tmp = data;
+	attr = tmp->attr;
+	ft_printf("name %s id %d value %d\n", attr->name, tmp->id, attr->value);
+	return ((ssize_t)i);
+}
+
+int	error(char *msg)
+{
+	ft_dprintf(2, "%s\n", msg);
 	return (1);
 }
 
-static void	print_array(t_array *input)
+int main(void)
 {
-	char	*line;
-	size_t	i;
+	t_graph	graph;
+	t_parr	input;
+	//t_arr	output;
 
-	i = 0;
-	while (i < array_size(input))
+	if (!graph_new(&graph, "lem-in"))
+		return (error("Error"));
+	input = parr_new(1);
+	if (input.data == NULL)
 	{
-		line = *(char **)array_get(input, i);
-		ft_printf("%s\n", line);
-		i++;
+		return (error("Error"));
 	}
-}
-
-static void	free_resources(t_graph **graph, t_array **input, t_array **output)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < array_size(*input))
+	if (parse_input(&graph, &input) != 1)
 	{
-		free(*(char **)array_get(*input, i));
-		i++;
+		return (error("Error on parsing input"));
 	}
-	array_del(input);
-	i = 0;
-	while (i < array_size(*output))
-	{
-		free(*(char **)array_get(*output, i));
-		i++;
-	}
-	array_del(output);
-	graph_del(graph);
-}
-
-static int	init_resources(t_graph **graph, t_array **input, t_array **output)
-{
-	*graph = graph_new();
-	if (*graph == NULL)
-		return (0);
-	*input = array_new(INIT_SIZE, sizeof(char *));
-	if (*input == NULL)
-	{
-		graph_del(graph);
-		return (0);
-	}
-	*output = array_new(INIT_SIZE, sizeof(char *));
-	if (*output == NULL)
-	{
-		graph_del(graph);
-		array_del(input);
-		return (0);
-	}
-	return (1);
-}
-
-/*
-** main
-*/
-
-int	main(void)
-{
-	t_graph	*graph;
-	t_array	*input;
-	t_array	*output;
-
-	if (init_resources(&graph, &input, &output) != 1)
-		return (error("Error\n"));
-	if (parse_input(graph, &input) != 1)
-	{
-		free_resources(&graph, &input, &output);
-		return (error("Error on reading input\n"));
-	}
-	if (process_graph(graph, &output) != 1)
-	{
-		free_resources(&graph, &input, &output);
-		return (error("Error on processing graph\n"));
-	}
-	print_array(input);
-	ft_putstr("\n");
-	print_array(output);
-	free_resources(&graph, &input, &output);
+	parr_iter(&input, print_string);
+	ft_printf("\n");
+	arr_iter(&graph.nodes, print_node);
 	return (0);
 }
