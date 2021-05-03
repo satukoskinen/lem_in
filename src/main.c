@@ -64,10 +64,6 @@ static int	init_resources(t_graph **graph, t_array **input, t_array **output)
 	return (1);
 }
 
-/*
-** main
-*/
-
 int	main(void)
 {
 	t_graph	*graph;

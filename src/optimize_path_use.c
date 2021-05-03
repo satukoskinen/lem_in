@@ -207,9 +207,10 @@ int	optimize_simple_paths(t_array *path_combinations, t_array **paths_to_use, in
 int	*optimize_path_use(int ant_count, t_array *paths, t_array **paths_to_use)
 {
 	int		*ants_per_path;
+	int		cost;
 	t_array	*simple_paths_to_use;
 
-	optimize_simple_paths(paths, &simple_paths_to_use, &ants_per_path, ant_count);
+	cost = optimize_simple_paths(paths, &simple_paths_to_use, &ants_per_path, ant_count);
 	*paths_to_use = simple_paths_to_use;
 	return (ants_per_path);
 }
