@@ -7,6 +7,18 @@ ssize_t	print_string(void *data, size_t i)
 	return ((ssize_t)i);
 }
 
+ssize_t print_edge(void *data, size_t i)
+{
+	t_graph_edge	*tmp;
+	t_edge_attr		*attr;
+
+	tmp = data;
+	attr = tmp->attr;
+	ft_printf("src %d dst %d flow %d capacity %d\n",
+		tmp->src->id, tmp->dst->id, attr->flow, attr->capacity);
+	return ((ssize_t)i);
+}
+
 ssize_t print_node(void *data, size_t i)
 {
 	t_graph_node	*tmp;
@@ -16,6 +28,8 @@ ssize_t print_node(void *data, size_t i)
 	attr = tmp->attr;
 	ft_printf("name %s id %d value %d x %d y %d\n",
 		attr->name, tmp->id, attr->value, attr->coordinates.x, attr->coordinates.y);
+	arr_iter(&tmp->in, print_edge);
+	arr_iter(&tmp->out, print_edge);
 	return ((ssize_t)i);
 }
 
