@@ -14,8 +14,8 @@ ssize_t print_edge(void *data, size_t i)
 
 	tmp = data;
 	attr = tmp->attr;
-	ft_printf("src %d dst %d flow %d capacity %d\n",
-		tmp->src->id, tmp->dst->id, attr->flow, attr->capacity);
+	ft_printf("src %-5s -> dst %-5s flow %d capacity %d\n",
+		tmp->src->key, tmp->dst->key, attr->flow, attr->capacity);
 	return ((ssize_t)i);
 }
 
@@ -26,8 +26,8 @@ ssize_t print_node(void *data, size_t i)
 
 	tmp = data;
 	attr = tmp->attr;
-	ft_printf("name %s id %d value %d x %d y %d\n",
-		attr->name, tmp->id, attr->value, attr->coordinates.x, attr->coordinates.y);
+	ft_printf("name %-5s key %-5s value %-5d x %-5d y %-5d\n",
+		attr->name, tmp->key, attr->value, attr->coordinates.x, attr->coordinates.y);
 	arr_iter(&tmp->in, print_edge);
 	arr_iter(&tmp->out, print_edge);
 	return ((ssize_t)i);
@@ -39,13 +39,25 @@ int	error(char *msg)
 	return (1);
 }
 
+t_graph	init_graph(void)
+{
+	t_graph 		graph;
+	t_graph_attr	attr;
+
+	attr.sink = NULL;
+	attr.source = NULL;
+	graph = graph_new(&attr);
+	return (graph);
+}
+
 int main(void)
 {
 	t_graph	graph;
 	t_parr	input;
-	//t_arr	output;
+	//t_parr	output;
 
-	if (!graph_new(&graph, "lem-in"))
+	graph = init_graph();
+	if (graph_null(&graph))
 		return (error("Error"));
 	input = parr_new(1);
 	if (input.data == NULL)
@@ -58,6 +70,6 @@ int main(void)
 	}
 	parr_iter(&input, print_string);
 	ft_printf("\n");
-	arr_iter(&graph.nodes, print_node);
+	map_iter(&graph.data, print_node);
 	return (0);
 }

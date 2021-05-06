@@ -41,9 +41,10 @@ int	parse_input(t_graph *graph, t_parr *input)
 		ret = parse_line(graph, input, &type);
 	if (ret == -1)
 		return (-1);
-	if (graph_find_node(graph, SOURCE) == NULL || graph_find_node(graph, SINK) == NULL)
+	if (((t_graph_attr *)graph->attr)->sink == NULL
+		|| ((t_graph_attr *)graph->attr)->source == NULL)
 		return (-1);
-	src = graph_find_node(graph, SOURCE);
+	src = ((t_graph_attr *)graph->attr)->source;
 	((t_node_attr *)src->attr)->value = ant_count;
 	return (1);
 }

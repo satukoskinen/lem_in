@@ -21,7 +21,6 @@ typedef struct s_coordinates
 	int			y;
 }				t_coordinates;
 
-
 typedef struct s_node_attr
 {
 	char			*name;
@@ -31,9 +30,16 @@ typedef struct s_node_attr
 
 typedef struct s_edge_attr
 {
-	ssize_t	flow;
-	ssize_t	capacity;
-}			t_edge_attr;
+	ssize_t			flow;
+	ssize_t			capacity;
+	t_graph_edge	*reverse_edge;
+}					t_edge_attr;
+
+typedef struct s_graph_attr
+{
+	t_graph_node	*source;
+	t_graph_node	*sink;
+}					t_graph_attr;
 
 int	parse_input(t_graph *graph, t_parr *input);
 int	parse_line(t_graph *graph, t_parr *input, enum e_line_type *type);
