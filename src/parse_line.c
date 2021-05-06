@@ -47,24 +47,6 @@ static int	validate_coordinates(char *line, t_coordinates *coordinates)
 		return (0);
 }
 
-static t_node_attr	*init_node_attr(char *name, t_coordinates coordinates)
-{
-	t_node_attr	*attr;
-
-	attr = (t_node_attr *)malloc(sizeof(t_node_attr));
-	if (attr == NULL)
-		return (NULL);
-	attr->name = ft_strdup(name);
-	if (attr->name == NULL)
-	{
-		free(attr);
-		return (NULL);
-	}
-	attr->value = 0;
-	attr->coordinates = coordinates;
-	return (attr);
-}
-
 static int	parse_room(t_graph *graph, char *line, enum e_line_type *type)
 {
 	char			*ptr;
@@ -82,7 +64,7 @@ static int	parse_room(t_graph *graph, char *line, enum e_line_type *type)
 	*ptr = '\0';
 	if (!validate_coordinates(ptr + 1, &coordinates))
 		return (-1);
-	attr = init_node_attr(line, coordinates);
+	attr = init_node_attr(line, coordinates, NULL);
 	if (attr == NULL)
 		return (-1);
 	if (graph_add_node(graph, attr->name, attr) == -1)

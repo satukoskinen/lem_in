@@ -77,6 +77,25 @@ ssize_t	add_edges(t_graph *src, t_graph *new)
 	return (1);
 }
 
+static t_node_attr	*init_split_node_attr(const char *name, char *suffix, t_graph_node *org)
+{
+	t_node_attr	*node_attr;
+
+	node_attr = (t_node_attr *)malloc(sizeof(t_node_attr));
+	if (node_attr == NULL)
+		return (NULL);
+	node_attr->name = s_join(name, suffix);
+	if (node_attr->name == NULL)
+	{
+		free(node_attr);
+		return (NULL);
+	}
+	node_attr->org = org;
+	node_attr->coordinates.x = 0;
+	node_attr->coordinates.y = 0;
+	return (node_attr);
+}
+
 ssize_t	add_nodes(t_graph *src, t_graph *new)
 {
 	size_t	i;
@@ -90,18 +109,8 @@ ssize_t	add_nodes(t_graph *src, t_graph *new)
     {
         if (!map_null_node(&src->data.node[i]))
 		{
-			in_node_attr = (t_node_attr *)malloc(sizeof(t_node_attr));
-			in_node_attr->name = s_new(s_len(
-						src->data.node[i].key) + 3);
-			sprintf(in_node_attr->name, "%s_in",
-						src->data.node[i].key);
-			in_node_attr->org = src->data.node[i].data;
-			out_node_attr = (t_node_attr *)malloc(sizeof(t_node_attr));
-			out_node_attr->name = s_new(s_len(
-						src->data.node[i].key) + 4);
-			sprintf(out_node_attr->name, "%s_out",
-						src->data.node[i].key);
-			out_node_attr->org = src->data.node[i].data;
+			in_node_attr = init_split_node_attr(src->data.node[i].key, "_in", src->data.node[i].data);
+			out_node_attr = init_split_node_attr(src->data.node[i].key, "_out", src->data.node[i].data);
 			graph_add_node(new, in_node_attr->name, in_node_attr);
 			graph_add_node(new, out_node_attr->name, out_node_attr);
 			edge_attr = init_edge_attr(1);
