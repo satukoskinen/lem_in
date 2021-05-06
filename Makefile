@@ -13,6 +13,8 @@ SRC = $(addprefix src/, \
 	main.c \
 	parse_input.c \
 	parse_line.c \
+	copy_disjoint_paths.c \
+	graph_utils.c \
 )
 
 OBJ = $(subst $(SRC_DIR), $(OBJ_DIR), $(SRC:.c=.o))

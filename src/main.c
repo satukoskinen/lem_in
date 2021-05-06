@@ -26,8 +26,8 @@ ssize_t print_node(void *data, size_t i)
 
 	tmp = data;
 	attr = tmp->attr;
-	ft_printf("name %-5s key %-5s value %-5d x %-5d y %-5d\n",
-		attr->name, tmp->key, attr->value, attr->coordinates.x, attr->coordinates.y);
+	ft_printf("name %-5s key %-5s value %-5d\n",
+		attr->name, tmp->key, attr->value);
 	arr_iter(&tmp->in, print_edge);
 	arr_iter(&tmp->out, print_edge);
 	return ((ssize_t)i);
@@ -58,6 +58,8 @@ int main(void)
 	t_graph	graph;
 	t_parr	input;
 	//t_parr	output;
+//	t_array	bfs;
+	t_graph	transformed_graph;
 
 	graph = init_graph();
 	if (graph_null(&graph))
@@ -73,6 +75,10 @@ int main(void)
 	}
 	parr_iter(&input, print_string);
 	ft_printf("\n");
-	map_iter(&graph.data, print_node);
+//	map_iter(&graph.data, print_node);
+//	bfs = graph_find_shortest_path(&graph, ((t_graph_attr *)graph.attr)->source->key, ((t_graph_attr *)graph.attr)->sink->key);
+//	arr_iter(&bfs, print_node);
+	transformed_graph = copy_vertex_disjoint(&graph);
+	map_iter(&transformed_graph.data, print_node);
 	return (0);
 }
