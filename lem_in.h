@@ -26,6 +26,7 @@ typedef struct s_node_attr
 	char			*name;
 	int				value;
 	t_coordinates	coordinates;
+	t_graph_node	*org;
 }					t_node_attr;
 
 typedef struct s_edge_attr
