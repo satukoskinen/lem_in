@@ -22,7 +22,7 @@ CC = gcc
 CFLAGS = -g -Wall -Wextra -Werror -Wpedantic -Wtype-limits -Wunused \
                 -Wunreachable-code -Wshadow -fPIC -Wconversion
 CPPFLAGS = -I . -I core -I libft
-LDLIBS = -lft -lcore
+LDLIBS = -lft -lcore -lm
 LDFLAGS = -L libft -L core #-fsanitize=address
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP_DIR)/$*.d
 COMPILE.c = $(CC) $(DEPFLAGS) $(CFLAGS) $(CPPFLAGS) -c
