@@ -13,7 +13,7 @@ SRC = $(addprefix src/, \
 	main.c \
 	parse_input.c \
 	parse_line.c \
-	copy_disjoint_paths.c \
+	lem_transform_vertex_disjoint.c \
 	graph_utils.c \
 )
 

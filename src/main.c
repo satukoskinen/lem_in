@@ -52,7 +52,7 @@ int main(void)
 //	map_iter(&graph.data, print_node);
 //	bfs = graph_find_shortest_path(&graph, ((t_graph_attr *)graph.attr)->source->key, ((t_graph_attr *)graph.attr)->sink->key);
 //	arr_iter(&bfs, print_node);
-	transformed_graph = copy_vertex_disjoint(&graph);
+	transformed_graph = lem_transform_vertex_disjoint(&graph);
 	map_iter(&transformed_graph.data, print_node);
 	return (0);
 }

@@ -44,7 +44,7 @@ typedef struct s_graph_attr
 
 int	parse_input(t_graph *graph, t_parr *input);
 int	parse_line(t_graph *graph, t_parr *input, enum e_line_type *type);
-t_graph	copy_vertex_disjoint(t_graph *src);
+t_graph	lem_transform_vertex_disjoint(t_graph *src);
 
 t_edge_attr *init_edge_attr(int capacity);
 t_node_attr	*init_node_attr(char *name, t_coordinates coordinates, t_graph_node *org);
