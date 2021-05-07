@@ -19,15 +19,15 @@ int	*optimise_path_use(t_array *path_combinations, int ant_count)
 	{
 		if (ant_count == 0)
 			break ;
-		if (ant_count / max_flow == 0)
+		if (ant_count / (max_flow - i) == 0)
 		{
 			ants_per_path[i] = ants_per_path[i] + 1;
 			ant_count--;
 		}
 		else
 		{
-			ants_per_path[i] = ant_count / max_flow;
-			ant_count -= ant_count / max_flow;
+			ants_per_path[i] = ant_count / (max_flow - i);
+			ant_count -= ant_count / (max_flow - i);
 		}
 		i++;
 	}

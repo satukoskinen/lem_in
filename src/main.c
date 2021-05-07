@@ -24,6 +24,20 @@ ssize_t	print_path_combinations(void *data, size_t i)
 	return ((ssize_t)i);
 }
 
+void	print_ants_per_path(int *ants_per_path, t_array *paths)
+{
+	size_t	i;
+	t_array	*max_flow_paths;
+
+	max_flow_paths = arr_get_last(paths); 
+	i = 0;
+	while (i < max_flow_paths->len)
+	{
+		ft_printf("path %d: %d ants\n", (int)i, ants_per_path[i]);
+		i++;
+	}
+}
+
 int	error(char *msg)
 {
 	ft_dprintf(2, "%s\n", msg);
@@ -37,7 +51,7 @@ int	process_graph(t_graph *graph, t_parray *output)
 	int		ant_count;
 	int		*ants_per_path;
 
-	ant_count = ((t_node_attr *)((t_graph_attr *)graph->attr)->source)->value;
+	ant_count = ((t_node_attr *)((t_graph_attr *)graph->attr)->source->attr)->value;
 	transformed_graph = lem_transform_vertex_disjoint(graph);
 	if (graph_null(&transformed_graph))
 		return (-1);
@@ -47,10 +61,10 @@ int	process_graph(t_graph *graph, t_parray *output)
 		return (-1);
 	arr_iter(&paths, print_path_combinations);
 	ants_per_path = optimise_path_use(&paths, ant_count);
+	print_ants_per_path(ants_per_path, &paths);
 	if (ants_per_path == NULL)
 		return (-1);
-	
-	return (move_ants(&transformed_graph, arr_get_last(&paths), ants_per_path, output));
+	return (move_ants(graph, arr_get_last(&paths), ants_per_path, output));
 }
 
 int main(void)
@@ -82,5 +96,6 @@ int main(void)
 	}
 	parr_iter(&input, print_string);
 	ft_printf("\n");
+	parr_iter(&output, print_string);
 	return (0);
 }

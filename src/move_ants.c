@@ -14,7 +14,7 @@ static char	*add_move_to_line(char *line, int ant, const char *node_key)
 	return (new);
 }
 
-static int	move_ants_in_path(t_array *path, char **line, int ants_per_path,
+static int	move_ants_in_path(t_parray *path, char **line, int ants_per_path,
 int ant_count)
 {
 	t_graph_node	*node;
@@ -26,8 +26,8 @@ int ant_count)
 	j = 0;
 	while (j < path->len - 1)
 	{
-		node = arr_get(path, j);
-		prev = arr_get(path, j + 1);
+		node = parr_get(path, j);
+		prev = parr_get(path, j + 1);
 		node_attr = (t_node_attr *)node->attr;
 		prev_attr = (t_node_attr *)prev->attr;
 		if (prev_attr->value != 0)
@@ -55,7 +55,7 @@ t_parray *output)
 {
 	t_graph_node	*source;
 	char			*line;
-	t_array			*path;
+	t_parray		*path;
 	int				ant_count;
 	size_t			i;
 
