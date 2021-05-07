@@ -30,26 +30,35 @@ int	error(char *msg)
 	return (1);
 }
 
-int	process_graph(t_graph *graph)
+int	process_graph(t_graph *graph, t_parray *output)
 {
 	t_graph transformed_graph;
 	t_array	paths;
 	int		ant_count;
-	int		paths_to_use;
+	size_t	paths_to_use;
 	int		*ants_per_path;
 
 	ant_count = ((t_node_attr *)((t_graph_attr *)graph->attr)->source)->value;
-	transformed_graph = lem_transform_vertex_disjoint(&graph);
+	transformed_graph = lem_transform_vertex_disjoint(graph);
+	if (graph_null(&transformed_graph))
+		return (-1);
+//	map_iter(&transformed_graph.data, print_node);
 	paths = find_max_flow_paths(&transformed_graph);
+	if (arr_null(&paths))
+		return (-1);
 	arr_iter(&paths, print_path_combinations);
-	paths_to_use = (int)optimise_path_use(paths, &ants_per_path, ant_count);
+	paths_to_use = optimise_path_use(&paths, &ants_per_path, ant_count);
+	if (paths_to_use == 0)
+		return (-1);
+	
+	return (move_ants(&transformed_graph, arr_get(&paths, paths_to_use - 1), ants_per_path, output));
 }
 
 int main(void)
 {
 	t_graph		graph;
 	t_parray	input;
-//	t_parr		output;
+	t_parray	output;
 
 	graph = init_graph();
 	if (graph_null(&graph))
@@ -63,10 +72,16 @@ int main(void)
 	{
 		return (error("Error on parsing input"));
 	}
+	output = parr_new(1);
+	if (parr_null(&output))
+	{
+		return (error("Error"));
+	}
+	if (process_graph(&graph, &output) != 1)
+	{
+		return (error("Error on processing graph"));
+	}
 	parr_iter(&input, print_string);
 	ft_printf("\n");
-
-//	map_iter(&transformed_graph.data, print_node);
-
 	return (0);
 }

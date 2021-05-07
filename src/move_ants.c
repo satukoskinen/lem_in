@@ -2,7 +2,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-static char	*add_move_to_line(char *line, int ant, char *node_key)
+static char	*add_move_to_line(char *line, int ant, const char *node_key)
 {
 	char		*move;
 	char		*new;

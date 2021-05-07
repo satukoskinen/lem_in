@@ -16,13 +16,15 @@ SRC = $(addprefix src/, \
 	lem_transform_vertex_disjoint.c \
 	graph_utils.c \
 	max_flow_edmonds_karp.c \
+	optimise_path_use.c \
+	move_ants.c \
 )
 
 OBJ = $(subst $(SRC_DIR), $(OBJ_DIR), $(SRC:.c=.o))
 
 CC = gcc
-#CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
-CFLAGS = -g -Wall -Wextra -Werror -Wpedantic -Wtype-limits -Wunused \
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+#CFLAGS = -g -Wall -Wextra -Werror -Wpedantic -Wtype-limits -Wunused \
                 -Wunreachable-code -Wshadow -fPIC -Wconversion
 CPPFLAGS = -I . -I core -I libft
 LDLIBS = -lft -lcore -lm
