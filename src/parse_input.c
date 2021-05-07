@@ -1,7 +1,7 @@
 #include "lem_in.h"
 #include "libft.h"
 
-static int	parse_ant_count(t_parr *input)
+static int	parse_ant_count(t_parray *input)
 {
 	char	*line;
 	int		ret;
@@ -25,7 +25,7 @@ static int	parse_ant_count(t_parr *input)
 	return (ant_count);
 }
 
-int	parse_input(t_graph *graph, t_parr *input)
+int	parse_input(t_graph *graph, t_parray *input)
 {
 	int					ant_count;
 	int					ret;

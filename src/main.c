@@ -10,7 +10,7 @@ ssize_t	print_string(void *data, size_t i)
 ssize_t	print_path(void *data, size_t i)
 {
 	ft_printf("Path %d:\n", (int)i);
-	parr_iter((t_parr *)data, print_node);
+	parr_iter((t_parray *)data, print_node);
 	return ((ssize_t)i);
 }
 
@@ -33,7 +33,7 @@ int	error(char *msg)
 int main(void)
 {
 	t_graph	graph;
-	t_parr	input;
+	t_parray	input;
 //	t_parr	output;
 //	t_array	bfs;
 	t_array	paths;

@@ -42,8 +42,8 @@ typedef struct s_graph_attr
 	t_graph_node	*sink;
 }					t_graph_attr;
 
-int			parse_input(t_graph *graph, t_parr *input);
-int			parse_line(t_graph *graph, t_parr *input, enum e_line_type *type);
+int			parse_input(t_graph *graph, t_parray *input);
+int			parse_line(t_graph *graph, t_parray *input, enum e_line_type *type);
 
 t_graph		lem_transform_vertex_disjoint(t_graph *src);
 
