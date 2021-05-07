@@ -21,7 +21,7 @@ int ant_count)
 	t_graph_node	*prev;
 	t_node_attr		*node_attr;
 	t_node_attr		*prev_attr;
-	size_t		j;
+	size_t			j;
 
 	j = 0;
 	while (j < path->len - 1)
@@ -59,7 +59,7 @@ t_parray *output)
 	int				ant_count;
 	size_t			i;
 
-	source = ((t_graph_attr*)graph->attr)->source;
+	source = ((t_graph_attr *)graph->attr)->source;
 	ant_count = ((t_node_attr *)source->attr)->value;
 	((t_node_attr *)source->attr)->value = 1;
 	while (1)
@@ -70,9 +70,9 @@ t_parray *output)
 		{
 			path = arr_get(paths, i);
 			ants_per_path[i] = move_ants_in_path(path, &line,
-				ants_per_path[i], ant_count);
+					ants_per_path[i], ant_count);
 			if (ants_per_path[i] == -1)
-				return (0);
+				return (-1);
 			i++;
 		}
 		if (line == NULL)
@@ -80,7 +80,7 @@ t_parray *output)
 		if (!parr_add_last(output, line))
 		{
 			free(line);
-			return (0);
+			return (-1);
 		}
 	}
 	return (1);

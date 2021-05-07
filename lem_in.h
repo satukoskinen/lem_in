@@ -40,6 +40,8 @@ typedef struct s_graph_attr
 
 int			parse_input(t_graph *graph, t_parray *input);
 int			parse_line(t_graph *graph, t_parray *input, enum e_line_type *type);
+int			parse_link(t_graph *graph, char *line);
+int			parse_room(t_graph *graph, char *line, enum e_line_type *type);
 
 t_graph		lem_transform_vertex_disjoint(t_graph *src);
 
@@ -49,6 +51,9 @@ t_node_attr	*init_node_attr(char *name, t_coordinates coordinates, t_graph_node 
 
 ssize_t 	print_node(void *data, size_t i);
 ssize_t 	print_edge(void *data, size_t i);
+ssize_t		print_string(void *data, size_t i);
+ssize_t		print_path(void *data, size_t i);
+ssize_t		print_path_combinations(void *data, size_t i);
 
 t_array	find_max_flow_paths(t_graph *graph);
 

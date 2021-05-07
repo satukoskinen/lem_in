@@ -1,28 +1,6 @@
 #include "lem_in.h"
 #include "libft.h"
-
-ssize_t	print_string(void *data, size_t i)
-{
-	ft_printf("%s\n", (char *)data);
-	return ((ssize_t)i);
-}
-
-ssize_t	print_path(void *data, size_t i)
-{
-	ft_printf("Path %d:\n", (int)i);
-	parr_iter((t_parray *)data, print_node);
-	return ((ssize_t)i);
-}
-
-ssize_t	print_path_combinations(void *data, size_t i)
-{
-	t_array	*path;
-
-	path = data;
-	ft_printf("Iteration %d: %d paths found\n", (int)i, path->len);
-	arr_iter(path, print_path);
-	return ((ssize_t)i);
-}
+#include <stdlib.h>
 
 void	print_ants_per_path(int *ants_per_path, t_array *paths)
 {
@@ -60,11 +38,11 @@ int	process_graph(t_graph *graph, t_parray *output)
 	paths = find_max_flow_paths(&transformed_graph);
 	if (arr_null(&paths))
 		return (-1);
-	arr_iter(&paths, print_path_combinations);
+	// arr_iter(&paths, print_path_combinations);
 	ants_per_path = optimise_path_use(&paths_to_use, &paths, paths.len, ant_count);
 	if (ants_per_path == NULL)
 		return (-1);
-	print_ants_per_path(ants_per_path, &paths);
+	// print_ants_per_path(ants_per_path, &paths);
 	return (move_ants(graph, paths_to_use, ants_per_path, output));
 }
 

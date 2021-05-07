@@ -197,6 +197,6 @@ t_array	find_max_flow_paths(t_graph *graph)
 	if (max_flow <= 0)
 		return (CR_ARR_NULL);
 	//paths = save_max_flow_paths(source, sink, (size_t)max_flow);
-	ft_printf("max flow is %d\n", max_flow);
+	// ft_printf("max flow is %d\n", max_flow);
 	return (path_combinations);
 }

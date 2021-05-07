@@ -1,7 +1,7 @@
 #include "lem_in.h"
 #include "libft.h"
 
-t_edge_attr *init_edge_attr(int capacity)
+t_edge_attr	*init_edge_attr(int capacity)
 {
 	t_edge_attr	*attr;
 
@@ -14,7 +14,7 @@ t_edge_attr *init_edge_attr(int capacity)
 	return (attr);
 }
 
-t_node_attr	*init_node_attr(char *name, t_coordinates coordinates, t_graph_node *org)
+t_node_attr	*init_node_attr(char *name, t_coordinates coords, t_graph_node *org)
 {
 	t_node_attr	*attr;
 
@@ -28,14 +28,14 @@ t_node_attr	*init_node_attr(char *name, t_coordinates coordinates, t_graph_node 
 		return (NULL);
 	}
 	attr->value = 0;
-	attr->coordinates = coordinates;
+	attr->coordinates = coords;
 	attr->org = org;
 	return (attr);
 }
 
 t_graph	init_graph(void)
 {
-	t_graph 		graph;
+	t_graph			graph;
 	t_graph_attr	*attr;
 
 	attr = (t_graph_attr *)malloc(sizeof(t_graph_attr));
@@ -45,30 +45,4 @@ t_graph	init_graph(void)
 	attr->source = NULL;
 	graph = graph_new(attr);
 	return (graph);
-}
-
-ssize_t print_edge(void *data, size_t i)
-{
-	t_graph_edge	*tmp;
-	t_edge_attr		*attr;
-
-	tmp = data;
-	attr = tmp->attr;
-	ft_printf("src %-5s -> dst %-5s flow %d capacity %d\n",
-		tmp->src->key, tmp->dst->key, attr->flow, attr->capacity);
-	return ((ssize_t)i);
-}
-
-ssize_t print_node(void *data, size_t i)
-{
-	t_graph_node	*tmp;
-	t_node_attr		*attr;
-
-	tmp = data;
-	attr = tmp->attr;
-	ft_printf("key [%s] value [%d]\n",
-		tmp->key, attr->value);
-	// arr_iter(&tmp->in, print_edge);
-	// arr_iter(&tmp->out, print_edge);
-	return ((ssize_t)i);
 }
