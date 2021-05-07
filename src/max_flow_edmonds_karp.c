@@ -30,6 +30,22 @@ void	save_flow_path(t_parray *path, t_graph_node *src, t_graph_node *dst)
 	}
 }
 
+static ssize_t	insert_path_to_array(t_array *paths, t_parray *path_to_add)
+{
+	size_t		i;
+	t_parray	*path;
+
+	i = 0;
+	while (i < paths->len)
+	{
+		path = arr_get(paths, i);
+		if (path->len > path_to_add->len)
+			return (arr_add(paths, path_to_add, i));
+		i++;
+	}
+	return (arr_add_last(paths, path_to_add));
+}
+
 t_array	save_max_flow_paths(t_graph_node *s, t_graph_node *t, size_t max_flow)
 {
 	t_array			paths;
@@ -49,7 +65,7 @@ t_array	save_max_flow_paths(t_graph_node *s, t_graph_node *t, size_t max_flow)
 			path = parr_new(sizeof(t_graph_node *));
 			parr_add_last(&path, ((t_node_attr *)t->attr)->org);
 			save_flow_path(&path, sink_edge->src, s);
-			arr_add_last(&paths, &path);
+			insert_path_to_array(&paths, &path);
 		}
 		i++;
 	}
@@ -100,7 +116,10 @@ void	update_edge_flows(t_map *prev, t_graph_node *s, t_graph_node *t, int augmen
 
 static ssize_t	edge_remaining_capacity(t_graph_edge *edge)
 {
-	return (((t_edge_attr *)edge->attr)->capacity - ((t_edge_attr *)edge->attr)->flow);
+	t_edge_attr	*attr;
+
+	attr = (t_edge_attr *)edge->attr;
+	return (attr->capacity - attr->flow);
 }
 
 int	find_augmenting_flow(t_graph_node *s, t_graph_node *t, t_map *prev)
@@ -120,8 +139,8 @@ int	find_augmenting_flow(t_graph_node *s, t_graph_node *t, t_map *prev)
 		while (i < node->out.len)
 		{
 			outgoing_edge = arr_get(&node->out, i);
-			if (!map_contains_key(prev, outgoing_edge->dst->key)
-				&& edge_remaining_capacity(outgoing_edge) > 0)
+			if (edge_remaining_capacity(outgoing_edge) > 0
+				&& !map_contains_key(prev, outgoing_edge->dst->key))
 			{
 				map_add(prev, node, outgoing_edge->dst->key);
 				if (ft_strcmp(outgoing_edge->dst->key, t->key) == 0)
