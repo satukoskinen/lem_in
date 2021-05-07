@@ -13,20 +13,6 @@ int	error(char *msg)
 	return (1);
 }
 
-t_graph	init_graph(void)
-{
-	t_graph 		graph;
-	t_graph_attr	*attr;
-
-	attr = (t_graph_attr *)malloc(sizeof(t_graph_attr));
-	if (attr == NULL)
-		return (CR_GRAPH_NULL);
-	attr->sink = NULL;
-	attr->source = NULL;
-	graph = graph_new(attr);
-	return (graph);
-}
-
 int main(void)
 {
 	t_graph	graph;
@@ -53,6 +39,7 @@ int main(void)
 //	bfs = graph_find_shortest_path(&graph, ((t_graph_attr *)graph.attr)->source->key, ((t_graph_attr *)graph.attr)->sink->key);
 //	arr_iter(&bfs, print_node);
 	transformed_graph = lem_transform_vertex_disjoint(&graph);
+//	find_max_flow_paths(&transformed_graph, ((t_graph_attr *)transformed_graph.attr)->source, ((t_graph_attr *)transformed_graph.attr)->sink);
 	map_iter(&transformed_graph.data, print_node);
 	return (0);
 }

@@ -42,14 +42,18 @@ typedef struct s_graph_attr
 	t_graph_node	*sink;
 }					t_graph_attr;
 
-int	parse_input(t_graph *graph, t_parr *input);
-int	parse_line(t_graph *graph, t_parr *input, enum e_line_type *type);
-t_graph	lem_transform_vertex_disjoint(t_graph *src);
+int			parse_input(t_graph *graph, t_parr *input);
+int			parse_line(t_graph *graph, t_parr *input, enum e_line_type *type);
 
-t_edge_attr *init_edge_attr(int capacity);
+t_graph		lem_transform_vertex_disjoint(t_graph *src);
+
+t_graph		init_graph(void);
+t_edge_attr	*init_edge_attr(int capacity);
 t_node_attr	*init_node_attr(char *name, t_coordinates coordinates, t_graph_node *org);
 
-ssize_t print_node(void *data, size_t i);
-ssize_t print_edge(void *data, size_t i);
+ssize_t 	print_node(void *data, size_t i);
+ssize_t 	print_edge(void *data, size_t i);
+
+//int	find_max_flow_paths(t_graph *graph, t_graph_node *s, t_graph_node *t);
 
 #endif

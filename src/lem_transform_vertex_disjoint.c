@@ -14,47 +14,47 @@
 
 // MOVE TO LIB!!
 
-t_graph_edge	*graph_find_edge(t_graph *g,
-				const char *src_key,
-				const char *dst_key)
-{
-	t_graph_node	*node;
-	t_graph_edge	*out;
-	size_t			i;
+// t_graph_edge	*graph_find_edge(t_graph *g,
+// 				const char *src_key,
+// 				const char *dst_key)
+// {
+// 	t_graph_node	*node;
+// 	t_graph_edge	*out;
+// 	size_t			i;
 
-	node = graph_find_node(g, src_key);
-	i = 0;
-	while (i < node->out.len)
-	{
-		out = arr_get(&node->out, i);
-		if (s_cmp(out->dst->key, dst_key) == 0)
-			return (out);
-		i++;
-	}
-	return (NULL);
-}
+// 	node = graph_find_node(g, src_key);
+// 	i = 0;
+// 	while (i < node->out.len)
+// 	{
+// 		out = arr_get(&node->out, i);
+// 		if (s_cmp(out->dst->key, dst_key) == 0)
+// 			return (out);
+// 		i++;
+// 	}
+// 	return (NULL);
+// }
 
-char	*map_parse(
-	t_map *src,
-	void *dst,
-	char *(*f)(void *, void *, const char *key))
-{
-	t_map_node	node;
-	size_t		i;
+// char	*map_parse(
+// 	t_map *src,
+// 	void *dst,
+// 	char *(*f)(void *, void *, const char *key))
+// {
+// 	t_map_node	node;
+// 	size_t		i;
 
-	i = 0;
-	while (i < src->capacity)
-	{
-		if (!map_null_node(&src->node[i]))
-		{
-			node = src->node[i];
-			if (!(f(dst, node.data, node.key)))
-				return ((char *)node.key);
-		}
-		i++;
-	}
-	return ((char *)node.key);
-}
+// 	i = 0;
+// 	while (i < src->capacity)
+// 	{
+// 		if (!map_null_node(&src->node[i]))
+// 		{
+// 			node = src->node[i];
+// 			if (!(f(dst, node.data, node.key)))
+// 				return ((char *)node.key);
+// 		}
+// 		i++;
+// 	}
+// 	return ((char *)node.key);
+// }
 
 /*******************************************************************************
  *
@@ -125,7 +125,7 @@ static char	*split_node(void *parse_dst, void *data, const char *key)
 		s_join(key, "_out"), (t_coordinates){0, 0}, node);
 	graph_add_node(graph, in_node_attr->name, in_node_attr);
 	graph_add_node(graph, out_node_attr->name, out_node_attr);
-	reverse_edge(graph, in_node_attr->name, out_node_attr->name);
+	reverse_edge(graph, out_node_attr->name, in_node_attr->name);
 	return ((char *)key);
 }
 
@@ -135,10 +135,18 @@ static char	*split_node(void *parse_dst, void *data, const char *key)
 
 t_graph	lem_transform_vertex_disjoint(t_graph *src)
 {
-	t_graph			new;
+	t_graph	new;
+	char	*source_key;
+	char	*sink_key;
 
-	new = graph_new(NULL);
+	new = init_graph();
 	map_parse(&src->data, &new, split_node);
 	map_parse(&src->data, &new, split_edge);
+	source_key = s_join(((t_graph_attr *)src->attr)->source->key, "_out");
+	sink_key = s_join(((t_graph_attr *)src->attr)->sink->key, "_in");
+	((t_graph_attr *)new.attr)->source = graph_find_node(&new, source_key);
+	((t_graph_attr *)new.attr)->sink = graph_find_node(&new, sink_key);
+	free(source_key);
+	free(sink_key);
 	return (new);
 }

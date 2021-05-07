@@ -33,6 +33,20 @@ t_node_attr	*init_node_attr(char *name, t_coordinates coordinates, t_graph_node 
 	return (attr);
 }
 
+t_graph	init_graph(void)
+{
+	t_graph 		graph;
+	t_graph_attr	*attr;
+
+	attr = (t_graph_attr *)malloc(sizeof(t_graph_attr));
+	if (attr == NULL)
+		return (CR_GRAPH_NULL);
+	attr->sink = NULL;
+	attr->source = NULL;
+	graph = graph_new(attr);
+	return (graph);
+}
+
 ssize_t print_edge(void *data, size_t i)
 {
 	t_graph_edge	*tmp;
