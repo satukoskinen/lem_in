@@ -1,7 +1,7 @@
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-#include "../core/inc/core.h"
+#include "core/inc/core.h"
 //#include "../core/graph/inc/graph.h"
 
 # define SOURCE -1
