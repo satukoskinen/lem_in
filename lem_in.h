@@ -2,10 +2,6 @@
 # define LEM_IN_H
 
 #include "core/inc/core.h"
-//#include "../core/graph/inc/graph.h"
-
-# define SOURCE -1
-# define SINK -2
 
 enum e_line_type
 {
@@ -54,7 +50,10 @@ t_node_attr	*init_node_attr(char *name, t_coordinates coordinates, t_graph_node 
 ssize_t 	print_node(void *data, size_t i);
 ssize_t 	print_edge(void *data, size_t i);
 
-//int	find_max_flow_paths(t_graph *graph, t_graph_node *s, t_graph_node *t);
 t_array	find_max_flow_paths(t_graph *graph);
+
+size_t	optimise_path_use(t_array *path_combinations, int **ants_per_path, int ant_count);
+int		move_ants(t_graph *graph, t_array *paths, int *ants_per_path,
+t_parray *output);
 
 #endif

@@ -33,7 +33,7 @@ void	save_flow_path(t_parray *path, t_graph_node *src, t_graph_node *dst)
 t_array	save_max_flow_paths(t_graph_node *s, t_graph_node *t, size_t max_flow)
 {
 	t_array			paths;
-	t_parray			path;
+	t_parray		path;
 	size_t			i;
 	t_graph_edge	*sink_edge;
 
@@ -105,7 +105,7 @@ static ssize_t	edge_remaining_capacity(t_graph_edge *edge)
 
 int	find_augmenting_flow(t_graph_node *s, t_graph_node *t, t_map *prev)
 {
-	t_parray			queue;
+	t_parray		queue;
 	t_graph_node	*node;
 	t_graph_edge	*outgoing_edge;
 	size_t			i;
