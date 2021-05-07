@@ -4,50 +4,54 @@
 
 static int	parse_link(t_graph *graph, char *line)
 {
-	char	*ptr;
-	int		ret;
+	char			*ptr;
+	t_graph_node	*node_1;
+	t_graph_node	*node_2;
+	t_edge_attr		*attr;
 
 	ptr = ft_strchr(line, '-');
 	if (ptr == NULL)
 		return (-1);
 	*ptr = '\0';
-	ret = graph_add_edge(graph, line, ptr + 1, 1);
-	if (ret != 1)
+	node_1 = graph_find_node(graph, line);
+	node_2 = graph_find_node(graph, ptr + 1);
+	if (node_1 == NULL || node_2 == NULL)
 		return (-1);
-	ret = graph_add_edge(graph, ptr + 1, line, 1);
+	attr = init_edge_attr(1);
+	if (attr == NULL || !graph_add_edge(graph, node_1->key, node_2->key, attr))
+		return (-1);
+	attr = init_edge_attr(1);
+	if (attr == NULL || !graph_add_edge(graph, node_2->key, node_1->key, attr))
+		return (-1);
 	*ptr = '-';
-	if (ret != 1)
-		return (-1);
-	else
-		return (ret);
+	return (1);
 }
 
-static int	parse_special_room(t_graph *graph, enum e_line_type *type)
+static int	validate_coordinates(char *line, t_coordinates *coordinates)
 {
-	t_vertex	*vertex;
-	size_t		index;
-
-	index = array_size(graph->vertices) - 1;
-	vertex = *(t_vertex **)array_get(graph->vertices, index);
-	vertex->capacity = -1;
-	if (*type == ROOM_SRC)
-	{
-		vertex->is_source = 1;
-		graph->source_index = (int)index;
-	}
+	coordinates->x = ft_atoi(line);
+	if (coordinates->x == 0 && *line != '0')
+		return (0);
+	while (ft_isdigit(*line))
+		line++;
+	if (*line != '\0')
+		line++;
+	coordinates->y = ft_atoi(line);
+	if (coordinates->y == 0 && *line != '0')
+		return (0);
+	while (ft_isdigit(*line))
+		line++;
+	if (*line == '\0')
+		return (1);
 	else
-	{
-		vertex->is_sink = 1;
-		graph->sink_index = (int)index;
-	}
-	*type = ROOM;
-	return (1);
+		return (0);
 }
 
 static int	parse_room(t_graph *graph, char *line, enum e_line_type *type)
 {
-	char	*ptr;
-	int		ret;
+	char			*ptr;
+	t_node_attr		*attr;
+	t_coordinates	coordinates;
 
 	if (line[0] == 'L')
 		return (-1);
@@ -55,46 +59,43 @@ static int	parse_room(t_graph *graph, char *line, enum e_line_type *type)
 	if (ptr == NULL)
 	{
 		*type = LINK;
-		ret = parse_link(graph, line);
-		return (ret);
+		return (parse_link(graph, line));
 	}
 	*ptr = '\0';
-	ret = graph_add_vertex(graph, line, 0, 1);
-	if (ret == 1 && (*type == ROOM_SRC || *type == ROOM_SINK))
-		parse_special_room(graph, type);
+	if (!validate_coordinates(ptr + 1, &coordinates))
+		return (-1);
+	attr = init_node_attr(line, coordinates, NULL);
+	if (attr == NULL)
+		return (-1);
+	if (graph_add_node(graph, attr->name, attr) == -1)
+		return (-1);
 	*ptr = ' ';
-	ptr = ft_strchr(ptr + 1, ' ');
-	if (ptr == NULL)
-		return (-1);
-	ptr = ft_strchr(ptr + 1, ' ');
-	if (ptr == NULL)
-		return (ret);
-	else
-		return (-1);
+	if (*type == ROOM_SRC)
+		((t_graph_attr *)graph->attr)->source = graph_find_node(graph, attr->name);
+	else if (*type == ROOM_SINK)
+		((t_graph_attr *)graph->attr)->sink = graph_find_node(graph, attr->name);
+	*type = ROOM;
+	return (1);
 }
 
 static int	parse_command(t_graph *graph, char *cmd, enum e_line_type *type)
 {
 	if (ft_strcmp(cmd, "##start") == 0)
 	{
-		if (*type != ROOM || graph->source_index >= 0)
+		if (*type != ROOM || ((t_graph_attr *)graph->attr)->source != NULL)
 			return (-1);
 		*type = ROOM_SRC;
 	}
 	else if (ft_strcmp(cmd, "##end") == 0)
 	{
-		if (*type != ROOM || graph->sink_index >= 0)
+		if (*type != ROOM || ((t_graph_attr *)graph->attr)->sink != NULL)
 			return (-1);
 		*type = ROOM_SINK;
 	}
 	return (1);
 }
 
-/*
-** parse one line of input based on the type
-*/
-
-int	parse_line(t_graph *graph, t_array **input, enum e_line_type *type)
+int	parse_line(t_graph *graph, t_parray *input, enum e_line_type *type)
 {
 	char	*line;
 	int		ret;
@@ -113,7 +114,7 @@ int	parse_line(t_graph *graph, t_array **input, enum e_line_type *type)
 		ret = parse_link(graph, line);
 	else
 		ret = parse_room(graph, line, type);
-	if (ret == -1 || array_add(input, &line) == NULL)
+	if (ret == -1 || !parr_add_last(input, line))
 	{
 		free(line);
 		return (-1);

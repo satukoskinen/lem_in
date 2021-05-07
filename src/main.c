@@ -1,90 +1,64 @@
 #include "lem_in.h"
 #include "libft.h"
-#include <stdlib.h>
 
-static int	error(char *msg)
+ssize_t	print_string(void *data, size_t i)
 {
-	ft_putstr_fd(msg, 2);
+	ft_printf("%s\n", (char *)data);
+	return ((ssize_t)i);
+}
+
+ssize_t	print_path(void *data, size_t i)
+{
+	ft_printf("Path %d:\n", (int)i);
+	parr_iter((t_parray *)data, print_node);
+	return ((ssize_t)i);
+}
+
+ssize_t	print_path_combinations(void *data, size_t i)
+{
+	t_array	*path;
+
+	path = data;
+	ft_printf("Iteration %d: %d paths found\n", (int)i, path->len);
+	arr_iter(path, print_path);
+	return ((ssize_t)i);
+}
+
+int	error(char *msg)
+{
+	ft_dprintf(2, "%s\n", msg);
 	return (1);
 }
 
-static void	print_array(t_array *input)
+int main(void)
 {
-	char	*line;
-	size_t	i;
+	t_graph	graph;
+	t_parray	input;
+//	t_parr	output;
+//	t_array	bfs;
+	t_array	paths;
+	t_graph	transformed_graph;
 
-	i = 0;
-	while (i < array_size(input))
+	graph = init_graph();
+	if (graph_null(&graph))
+		return (error("Error"));
+	input = parr_new(1);
+	if (input.data == NULL)
 	{
-		line = *(char **)array_get(input, i);
-		ft_printf("%s\n", line);
-		i++;
+		return (error("Error"));
 	}
-}
-
-static void	free_resources(t_graph **graph, t_array **input, t_array **output)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < array_size(*input))
+	if (parse_input(&graph, &input) != 1)
 	{
-		free(*(char **)array_get(*input, i));
-		i++;
+		return (error("Error on parsing input"));
 	}
-	array_del(input);
-	i = 0;
-	while (i < array_size(*output))
-	{
-		free(*(char **)array_get(*output, i));
-		i++;
-	}
-	array_del(output);
-	graph_del(graph);
-}
-
-static int	init_resources(t_graph **graph, t_array **input, t_array **output)
-{
-	*graph = graph_new();
-	if (*graph == NULL)
-		return (0);
-	*input = array_new(INIT_SIZE, sizeof(char *));
-	if (*input == NULL)
-	{
-		graph_del(graph);
-		return (0);
-	}
-	*output = array_new(INIT_SIZE, sizeof(char *));
-	if (*output == NULL)
-	{
-		graph_del(graph);
-		array_del(input);
-		return (0);
-	}
-	return (1);
-}
-
-int	main(void)
-{
-	t_graph	*graph;
-	t_array	*input;
-	t_array	*output;
-
-	if (init_resources(&graph, &input, &output) != 1)
-		return (error("Error\n"));
-	if (parse_input(graph, &input) != 1)
-	{
-		free_resources(&graph, &input, &output);
-		return (error("Error on reading input\n"));
-	}
-	if (process_graph(graph, &output) != 1)
-	{
-		free_resources(&graph, &input, &output);
-		return (error("Error on processing graph\n"));
-	}
-	print_array(input);
-	ft_putstr("\n");
-	print_array(output);
-	free_resources(&graph, &input, &output);
+	parr_iter(&input, print_string);
+	ft_printf("\n");
+//	map_iter(&graph.data, print_node);
+//	bfs = graph_find_shortest_path(&graph, ((t_graph_attr *)graph.attr)->source->key, ((t_graph_attr *)graph.attr)->sink->key);
+//	arr_iter(&bfs, print_node);
+	transformed_graph = lem_transform_vertex_disjoint(&graph);
+	paths = find_max_flow_paths(&transformed_graph);
+//	map_iter(&transformed_graph.data, print_node);
+	arr_iter(&paths, print_path_combinations);
 	return (0);
 }
