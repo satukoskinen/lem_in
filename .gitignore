@@ -2,3 +2,4 @@ obj
 .deps
 .vscode
 lem_in
+*.a
