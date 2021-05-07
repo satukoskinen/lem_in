@@ -134,11 +134,12 @@ int	find_augmenting_flow(t_graph_node *s, t_graph_node *t, t_map *prev)
 	return (0);
 }
 
-int	max_flow_edmonds_karp(t_graph_node *s, t_graph_node *t)
+int	max_flow_edmonds_karp(t_graph_node *s, t_graph_node *t, t_array *path_combinations)
 {
 	int		flow;
 	int		augmenting_flow;
 	t_map	prev;
+	t_array	paths;
 
 	flow = 0;
 	while (1)
@@ -149,6 +150,8 @@ int	max_flow_edmonds_karp(t_graph_node *s, t_graph_node *t)
 			break ;
 		update_edge_flows(&prev, s, t, augmenting_flow);
 		flow += augmenting_flow;
+		paths = save_max_flow_paths(s, t, (size_t)flow);
+		arr_add_last(path_combinations, &paths);
 		free(prev.node);
 	}
 	if (augmenting_flow == -1)
@@ -159,18 +162,18 @@ int	max_flow_edmonds_karp(t_graph_node *s, t_graph_node *t)
 
 t_array	find_max_flow_paths(t_graph *graph)
 {
-	int		max_flow;
-	t_array	paths;
+	int				max_flow;
+	t_graph_node	*source;
+	t_graph_node	*sink;
+	t_array			path_combinations;
 
-	max_flow = max_flow_edmonds_karp(
-		((t_graph_attr *)graph->attr)->source,
-		((t_graph_attr *)graph->attr)->sink);
+	source = ((t_graph_attr *)graph->attr)->source;
+	sink = ((t_graph_attr *)graph->attr)->sink;
+	path_combinations = arr_new(1, sizeof(t_array));
+	max_flow = max_flow_edmonds_karp(source, sink, &path_combinations);
 	if (max_flow <= 0)
 		return (CR_ARR_NULL);
-	paths = save_max_flow_paths(
-		((t_graph_attr *)graph->attr)->source,
-		((t_graph_attr *)graph->attr)->sink,
-		(size_t)max_flow);
+	//paths = save_max_flow_paths(source, sink, (size_t)max_flow);
 	ft_printf("max flow is %d\n", max_flow);
-	return (paths);
+	return (path_combinations);
 }

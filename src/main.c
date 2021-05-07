@@ -14,6 +14,13 @@ ssize_t	print_path(void *data, size_t i)
 	return ((ssize_t)i);
 }
 
+ssize_t	print_path_combinations(void *data, size_t i)
+{
+	ft_printf("paths %d:\n", (int)i);
+	arr_iter((t_array *)data, print_path);
+	return ((ssize_t)i);
+}
+
 int	error(char *msg)
 {
 	ft_dprintf(2, "%s\n", msg);
@@ -49,6 +56,6 @@ int main(void)
 	transformed_graph = lem_transform_vertex_disjoint(&graph);
 	paths = find_max_flow_paths(&transformed_graph);
 //	map_iter(&transformed_graph.data, print_node);
-	arr_iter(&paths, print_path);
+	arr_iter(&paths, print_path_combinations);
 	return (0);
 }
