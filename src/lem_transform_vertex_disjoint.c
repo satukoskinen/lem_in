@@ -12,7 +12,7 @@
 
 #include "../lem_in.h"
 
-MOVE TO LIB!!
+//MOVE TO LIB!!
 
 t_graph_edge	*graph_find_edge(t_graph *g,
 				const char *src_key,

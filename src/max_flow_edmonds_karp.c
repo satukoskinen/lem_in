@@ -157,17 +157,20 @@ int	max_flow_edmonds_karp(t_graph_node *s, t_graph_node *t)
 		return (flow);
 }
 
-t_array	find_max_flow_paths(t_graph *graph, t_graph_node *s, t_graph_node *t)
+t_array	find_max_flow_paths(t_graph *graph)
 {
 	int		max_flow;
 	t_array	paths;
 
-	if (graph)
-		;
-	max_flow = max_flow_edmonds_karp(s, t);
+	max_flow = max_flow_edmonds_karp(
+		((t_graph_attr *)graph->attr)->source,
+		((t_graph_attr *)graph->attr)->sink);
 	if (max_flow <= 0)
 		return (CR_ARR_NULL);
-	paths = save_max_flow_paths(s, t, (size_t)max_flow);
+	paths = save_max_flow_paths(
+		((t_graph_attr *)graph->attr)->source,
+		((t_graph_attr *)graph->attr)->sink,
+		(size_t)max_flow);
 	ft_printf("max flow is %d\n", max_flow);
 	return (paths);
 }

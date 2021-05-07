@@ -47,7 +47,7 @@ int main(void)
 //	bfs = graph_find_shortest_path(&graph, ((t_graph_attr *)graph.attr)->source->key, ((t_graph_attr *)graph.attr)->sink->key);
 //	arr_iter(&bfs, print_node);
 	transformed_graph = lem_transform_vertex_disjoint(&graph);
-	paths = find_max_flow_paths(&transformed_graph, ((t_graph_attr *)transformed_graph.attr)->source, ((t_graph_attr *)transformed_graph.attr)->sink);
+	paths = find_max_flow_paths(((t_graph_attr *)transformed_graph.attr)->source, ((t_graph_attr *)transformed_graph.attr)->sink);
 //	map_iter(&transformed_graph.data, print_node);
 	arr_iter(&paths, print_path);
 	return (0);

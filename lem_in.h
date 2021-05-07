@@ -55,6 +55,6 @@ ssize_t 	print_node(void *data, size_t i);
 ssize_t 	print_edge(void *data, size_t i);
 
 //int	find_max_flow_paths(t_graph *graph, t_graph_node *s, t_graph_node *t);
-t_array	find_max_flow_paths(t_graph *graph, t_graph_node *s, t_graph_node *t);
+t_array	find_max_flow_paths(t_graph *graph);
 
 #endif
