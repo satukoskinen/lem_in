@@ -7,6 +7,13 @@ ssize_t	print_string(void *data, size_t i)
 	return ((ssize_t)i);
 }
 
+ssize_t	print_path(void *data, size_t i)
+{
+	ft_printf("path %d:\n", (int)i);
+	parr_iter((t_parr *)data, print_node);
+	return ((ssize_t)i);
+}
+
 int	error(char *msg)
 {
 	ft_dprintf(2, "%s\n", msg);
@@ -19,6 +26,7 @@ int main(void)
 	t_parr	input;
 //	t_parr	output;
 //	t_array	bfs;
+	t_array	paths;
 	t_graph	transformed_graph;
 
 	graph = init_graph();
@@ -39,7 +47,8 @@ int main(void)
 //	bfs = graph_find_shortest_path(&graph, ((t_graph_attr *)graph.attr)->source->key, ((t_graph_attr *)graph.attr)->sink->key);
 //	arr_iter(&bfs, print_node);
 	transformed_graph = lem_transform_vertex_disjoint(&graph);
-//	find_max_flow_paths(&transformed_graph, ((t_graph_attr *)transformed_graph.attr)->source, ((t_graph_attr *)transformed_graph.attr)->sink);
-	map_iter(&transformed_graph.data, print_node);
+	paths = find_max_flow_paths(&transformed_graph, ((t_graph_attr *)transformed_graph.attr)->source, ((t_graph_attr *)transformed_graph.attr)->sink);
+//	map_iter(&transformed_graph.data, print_node);
+	arr_iter(&paths, print_path);
 	return (0);
 }

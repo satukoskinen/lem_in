@@ -68,7 +68,7 @@ ssize_t print_node(void *data, size_t i)
 	attr = tmp->attr;
 	ft_printf("name %-5s key %-5s value %-5d\n",
 		attr->name, tmp->key, attr->value);
-	arr_iter(&tmp->in, print_edge);
-	arr_iter(&tmp->out, print_edge);
+	// arr_iter(&tmp->in, print_edge);
+	// arr_iter(&tmp->out, print_edge);
 	return ((ssize_t)i);
 }

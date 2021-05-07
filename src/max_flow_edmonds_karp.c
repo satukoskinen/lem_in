@@ -1,6 +1,57 @@
 #include "lem_in.h"
 #include "libft.h"
 
+void	save_flow_path(t_parr *path, t_graph_node *src, t_graph_node *dst)
+{
+	t_graph_node	*node;
+	t_graph_edge	*edge;
+	size_t			i;
+
+	node = src;
+	parr_add_last(path, node);
+	while (ft_strcmp(node->key, dst->key) != 0)
+	{
+		i = 0;
+		while (i < node->in.len)
+		{
+			edge = arr_get(&node->in, i);
+			if (((t_edge_attr *)edge->attr)->flow > 0)
+			{
+				parr_add_last(path, edge->src);
+				node = edge->src;
+				break ;
+			}
+			i++;
+		}
+	}
+}
+
+t_array	save_max_flow_paths(t_graph_node *s, t_graph_node *t, size_t max_flow)
+{
+	t_array			paths;
+	t_parr			path;
+	size_t			i;
+	t_graph_edge	*sink_edge;
+
+	paths = arr_new(max_flow, sizeof(t_parr));
+	if (paths.data == NULL)
+		return (CR_ARR_NULL);
+	i = 0;
+	while (i < t->in.len)
+	{
+		sink_edge = arr_get(&t->in, i);
+		if (((t_edge_attr *)sink_edge->attr)->flow > 0)
+		{
+			path = parr_new(sizeof(t_graph_node *));
+			parr_add_last(&path, t);
+			save_flow_path(&path, sink_edge->src, s);
+			arr_add_last(&paths, &path);
+		}
+		i++;
+	}
+	return (paths);
+}
+
 int		map_contains_key(t_map *map, const char *key)
 {
 	if (map_get(map, key) == NULL)
@@ -52,7 +103,7 @@ int	find_augmenting_flow(t_graph_node *s, t_graph_node *t, t_map *prev)
 {
 	t_parr			queue;
 	t_graph_node	*node;
-	t_graph_edge	*adj_edge;
+	t_graph_edge	*outgoing_edge;
 	size_t			i;
 
 	queue = parr_new(sizeof(t_graph_node *));
@@ -64,17 +115,17 @@ int	find_augmenting_flow(t_graph_node *s, t_graph_node *t, t_map *prev)
 		i = 0;
 		while (i < node->out.len)
 		{
-			adj_edge = arr_get(&node->out, i);
-			if (!map_contains_key(prev, adj_edge->dst->key)
-				&& edge_remaining_capacity(adj_edge) > 0)
+			outgoing_edge = arr_get(&node->out, i);
+			if (!map_contains_key(prev, outgoing_edge->dst->key)
+				&& edge_remaining_capacity(outgoing_edge) > 0)
 			{
-				map_add(prev, node, adj_edge->dst->key);
-				if (ft_strcmp(adj_edge->dst->key, t->key) == 0)
+				map_add(prev, node, outgoing_edge->dst->key);
+				if (ft_strcmp(outgoing_edge->dst->key, t->key) == 0)
 				{
 					free(queue.data);
 					return (1);
 				}
-				parr_add_last(&queue, adj_edge->dst);
+				parr_add_last(&queue, outgoing_edge->dst);
 			}
 			i++;
 		}
@@ -106,13 +157,17 @@ int	max_flow_edmonds_karp(t_graph_node *s, t_graph_node *t)
 		return (flow);
 }
 
-int	find_max_flow_paths(t_graph *graph, t_graph_node *s, t_graph_node *t)
+t_array	find_max_flow_paths(t_graph *graph, t_graph_node *s, t_graph_node *t)
 {
-	int	max_flow;
+	int		max_flow;
+	t_array	paths;
 
 	if (graph)
 		;
 	max_flow = max_flow_edmonds_karp(s, t);
+	if (max_flow <= 0)
+		return (CR_ARR_NULL);
+	paths = save_max_flow_paths(s, t, (size_t)max_flow);
 	ft_printf("max flow is %d\n", max_flow);
-	return (max_flow);
+	return (paths);
 }

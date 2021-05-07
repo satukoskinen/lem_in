@@ -15,6 +15,7 @@ SRC = $(addprefix src/, \
 	parse_line.c \
 	lem_transform_vertex_disjoint.c \
 	graph_utils.c \
+	max_flow_edmonds_karp.c \
 )
 
 OBJ = $(subst $(SRC_DIR), $(OBJ_DIR), $(SRC:.c=.o))
