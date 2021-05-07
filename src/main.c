@@ -9,14 +9,14 @@ ssize_t	print_string(void *data, size_t i)
 
 ssize_t	print_path(void *data, size_t i)
 {
-	ft_printf("Paths found %d:\n", (int)i);
+	ft_printf("\nPath %d:\n\n", (int)i);
 	parr_iter((t_parr *)data, print_node);
 	return ((ssize_t)i);
 }
 
 ssize_t	print_path_combinations(void *data, size_t i)
 {
-	ft_printf("Iteration %d:\n", (int)i);
+	ft_printf("\nIteration %d:\n", (int)i);
 	arr_iter((t_array *)data, print_path);
 	return ((ssize_t)i);
 }
