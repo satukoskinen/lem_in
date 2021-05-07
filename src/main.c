@@ -35,7 +35,6 @@ int	process_graph(t_graph *graph, t_parray *output)
 	t_graph transformed_graph;
 	t_array	paths;
 	int		ant_count;
-	size_t	paths_to_use;
 	int		*ants_per_path;
 
 	ant_count = ((t_node_attr *)((t_graph_attr *)graph->attr)->source)->value;
@@ -47,11 +46,11 @@ int	process_graph(t_graph *graph, t_parray *output)
 	if (arr_null(&paths))
 		return (-1);
 	arr_iter(&paths, print_path_combinations);
-	paths_to_use = optimise_path_use(&paths, &ants_per_path, ant_count);
-	if (paths_to_use == 0)
+	ants_per_path = optimise_path_use(&paths, ant_count);
+	if (ants_per_path == NULL)
 		return (-1);
 	
-	return (move_ants(&transformed_graph, arr_get(&paths, paths_to_use - 1), ants_per_path, output));
+	return (move_ants(&transformed_graph, arr_get_last(&paths), ants_per_path, output));
 }
 
 int main(void)

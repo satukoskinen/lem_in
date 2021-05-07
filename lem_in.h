@@ -52,7 +52,7 @@ ssize_t 	print_edge(void *data, size_t i);
 
 t_array	find_max_flow_paths(t_graph *graph);
 
-size_t	optimise_path_use(t_array *path_combinations, int **ants_per_path, int ant_count);
+int	*optimise_path_use(t_array *path_combinations, int ant_count);
 int		move_ants(t_graph *graph, t_array *paths, int *ants_per_path,
 t_parray *output);
 
