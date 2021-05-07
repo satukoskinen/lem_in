@@ -44,7 +44,7 @@ int	validate_output(t_graph *graph, int ant_count)
 	if (ret == -1)
 		return (error("Error occurred\n", -1));
 	print(rounds - 1, graph->vertex_count,
-		graph->edge_count / 2 - graph->vertex_count, ant_count);
+		(graph->edge_count - 2 * graph->vertex_count) / 3, ant_count);
 	if (graph->source->value != ant_count + 1)
 		return (error("Not all ants were moved\n", 0));
 	if (ants_in_graph(graph))
