@@ -12,50 +12,6 @@
 
 #include "../lem_in.h"
 
-//MOVE TO LIB!!
-
-t_graph_edge	*graph_find_edge(t_graph *g,
-				const char *src_key,
-				const char *dst_key)
-{
-	t_graph_node	*node;
-	t_graph_edge	*out;
-	size_t			i;
-
-	node = graph_find_node(g, src_key);
-	i = 0;
-	while (i < node->out.len)
-	{
-		out = arr_get(&node->out, i);
-		if (s_cmp(out->dst->key, dst_key) == 0)
-			return (out);
-		i++;
-	}
-	return (NULL);
-}
-
-char	*map_parse(
-	t_map *src,
-	void *dst,
-	char *(*f)(void *, void *, const char *key))
-{
-	t_map_node	node;
-	size_t		i;
-
-	i = 0;
-	while (i < src->capacity)
-	{
-		if (!map_null_node(&src->node[i]))
-		{
-			node = src->node[i];
-			if (!(f(dst, node.data, node.key)))
-				return ((char *)node.key);
-		}
-		i++;
-	}
-	return ((char *)node.key);
-}
-
 /*******************************************************************************
  *
  ******************************************************************************/
