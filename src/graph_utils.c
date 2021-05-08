@@ -1,6 +1,22 @@
 #include "lem_in.h"
 #include "libft.h"
 
+t_graph_edge	*get_edge(t_graph_node *src, t_graph_node *dst)
+{
+	size_t			i;
+	t_graph_edge	*edge;
+
+	i = 0;
+	while (i < src->out.len)
+	{
+		edge = arr_get(&src->out, i);
+		if (ft_strcmp(edge->dst->key, dst->key) == 0)
+			return (edge);
+		i++;
+	}
+	return (NULL);
+}
+
 t_edge_attr	*init_edge_attr(int capacity)
 {
 	t_edge_attr	*attr;

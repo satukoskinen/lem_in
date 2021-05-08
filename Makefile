@@ -17,8 +17,10 @@ SRC = $(addprefix src/, \
 	parse_link.c \
 	lem_transform_vertex_disjoint.c \
 	print_utils.c \
-	init_attributes.c \
+	graph_utils.c \
 	max_flow_edmonds_karp.c \
+	save_max_flow_paths.c \
+	map_utils.c \
 	optimise_path_use.c \
 	move_ants.c \
 )
