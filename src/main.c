@@ -7,7 +7,7 @@ void	print_ants_per_path(int *ants_per_path, t_array *paths)
 	size_t	i;
 	t_array	*max_flow_paths;
 
-	max_flow_paths = arr_get_last(paths); 
+	max_flow_paths = arr_get_last(paths);
 	i = 0;
 	while (i < max_flow_paths->len)
 	{
@@ -22,7 +22,7 @@ int	error(char *msg)
 	return (1);
 }
 
-int	process_graph(t_graph *graph, t_parray *output)
+int	process_graph(t_parray *output, t_graph *graph)
 {
 	t_graph transformed_graph;
 	t_array	paths;
@@ -34,16 +34,19 @@ int	process_graph(t_graph *graph, t_parray *output)
 	transformed_graph = lem_transform_vertex_disjoint(graph);
 	if (graph_null(&transformed_graph))
 		return (-1);
-//	map_iter(&transformed_graph.data, print_node);
 	paths = find_max_flow_paths(&transformed_graph);
 	if (arr_null(&paths))
 		return (-1);
-	// arr_iter(&paths, print_path_combinations);
+	arr_iter(&paths, print_path_combinations);
+	printf("\n\n");
 	ants_per_path = optimise_path_use(&paths_to_use, &paths, paths.len, ant_count);
 	if (ants_per_path == NULL)
 		return (-1);
-	// print_ants_per_path(ants_per_path, &paths);
+	print_ants_per_path(ants_per_path, &paths);
 	return (move_ants(graph, paths_to_use, ants_per_path, output));
+	if (!output)
+		return (0);
+	return (1);
 }
 
 int main(void)
@@ -52,6 +55,7 @@ int main(void)
 	t_parray	input;
 	t_parray	output;
 
+	g_node_id = 0;
 	graph = init_graph();
 	if (graph_null(&graph))
 		return (error("Error"));
@@ -69,7 +73,7 @@ int main(void)
 	{
 		return (error("Error"));
 	}
-	if (process_graph(&graph, &output) != 1)
+	if (process_graph(&output, &graph) != 1)
 	{
 		return (error("Error on processing graph"));
 	}

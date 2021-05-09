@@ -19,7 +19,10 @@ static int	parse_command(t_graph *graph, char *cmd, enum e_line_type *type)
 	return (1);
 }
 
-int	parse_line(t_graph *graph, t_parray *input, enum e_line_type *type)
+int	parse_line(
+	t_graph *graph,
+	t_parray *input,
+	enum e_line_type *type)
 {
 	char	*line;
 	int		ret;

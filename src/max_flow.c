@@ -1,19 +1,10 @@
-#include "lem_in.h"
-#include "libft.h"
+#include "../lem_in.h"
 
-ssize_t	lem_compare_nodes(t_graph_node *n1, t_graph_node *n2)
-{
-	t_node_attr	*attr1;
-	t_node_attr	*attr2;
+/*******************************************************************************
+ *
+ ******************************************************************************/
 
-	attr1 = n1->attr;
-	attr2 = n2->attr;
-	if (attr1->value == attr2->value)
-		return (1);
-	return (0);
-}
-
-ssize_t	update_edge_flows(t_array *edge_list, t_graph_node *sink)
+ssize_t update_edge_flows(t_array *edge_list, t_graph_node *sink)
 {
 	t_graph_node	*curr_node;
 	t_graph_edge	*curr_edge;
@@ -21,7 +12,7 @@ ssize_t	update_edge_flows(t_array *edge_list, t_graph_node *sink)
 	size_t			i;
 
 	curr_edge = arr_get_last(edge_list);
-	if (!curr_edge || !lem_compare_nodes(sink, curr_edge->dst))
+	if (!curr_edge || !graph_cmp_nodes(sink, curr_edge->dst))
 		return (0);
 	curr_node = curr_edge->dst;
 	i = edge_list->len;
@@ -30,6 +21,7 @@ ssize_t	update_edge_flows(t_array *edge_list, t_graph_node *sink)
 		curr_edge = arr_get(edge_list, i);
 		if (s_cmp(curr_edge->dst->key, curr_node->key) == 0)
 		{
+			printf("src = %s, dst = %s\n", curr_edge->src->key, curr_edge->dst->key);
 			((t_edge_attr *)curr_edge->attr)->flow += 1;
 			rev_edge = get_edge(curr_edge->dst, curr_edge->src);
 			((t_edge_attr *)rev_edge->attr)->flow -= 1;
@@ -39,6 +31,10 @@ ssize_t	update_edge_flows(t_array *edge_list, t_graph_node *sink)
 	return (1);
 }
 
+/*******************************************************************************
+ *
+ ******************************************************************************/
+
 static ssize_t	edge_remaining_capacity(t_graph_edge *edge)
 {
 	t_edge_attr	*attr;
@@ -47,23 +43,9 @@ static ssize_t	edge_remaining_capacity(t_graph_edge *edge)
 	return (attr->capacity - attr->flow);
 }
 
-ssize_t	lem_find_node(t_array *dst, t_graph_node *node)
-{
-	size_t			i;
-	t_graph_node	*cast;
-
-	i = 0;
-	cast = (t_graph_node *)dst->data;
-	while (i < dst->len)
-	{
-		if (lem_compare_nodes(&cast[i], node))
-		{
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
+/*******************************************************************************
+ *
+ ******************************************************************************/
 
 static ssize_t graph_bfs_loop(
 		t_array *bfs_queue,
@@ -76,14 +58,14 @@ static ssize_t graph_bfs_loop(
 	size_t			i;
 
 	if (bfs_queue->len == queue_index)
-		return (CR_STOP);
+		return (CR_SUCCESS);
 	curr_node = arr_get(bfs_queue, queue_index);
 	i = 0;
 	while (i < curr_node->out.len)
 	{
 		curr_edge = arr_get(&curr_node->out, i);
-		if (edge_remaining_capacity(curr_edge) > 0
-		&& arr_find_by(bfs_queue, curr_edge->dst, graph_cmp_nodes) == -1)
+		if ((edge_remaining_capacity(curr_edge) > 0)
+		&& (arr_find_by(bfs_queue, curr_edge->dst, graph_cmp_nodes)) == -1)
 		{
 			if (!(arr_add_last(res_edges, curr_edge)))
 				return (CR_FAIL);
@@ -98,21 +80,31 @@ static ssize_t graph_bfs_loop(
 	return (graph_bfs_loop(bfs_queue, res_edges, sink, queue_index + 1));
 }
 
-ssize_t new_augmenting_flow(
-		t_array *res_edges,
+/*******************************************************************************
+ *
+ ******************************************************************************/
+
+t_array new_augmenting_flow(
 		t_graph_node *src,
 		t_graph_node *dst)
 {
 	t_array			bfs_queue;
+	t_array			res_edges;
 
+
+	res_edges = arr_new(1, sizeof(t_graph_edge));
 	bfs_queue = arr_new(1, sizeof(t_graph_node));
 	if (!(arr_add_last(&bfs_queue, src)))
-		return (0);
-	if (!(graph_bfs_loop(&bfs_queue, res_edges, dst, 0)))
-		return (0);
+		return (CR_ARR_NULL);
+	if (!(graph_bfs_loop(&bfs_queue, &res_edges, dst, 0)))
+		return (CR_ARR_NULL);
 	arr_free(&bfs_queue);
-	return (1);
+	return (res_edges);
 }
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
 
 int64_t	max_flow_edmonds_karp(
 	t_array *path_combinations,
@@ -126,8 +118,8 @@ int64_t	max_flow_edmonds_karp(
 	flow = 0;
 	while (1)
 	{
-		edge_list = arr_new(1, sizeof(t_graph_edge));
-		new_augmenting_flow(&edge_list, s, t);
+		edge_list = new_augmenting_flow(s, t);
+		// arr_iter(&edge_list, print_edge);
 		if (!update_edge_flows(&edge_list, t))
 			break ;
 		flow++;
@@ -137,6 +129,13 @@ int64_t	max_flow_edmonds_karp(
 	}
 	return (flow);
 }
+
+/*******************************************************************************
+ *
+ * Find a combination of all possible path combinations to achieve a max flow.
+ * Combinations are stored in path_combinations as arrays of arrays of nodes.
+ *
+ ******************************************************************************/
 
 t_array	find_max_flow_paths(t_graph *graph)
 {

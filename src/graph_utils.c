@@ -30,7 +30,10 @@ t_edge_attr	*init_edge_attr(int capacity)
 	return (attr);
 }
 
-t_node_attr	*init_node_attr(char *name, t_coordinates coords, t_graph_node *org)
+t_node_attr	*init_node_attr(
+	char *name,
+	t_coordinates coords,
+	t_graph_node *org)
 {
 	t_node_attr	*attr;
 
@@ -43,7 +46,13 @@ t_node_attr	*init_node_attr(char *name, t_coordinates coords, t_graph_node *org)
 		free(attr);
 		return (NULL);
 	}
-	attr->value = 0;
+	if (g_node_id > INT32_MAX)
+	{
+		printf("Too many nodes!!!\n");
+		exit(-1);
+	}
+	attr->value = g_node_id;
+	g_node_id++;
 	attr->coordinates = coords;
 	attr->org = org;
 	return (attr);

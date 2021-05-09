@@ -31,14 +31,19 @@ int	parse_input(t_graph *graph, t_parray *input)
 	int					ret;
 	enum e_line_type	type;
 	t_graph_node		*src;
+	size_t				line_nbr;
 
+	line_nbr = 0;
 	ant_count = parse_ant_count(input);
 	if (ant_count == -1)
 		return (-1);
 	type = ROOM;
 	ret = 1;
 	while (ret == 1)
+	{
 		ret = parse_line(graph, input, &type);
+		line_nbr++;
+	}
 	if (ret == -1)
 		return (-1);
 	if (((t_graph_attr *)graph->attr)->sink == NULL

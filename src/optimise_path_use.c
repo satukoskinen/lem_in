@@ -21,8 +21,10 @@ static size_t	get_path_cost(t_array *paths, int *ants_per_path)
 	return (max_path_cost);
 }
 
-static void	add_remaining_ants(t_array *paths,
-	int *ants_per_path, size_t ant_count)
+static void	add_remaining_ants(
+	t_array *paths,
+	int *ants_per_path,
+	size_t ant_count)
 {
 	size_t	i;
 
@@ -38,13 +40,15 @@ static void	add_remaining_ants(t_array *paths,
 	}
 }
 
-static size_t	optimise_ants_per_path(t_array *paths,
-	int *ants_per_path, size_t ant_count)
+static size_t	optimise_ants_per_path(
+	t_array *paths,
+	int *ants_per_path,
+	size_t ant_count)
 {
 	size_t		i;
 	size_t		longest_path_len;
 	size_t		len_diff;
-	t_parray	*path;
+	t_array		*path;
 
 	path = arr_get_last(paths);
 	longest_path_len = path->len;
@@ -77,8 +81,11 @@ static size_t	optimise_i_paths(t_array *path_combinations,
 	return (path_cost);
 }
 
-int	*optimise_path_use(t_array **paths_to_use,
-	t_array *path_combinations, size_t max_flow, int ant_count)
+int	*optimise_path_use(
+	t_array **paths_to_use,
+	t_array *path_combinations,
+	size_t max_flow,
+	int ant_count)
 {
 	int		*ants_per_path;
 	size_t	i;
@@ -93,7 +100,7 @@ int	*optimise_path_use(t_array **paths_to_use,
 	while (i < max_flow)
 	{
 		path_cost = optimise_i_paths(path_combinations,
-				i, ants_per_path, (size_t)ant_count);
+			i, ants_per_path, (size_t)ant_count);
 		if (path_cost >= min_path_cost)
 			break ;
 		min_path_cost = path_cost;
