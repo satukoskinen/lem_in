@@ -37,12 +37,12 @@ int	process_graph(t_parray *output, t_graph *graph)
 	paths = find_max_flow_paths(&transformed_graph);
 	if (arr_null(&paths))
 		return (-1);
-	arr_iter(&paths, print_path_combinations);
-	printf("\n\n");
+	/*arr_iter(&paths, print_path_combinations);*/
+	/*printf("\n\n");*/
 	ants_per_path = optimise_path_use(&paths_to_use, &paths, paths.len, ant_count);
 	if (ants_per_path == NULL)
 		return (-1);
-	print_ants_per_path(ants_per_path, &paths);
+	/*print_ants_per_path(ants_per_path, &paths);*/
 	return (move_ants(graph, paths_to_use, ants_per_path, output));
 	if (!output)
 		return (0);

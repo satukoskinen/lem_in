@@ -3,12 +3,7 @@
 
 ssize_t	lem_compare_nodes(t_graph_node *n1, t_graph_node *n2)
 {
-	t_node_attr	*attr1;
-	t_node_attr	*attr2;
-
-	attr1 = n1->attr;
-	attr2 = n2->attr;
-	if (attr1->value == attr2->value)
+	if (n1->id == n2->id)
 		return (1);
 	return (0);
 }
@@ -56,7 +51,7 @@ ssize_t	lem_find_node(t_array *dst, t_graph_node *node)
 	cast = (t_graph_node *)dst->data;
 	while (i < dst->len)
 	{
-		if (lem_compare_nodes(&cast[i], node))
+		if (cast[i].id ==  node->id)
 		{
 			return (1);
 		}
@@ -83,7 +78,7 @@ static ssize_t graph_bfs_loop(
 	{
 		curr_edge = arr_get(&curr_node->out, i);
 		if (edge_remaining_capacity(curr_edge) > 0
-		&& arr_find_by(bfs_queue, curr_edge->dst, graph_cmp_nodes) == -1)
+		&& !lem_find_node(bfs_queue, curr_edge->dst))
 		{
 			if (!(arr_add_last(res_edges, curr_edge)))
 				return (CR_FAIL);

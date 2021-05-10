@@ -51,8 +51,7 @@ t_node_attr	*init_node_attr(
 		printf("Too many nodes!!!\n");
 		exit(-1);
 	}
-	attr->value = g_node_id;
-	g_node_id++;
+	attr->value = 0;
 	attr->coordinates = coords;
 	attr->org = org;
 	return (attr);

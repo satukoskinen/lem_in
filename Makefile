@@ -28,7 +28,7 @@ SRC = $(addprefix src/, \
 OBJ = $(subst $(SRC_DIR), $(OBJ_DIR), $(SRC:.c=.o))
 
 CC = gcc
-CFLAGS = -pg -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -O3 -Wall -Wextra -Werror #-fsanitize=address
 #CFLAGS = -g -Wall -Wextra -Werror -Wpedantic -Wtype-limits -Wunused \
                 -Wunreachable-code -Wshadow -fPIC -Wconversion
 CPPFLAGS = -I . -I core -I libft
