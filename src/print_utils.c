@@ -1,5 +1,4 @@
 #include "lem_in.h"
-#include "libft.h"
 
 ssize_t	print_string(void *data, size_t i)
 {

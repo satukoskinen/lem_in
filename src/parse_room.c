@@ -1,19 +1,18 @@
 #include "lem_in.h"
-#include "libft.h"
 
 static int	validate_coordinates(char *line, t_coordinates *coordinates)
 {
-	coordinates->x = ft_atoi(line);
+	coordinates->x = a_to_i(line);
 	if (coordinates->x == 0 && *line != '0')
 		return (0);
-	while (ft_isdigit(*line))
+	while (is_digit(*line))
 		line++;
 	if (*line != '\0')
 		line++;
-	coordinates->y = ft_atoi(line);
+	coordinates->y = a_to_i(line);
 	if (coordinates->y == 0 && *line != '0')
 		return (0);
-	while (ft_isdigit(*line))
+	while (is_digit(*line))
 		line++;
 	if (*line == '\0')
 		return (1);
@@ -40,7 +39,7 @@ int	parse_room(t_graph *graph, char *line, enum e_line_type *type)
 
 	if (line[0] == 'L')
 		return (-1);
-	ptr = ft_strchr(line, ' ');
+	ptr = s_chr(line, ' ');
 	if (ptr == NULL)
 	{
 		*type = LINK;

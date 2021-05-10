@@ -1,5 +1,4 @@
 #include "lem_in.h"
-#include "libft.h"
 #include <stdlib.h>
 
 void	print_ants_per_path(int *ants_per_path, t_array *paths)

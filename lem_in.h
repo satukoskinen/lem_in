@@ -51,6 +51,9 @@ int			parse_line(t_graph *graph, t_parray *input, enum e_line_type *typ);
 int			parse_link(t_graph *graph, char *line);
 int			parse_room(t_graph *graph, char *line, enum e_line_type *type);
 
+int			a_to_i(const char *str);
+int			is_digit(int c);
+
 t_graph		lem_transform_vertex_disjoint(t_graph *src);
 
 t_array		find_max_flow_paths(t_graph *graph);

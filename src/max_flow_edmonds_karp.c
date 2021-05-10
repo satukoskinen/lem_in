@@ -1,5 +1,4 @@
 #include "lem_in.h"
-#include "libft.h"
 
 ssize_t	lem_compare_nodes(t_graph_node *n1, t_graph_node *n2)
 {
@@ -23,7 +22,7 @@ ssize_t	update_edge_flows(t_array *edge_list, t_graph_node *sink)
 	while (i--)
 	{
 		curr_edge = arr_get(edge_list, i);
-		if (s_cmp(curr_edge->dst->key, curr_node->key) == 0)
+		if (curr_edge->dst->id == curr_node->id)
 		{
 			((t_edge_attr *)curr_edge->attr)->flow += 1;
 			rev_edge = get_edge(curr_edge->dst, curr_edge->src);
@@ -84,7 +83,7 @@ static ssize_t graph_bfs_loop(
 				return (CR_FAIL);
 			if (!(arr_add_last(bfs_queue, curr_edge->dst)))
 				return (CR_FAIL);
-			if (sink && s_cmp(curr_edge->dst->key, sink->key) == 0)
+			if (sink && curr_edge->dst->id == sink->id)
 				return (CR_SUCCESS);
 		}
 		curr_node = arr_get(bfs_queue, queue_index);

@@ -1,5 +1,4 @@
 #include "lem_in.h"
-#include "libft.h"
 
 static int	parse_ant_count(t_parray *input)
 {
@@ -8,10 +7,10 @@ static int	parse_ant_count(t_parray *input)
 	int		ant_count;
 
 	line = NULL;
-	ret = get_next_line(0, &line);
+	ret = s_readline(0, &line);
 	if (ret != 1)
 		return (-1);
-	ant_count = ft_atoi(line);
+	ant_count = a_to_i(line);
 	if (ant_count == 0 && line[0] != '0')
 	{
 		free(line);

@@ -1,5 +1,4 @@
 #include "lem_in.h"
-#include "libft.h"
 
 t_graph_edge	*get_edge(t_graph_node *src, t_graph_node *dst)
 {
@@ -10,7 +9,7 @@ t_graph_edge	*get_edge(t_graph_node *src, t_graph_node *dst)
 	while (i < src->out.len)
 	{
 		edge = arr_get(&src->out, i);
-		if (ft_strcmp(edge->dst->key, dst->key) == 0)
+		if (s_cmp(edge->dst->key, dst->key) == 0)
 			return (edge);
 		i++;
 	}
@@ -40,7 +39,7 @@ t_node_attr	*init_node_attr(
 	attr = (t_node_attr *)malloc(sizeof(t_node_attr));
 	if (attr == NULL)
 		return (NULL);
-	attr->name = ft_strdup(name);
+	attr->name = s_dup(name);
 	if (attr->name == NULL)
 	{
 		free(attr);

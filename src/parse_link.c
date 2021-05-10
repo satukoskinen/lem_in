@@ -1,5 +1,4 @@
 #include "lem_in.h"
-#include "libft.h"
 
 int	parse_link(t_graph *graph, char *line)
 {
@@ -8,7 +7,7 @@ int	parse_link(t_graph *graph, char *line)
 	t_graph_node	*node_2;
 	t_edge_attr		*attr;
 
-	ptr = ft_strchr(line, '-');
+	ptr = s_chr(line, '-');
 	if (ptr == NULL)
 		return (-1);
 	*ptr = '\0';

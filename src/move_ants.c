@@ -1,5 +1,4 @@
 #include "lem_in.h"
-#include "libft.h"
 #include <stdlib.h>
 
 static void	add_move_to_line(char **line, int ant, const char *node_key)
@@ -13,7 +12,7 @@ static void	add_move_to_line(char **line, int ant, const char *node_key)
 		free(*line);
 		*line = NULL;
 	}
-	new = ft_strjoin(*line, move);
+	new = s_join(*line, move);
 	free(move);
 	free(*line);
 	*line = new;

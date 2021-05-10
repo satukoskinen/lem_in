@@ -1,5 +1,4 @@
 #include "lem_in.h"
-#include "libft.h"
 
 static size_t	get_path_cost(t_array *paths, int *ants_per_path)
 {
@@ -75,7 +74,7 @@ static size_t	optimise_i_paths(t_array *path_combinations,
 	t_array	*i_paths;
 	size_t	path_cost;
 
-	ft_memset(ants_per_path, 0, sizeof(int) * path_combinations->len);
+	mem_set(ants_per_path, 0, sizeof(int) * path_combinations->len);
 	i_paths = arr_get(path_combinations, i);
 	path_cost = optimise_ants_per_path(i_paths, ants_per_path, ant_count);
 	return (path_cost);
