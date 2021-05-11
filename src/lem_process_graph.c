@@ -22,7 +22,7 @@ int	lem_process_graph(t_parray *output, t_graph *graph)
 		return (-1);
 	if (PRINT_DEBUG)
 		lem_print_ants_per_path(ants_per_path, &paths);
-	return (lem_move_ants(graph, paths_to_use, ants_per_path, output));
+	lem_move_ants(graph, paths_to_use, ants_per_path, output);
 	if (!output)
 		return (0);
 	return (1);
