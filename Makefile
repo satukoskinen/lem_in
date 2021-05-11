@@ -15,12 +15,23 @@ SRC = $(addprefix src/, \
 	parse_link.c \
 	parse_utils.c \
 	lem_transform_vertex_disjoint.c \
-	print_utils.c \
-	graph_utils.c \
+	init_graph.c \
+	init_edge_attributes.c \
+	init_node_attributes.c \
+	lem_find_node.c \
+	lem_compare_nodes.c \
+	lem_get_edge.c \
+	process_graph.c \
 	max_flow_edmonds_karp.c \
 	save_max_flow_paths.c \
 	optimise_path_use.c \
 	move_ants.c \
+	print_ants_per_path.c \
+	print_edge.c \
+	print_node.c \
+	print_path_combinations.c \
+	print_path.c \
+	print_string.c \
 )
 
 OBJ = $(subst $(SRC_DIR), $(OBJ_DIR), $(SRC:.c=.o))
