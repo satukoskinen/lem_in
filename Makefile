@@ -9,29 +9,30 @@ CORE = $(CORE_DIR)/libcore.a
 
 SRC = $(addprefix src/, \
 	main.c \
-	parse_input.c \
-	parse_line.c \
-	parse_room.c \
-	parse_link.c \
-	parse_utils.c \
+	lem_parse_input.c \
+	lem_parse_line.c \
+	lem_parse_room.c \
+	lem_parse_link.c \
+	lem_parse_utils.c \
 	lem_transform_vertex_disjoint.c \
-	init_graph.c \
-	init_edge_attributes.c \
-	init_node_attributes.c \
+	lem_init_graph.c \
+	lem_init_edge_attributes.c \
+	lem_init_node_attributes.c \
 	lem_find_node.c \
 	lem_compare_nodes.c \
 	lem_get_edge.c \
-	process_graph.c \
-	max_flow_edmonds_karp.c \
-	save_max_flow_paths.c \
-	optimise_path_use.c \
-	move_ants.c \
-	print_ants_per_path.c \
-	print_edge.c \
-	print_node.c \
-	print_path_combinations.c \
-	print_path.c \
-	print_string.c \
+	lem_edge_remaining_capacity.c \
+	lem_process_graph.c \
+	lem_find_max_flow_paths.c \
+	lem_save_max_flow_paths.c \
+	lem_optimise_path_use.c \
+	lem_move_ants.c \
+	lem_print_ants_per_path.c \
+	lem_print_edge.c \
+	lem_print_node.c \
+	lem_print_path_combinations.c \
+	lem_print_path.c \
+	lem_print_string.c \
 )
 
 OBJ = $(subst $(SRC_DIR), $(OBJ_DIR), $(SRC:.c=.o))

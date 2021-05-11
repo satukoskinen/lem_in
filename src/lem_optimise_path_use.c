@@ -80,7 +80,7 @@ static size_t	optimise_i_paths(t_array *path_combinations,
 	return (path_cost);
 }
 
-int	*optimise_path_use(
+int	*lem_optimise_path_use(
 	t_array **paths_to_use,
 	t_array *path_combinations,
 	size_t max_flow,

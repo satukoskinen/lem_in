@@ -1,6 +1,6 @@
 #include "lem_in.h"
 
-ssize_t	update_edge_flows(t_array *edge_list, t_graph_node *sink)
+static ssize_t	update_edge_flows(t_array *edge_list, t_graph_node *sink)
 {
 	t_graph_node	*curr_node;
 	t_graph_edge	*curr_edge;
@@ -26,14 +26,6 @@ ssize_t	update_edge_flows(t_array *edge_list, t_graph_node *sink)
 	return (1);
 }
 
-static ssize_t	edge_remaining_capacity(t_graph_edge *edge)
-{
-	t_edge_attr	*attr;
-
-	attr = (t_edge_attr *)edge->attr;
-	return (attr->capacity - attr->flow);
-}
-
 static ssize_t	graph_bfs_loop(
 		t_array *bfs_queue,
 		t_array *res_edges,
@@ -51,7 +43,7 @@ static ssize_t	graph_bfs_loop(
 	while (i < curr_node->out.len)
 	{
 		curr_edge = arr_get(&curr_node->out, i);
-		if (edge_remaining_capacity(curr_edge) > 0
+		if (lem_edge_remaining_capacity(curr_edge) > 0
 			&& !lem_find_node(bfs_queue, curr_edge->dst))
 		{
 			if (!(arr_add_last(res_edges, curr_edge)))
@@ -67,12 +59,12 @@ static ssize_t	graph_bfs_loop(
 	return (graph_bfs_loop(bfs_queue, res_edges, sink, queue_index + 1));
 }
 
-ssize_t	new_augmenting_flow(
+static ssize_t	new_augmenting_flow(
 		t_array *res_edges,
 		t_graph_node *src,
 		t_graph_node *dst)
 {
-	t_array			bfs_queue;
+	t_array	bfs_queue;
 
 	bfs_queue = arr_new(1, sizeof(t_graph_node));
 	if (!(arr_add_last(&bfs_queue, src)))
@@ -83,7 +75,7 @@ ssize_t	new_augmenting_flow(
 	return (1);
 }
 
-int64_t	max_flow_edmonds_karp(
+static int64_t	max_flow_edmonds_karp(
 	t_array *path_combinations,
 	t_graph_node *s,
 	t_graph_node *t)
@@ -100,9 +92,25 @@ int64_t	max_flow_edmonds_karp(
 		if (!update_edge_flows(&edge_list, t))
 			break ;
 		flow++;
-		paths = save_max_flow_paths(s, t, (size_t)flow);
+		paths = lem_save_max_flow_paths(s, t, (size_t)flow);
 		arr_add_last(path_combinations, &paths);
 		arr_free(&edge_list);
 	}
 	return (flow);
+}
+
+t_array	lem_find_max_flow_paths(t_graph *graph)
+{
+	int64_t			max_flow;
+	t_graph_node	*source;
+	t_graph_node	*sink;
+	t_array			path_combinations;
+
+	source = ((t_graph_attr *)graph->attr)->source;
+	sink = ((t_graph_attr *)graph->attr)->sink;
+	path_combinations = arr_new(1, sizeof(t_array));
+	max_flow = max_flow_edmonds_karp(&path_combinations, source, sink);
+	if (max_flow <= 0)
+		return (CR_ARR_NULL);
+	return (path_combinations);
 }

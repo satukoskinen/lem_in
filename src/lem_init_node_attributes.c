@@ -1,6 +1,6 @@
 #include "lem_in.h"
 
-t_node_attr	*init_node_attr(
+t_node_attr	*lem_init_node_attr(
 	char *name,
 	t_coordinates coords,
 	t_graph_node *org)

@@ -76,7 +76,7 @@ int	save_round_to_line(char **line, t_array *paths,
 	return (1);
 }
 
-int	move_ants(t_graph *graph, t_array *paths, int *ants_per_path,
+int	lem_move_ants(t_graph *graph, t_array *paths, int *ants_per_path,
 	t_parray *output)
 {
 	t_graph_node	*source;

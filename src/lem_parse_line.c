@@ -18,7 +18,7 @@ static int	parse_command(t_graph *graph, char *cmd, enum e_line_type *type)
 	return (1);
 }
 
-int	parse_line(
+int	lem_parse_line(
 	t_graph *graph,
 	t_parray *input,
 	enum e_line_type *type)
@@ -31,15 +31,15 @@ int	parse_line(
 	if (ret != 1)
 		return (ret);
 	if (*type == ROOM_SRC || *type == ROOM_SINK)
-		ret = parse_room(graph, line, type);
+		ret = lem_parse_room(graph, line, type);
 	else if (s_ncmp(line, "##", 2) == 0)
 		ret = parse_command(graph, line, type);
 	else if (s_ncmp(line, "#", 1) == 0)
 		ret = 1;
 	else if (*type == LINK)
-		ret = parse_link(graph, line);
+		ret = lem_parse_link(graph, line);
 	else
-		ret = parse_room(graph, line, type);
+		ret = lem_parse_room(graph, line, type);
 	if (ret == -1 || !parr_add_last(input, line))
 	{
 		free(line);

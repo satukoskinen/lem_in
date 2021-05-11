@@ -28,8 +28,8 @@ static ssize_t	add_edges(
 
 	src = graph_find_node(new, src_key);
 	dst = graph_find_node(new, dst_key);
-	edge_attr = init_edge_attr(1);
-	rev_edge_attr = init_edge_attr(0);
+	edge_attr = lem_init_edge_attr(1);
+	rev_edge_attr = lem_init_edge_attr(0);
 	graph_add_edge(new, src->key, dst->key, edge_attr);
 	graph_add_edge(new, dst->key, src->key, rev_edge_attr);
 	edge_attr->reverse_edge = graph_find_edge(new, dst->key, src->key);
@@ -79,9 +79,9 @@ static char	*split_node(void *parse_dst, void *data, const char *key)
 	graph = parse_dst;
 	node = data;
 	new_key = s_join(key, "_in");
-	in_node_attr = init_node_attr(new_key, (t_coordinates){0, 0}, node);
+	in_node_attr = lem_init_node_attr(new_key, (t_coordinates){0, 0}, node);
 	new_key = s_join(key, "_out");
-	out_node_attr = init_node_attr(new_key, (t_coordinates){0, 0}, node);
+	out_node_attr = lem_init_node_attr(new_key, (t_coordinates){0, 0}, node);
 	graph_add_node(graph, in_node_attr->name, in_node_attr);
 	graph_add_node(graph, out_node_attr->name, out_node_attr);
 	add_edges(graph, in_node_attr->name, out_node_attr->name);
@@ -98,7 +98,7 @@ t_graph	lem_transform_vertex_disjoint(t_graph *src)
 	char	*source_key;
 	char	*sink_key;
 
-	new = init_graph();
+	new = lem_init_graph();
 	map_parse(&src->data, &new, split_node);
 	map_parse(&src->data, &new, split_edge);
 	source_key = s_join(((t_graph_attr *)src->attr)->source->key, "_out");

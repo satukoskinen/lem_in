@@ -45,7 +45,8 @@ static ssize_t	insert_path_to_array(t_array *paths, t_parray *path_to_add)
 	return (arr_add_last(paths, path_to_add));
 }
 
-t_array	save_max_flow_paths(t_graph_node *s, t_graph_node *t, size_t max_flow)
+t_array	lem_save_max_flow_paths(t_graph_node *s, t_graph_node *t,
+	size_t max_flow)
 {
 	t_array			paths;
 	t_parray		path;

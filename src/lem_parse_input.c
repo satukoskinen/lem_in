@@ -24,7 +24,7 @@ static int	parse_ant_count(t_parray *input)
 	return (ant_count);
 }
 
-int	parse_input(t_graph *graph, t_parray *input)
+int	lem_parse_input(t_graph *graph, t_parray *input)
 {
 	int					ant_count;
 	int					ret;
@@ -40,7 +40,7 @@ int	parse_input(t_graph *graph, t_parray *input)
 	ret = 1;
 	while (ret == 1)
 	{
-		ret = parse_line(graph, input, &type);
+		ret = lem_parse_line(graph, input, &type);
 		line_nbr++;
 	}
 	if (ret == -1)

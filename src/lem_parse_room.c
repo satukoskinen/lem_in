@@ -31,7 +31,7 @@ static void	update_graph_attr(t_graph *graph, char *key, enum e_line_type type)
 		((t_graph_attr *)graph->attr)->sink = node;
 }
 
-int	parse_room(t_graph *graph, char *line, enum e_line_type *type)
+int	lem_parse_room(t_graph *graph, char *line, enum e_line_type *type)
 {
 	char			*ptr;
 	t_node_attr		*attr;
@@ -43,12 +43,12 @@ int	parse_room(t_graph *graph, char *line, enum e_line_type *type)
 	if (ptr == NULL)
 	{
 		*type = LINK;
-		return (parse_link(graph, line));
+		return (lem_parse_link(graph, line));
 	}
 	*ptr = '\0';
 	if (!validate_coordinates(ptr + 1, &coordinates))
 		return (-1);
-	attr = init_node_attr(line, coordinates, NULL);
+	attr = lem_init_node_attr(line, coordinates, NULL);
 	if (attr == NULL)
 		return (-1);
 	if (graph_add_node(graph, attr->name, attr) == -1)

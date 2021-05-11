@@ -1,6 +1,6 @@
 #include "lem_in.h"
 
-t_graph	init_graph(void)
+t_graph	lem_init_graph(void)
 {
 	t_graph			graph;
 	t_graph_attr	*attr;

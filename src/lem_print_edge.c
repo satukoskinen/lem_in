@@ -1,6 +1,6 @@
 #include "lem_in.h"
 
-ssize_t	print_edge(void *data, size_t i)
+ssize_t	lem_print_edge(void *data, size_t i)
 {
 	t_graph_edge	*tmp;
 	t_edge_attr		*attr;
