@@ -27,9 +27,9 @@ static ssize_t	update_edge_flows(t_array *edge_list, t_graph_node *sink)
 }
 
 static ssize_t	graph_bfs_loop(
-		t_array *bfs_queue,
-		t_array *res_edges,
-		t_graph_node *sink,
+		t_array *restrict bfs_queue,
+		t_array *restrict res_edges,
+		t_graph_node *restrict sink,
 		size_t queue_index)
 {
 	t_graph_node	*curr_node;
@@ -46,10 +46,8 @@ static ssize_t	graph_bfs_loop(
 		if (lem_edge_remaining_capacity(curr_edge) > 0
 			&& !lem_find_node(bfs_queue, curr_edge->dst))
 		{
-			if (!(arr_add_last(res_edges, curr_edge)))
-				return (CR_FAIL);
-			if (!(arr_add_last(bfs_queue, curr_edge->dst)))
-				return (CR_FAIL);
+			arr_add_last(res_edges, curr_edge);
+			arr_add_last(bfs_queue, curr_edge->dst);
 			if (sink && curr_edge->dst->id == sink->id)
 				return (CR_SUCCESS);
 		}
@@ -60,15 +58,14 @@ static ssize_t	graph_bfs_loop(
 }
 
 static ssize_t	new_augmenting_flow(
-		t_array *res_edges,
-		t_graph_node *src,
-		t_graph_node *dst)
+		t_array *restrict res_edges,
+		t_graph_node *restrict src,
+		t_graph_node *restrict dst)
 {
 	t_array	bfs_queue;
 
 	bfs_queue = arr_new(1, sizeof(t_graph_node));
-	if (!(arr_add_last(&bfs_queue, src)))
-		return (0);
+	arr_add_last(&bfs_queue, src);
 	if (!(graph_bfs_loop(&bfs_queue, res_edges, dst, 0)))
 		return (0);
 	arr_free(&bfs_queue);
