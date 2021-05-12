@@ -63,9 +63,10 @@ t_graph_edge	*lem_get_edge(t_graph_node *src, t_graph_node *dst);
 ssize_t			lem_compare_nodes(t_graph_node *n1, t_graph_node *n2);
 ssize_t			lem_edge_remaining_capacity(t_graph_edge *edge);
 ssize_t			lem_find_node(t_array *dst, t_graph_node *node);
+void			lem_free_graph(t_graph *graph);
 
 int				*lem_optimise_path_use(t_array **paths_to_use,
-					t_array *path_combinations, size_t max_flow, int ants);
+					t_array *path_combinations, int ants);
 int				lem_move_ants(t_graph *graph, t_array *paths,
 					int *ants_per_path, t_parray *output);
 

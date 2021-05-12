@@ -83,14 +83,15 @@ static size_t	optimise_i_paths(t_array *path_combinations,
 int	*lem_optimise_path_use(
 	t_array **paths_to_use,
 	t_array *path_combinations,
-	size_t max_flow,
 	int ant_count)
 {
 	int		*ants_per_path;
+	size_t	max_flow;
 	size_t	i;
 	size_t	min_path_cost;
 	size_t	path_cost;
 
+	max_flow = path_combinations->len;
 	ants_per_path = (int *)malloc(sizeof(int) * max_flow);
 	if (ants_per_path == NULL)
 		return (NULL);

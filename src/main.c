@@ -1,6 +1,12 @@
 #include "lem_in.h"
 #include <stdlib.h>
 
+ssize_t free_string(void *str, size_t i)
+{
+	free(str);
+	return ((ssize_t)i);
+}
+
 static int	error(char *msg)
 {
 	print_fd(2, "%s\n", msg);
@@ -26,8 +32,14 @@ int	main(void)
 		return (error("Error"));
 	if (lem_process_graph(&output, &graph) != 1)
 		return (error("Error on processing graph"));
+	lem_free_graph(&graph);
 	parr_iter(&input, lem_print_string);
 	print("\n");
 	parr_iter(&output, lem_print_string);
+	parr_iter(&input, free_string);
+	parr_free(&input);
+	parr_iter(&output, free_string);
+	parr_free(&output);
+	system("leaks lem_in");
 	return (0);
 }
