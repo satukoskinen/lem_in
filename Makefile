@@ -17,6 +17,7 @@ SRC = $(addprefix src/, \
 	lem_transform_vertex_disjoint.c \
 	lem_init_graph.c \
 	lem_free_graph.c \
+	lem_free_path_combinations.c \
 	lem_init_edge_attributes.c \
 	lem_init_node_attributes.c \
 	lem_find_node.c \
