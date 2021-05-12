@@ -26,12 +26,24 @@ int	main(void)
 	if (input.data == NULL)
 		return (error("Error"));
 	if (lem_parse_input(&graph, &input) != 1)
+	{
+		lem_free_graph(&graph);
+		parr_iter(&input, free_string);
+		parr_free(&input);
 		return (error("Error on parsing input"));
+	}
 	output = parr_new(1);
 	if (parr_null(&output))
 		return (error("Error"));
 	if (lem_process_graph(&output, &graph) != 1)
+	{
+		lem_free_graph(&graph);
+		parr_iter(&input, free_string);
+		parr_free(&input);
+		parr_iter(&output, free_string);
+		parr_free(&output);
 		return (error("Error on processing graph"));
+	}
 	lem_free_graph(&graph);
 	parr_iter(&input, lem_print_string);
 	print("\n");
@@ -40,6 +52,6 @@ int	main(void)
 	parr_free(&input);
 	parr_iter(&output, free_string);
 	parr_free(&output);
-	system("leaks lem_in");
+//	system("leaks lem_in");
 	return (0);
 }
