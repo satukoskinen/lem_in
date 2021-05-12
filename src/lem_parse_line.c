@@ -28,7 +28,7 @@ int	lem_parse_line(
 
 	line = NULL;
 	ret = s_readline(0, &line);
-	if (ret != 1)
+	if (!ret)
 		return (ret);
 	if (*type == ROOM_SRC || *type == ROOM_SINK)
 		ret = lem_parse_room(graph, line, type);
