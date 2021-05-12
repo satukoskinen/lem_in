@@ -1,5 +1,17 @@
 #include "lem_in.h"
 
+_Atomic int	count = 0;
+_Atomic int	flag = 0;
+pthread_t	pool[8];
+pthread_mutex_t	lock;
+
+typedef struct s_thread
+{
+	t_graph_node	*nodes;
+	size_t			id;
+	size_t			len;
+}				t_thread;
+
 static ssize_t	update_edge_flows(t_array *edge_list, t_graph_node *sink)
 {
 	t_graph_node	*curr_node;
@@ -26,10 +38,67 @@ static ssize_t	update_edge_flows(t_array *edge_list, t_graph_node *sink)
 	return (1);
 }
 
+// static void		*thread(void *args)
+// {
+// 	t_thread	*thread_args;
+
+// 	thread_args = args;
+// 	pthread_mutex_lock(&lock);
+// 	if (flag == 1)
+// 			return (NULL);
+// 	if (thread_args->nodes[count].id == thread_args->id)
+// 	{
+// 		flag = 1;
+// 		return (NULL);
+// 	}
+// 	count++;
+// 	pthread_mutex_unlock(&lock);
+// 	while (count < (int)thread_args->len)
+// 	{
+// 		if (flag == 1)
+// 			return (NULL);
+// 		if (thread_args->nodes[count].id == thread_args->id)
+// 		{
+// 			flag = 1;
+// 			return (NULL);
+// 		}
+// 		count++;
+// 	}
+// 	return (NULL);
+// }
+
+// static ssize_t	lem_find_node_thread(t_array *dst, t_graph_node *node)
+// {
+// 	size_t			i;
+// 	t_thread		arg;
+// 	t_graph_node	*cast;
+
+// 	if (pthread_mutex_init(&lock, NULL) != 0)
+// 	{
+// 		printf("\n mutex init failed\n");
+// 		return 1;
+// 	}
+// 	cast = (t_graph_node *)dst->data;
+// 	i = 0;
+// 	while (i < 8)
+// 	{
+// 		arg = (t_thread){cast, node->id, dst->len};
+// 		pthread_create(&pool[i], NULL, thread, &arg);
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (i < 8)
+// 	{
+// 		pthread_join(pool[i], NULL);
+// 		i++;
+// 	}
+// 	return (flag);
+// }
+
 static ssize_t	graph_bfs_loop(
-		t_array *restrict bfs_queue,
-		t_array *restrict res_edges,
-		t_graph_node *restrict sink,
+		t_array *bfs_queue,
+		t_array *res_edges,
+		t_graph_node *sink,
 		size_t queue_index)
 {
 	t_graph_node	*curr_node;
@@ -58,9 +127,9 @@ static ssize_t	graph_bfs_loop(
 }
 
 static ssize_t	new_augmenting_flow(
-		t_array *restrict res_edges,
-		t_graph_node *restrict src,
-		t_graph_node *restrict dst)
+		t_array *res_edges,
+		t_graph_node *src,
+		t_graph_node *dst)
 {
 	t_array	bfs_queue;
 
