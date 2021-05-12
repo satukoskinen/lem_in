@@ -96,6 +96,7 @@ static int64_t	max_flow_edmonds_karp(
 		arr_add_last(path_combinations, &paths);
 		arr_free(&edge_list);
 	}
+	arr_free(&edge_list);
 	return (flow);
 }
 
