@@ -2,6 +2,8 @@
 # define LEM_IN_H
 
 # include "core/inc/core.h"
+# include <pthread.h>
+# include <unistd.h>
 
 # define PRINT_DEBUG 0
 
