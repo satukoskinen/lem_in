@@ -32,6 +32,8 @@ SRC = $(addprefix src/, \
 	lem_print_path_combinations.c \
 	lem_print_path.c \
 	lem_print_string.c \
+	lem_find_max_flow_paths.c \
+	lem_compare_nodes.c \
 )
 
 #	lem_find_max_flow_paths.c \
@@ -43,7 +45,7 @@ SRC = $(addprefix src/, \
 OBJ = $(subst $(SRC_DIR), $(OBJ_DIR), $(SRC:.c=.o))
 
 CC = gcc
-CFLAGS = -O3 -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror # -fsanitize=address
 #CFLAGS = -g -Wall -Wextra -Werror -Wpedantic -Wtype-limits -Wunused \
                 -Wunreachable-code -Wshadow -fPIC -Wconversion
 CPPFLAGS = -I . -I core

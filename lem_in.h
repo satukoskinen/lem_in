@@ -67,14 +67,13 @@ int				a_to_i(const char *str);
 
 int				lem_process_graph(t_parray *output, t_lem *data);
 t_lem			lem_transform_vertex_disjoint(t_lem *data);
-t_array			lem_find_max_flow_paths(t_graph *graph);
+t_paths			lem_find_max_flow_paths(t_lem *lem);
 t_array			lem_save_max_flow_paths(t_graph_node *s, t_graph_node *t,
 					size_t max_flow);
 
 t_graph_edge	*lem_get_edge(t_graph_node *src, t_graph_node *dst);
 ssize_t			lem_compare_nodes(t_graph_node *n1, t_graph_node *n2);
 ssize_t			lem_edge_remaining_capacity(t_graph_edge *edge);
-ssize_t			lem_find_node(t_array *dst, t_graph_node *node);
 void			lem_free_graph(t_graph *graph);
 void			lem_free_path_combinations(t_array *path_combinations);
 
