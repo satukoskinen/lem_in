@@ -136,7 +136,10 @@ static ssize_t	new_augmenting_flow(
 	bfs_queue = arr_new(1, sizeof(t_graph_node));
 	arr_add_last(&bfs_queue, src);
 	if (!(graph_bfs_loop(&bfs_queue, res_edges, dst, 0)))
+	{
+		arr_free(&bfs_queue);
 		return (0);
+	}
 	arr_free(&bfs_queue);
 	return (1);
 }
@@ -162,6 +165,7 @@ static int64_t	max_flow_edmonds_karp(
 		arr_add_last(path_combinations, &paths);
 		arr_free(&edge_list);
 	}
+	arr_free(&edge_list);
 	return (flow);
 }
 
@@ -177,6 +181,9 @@ t_array	lem_find_max_flow_paths(t_graph *graph)
 	path_combinations = arr_new(1, sizeof(t_array));
 	max_flow = max_flow_edmonds_karp(&path_combinations, source, sink);
 	if (max_flow <= 0)
+	{
+		arr_free(&path_combinations);
 		return (CR_ARR_NULL);
+	}
 	return (path_combinations);
 }
