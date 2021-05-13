@@ -67,7 +67,7 @@ int	main(void)
 		free_resources(&data, &input, &output);
 		return (error("Error on processing graph"));
 	}
-	map_iter(&data.graph, lem_print_node);
+	// map_iter(&data.graph, lem_print_node);
 	parr_iter(&input, lem_print_string);
 	print("\n");
 	parr_iter(&output, lem_print_string);

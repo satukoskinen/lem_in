@@ -49,9 +49,9 @@ static char	*split_edge(void *parse_dst, void *data, const char *key)
 {
 	t_graph_node	*node;
 	t_graph_edge	*edge;
-	size_t			i;
 	char			*src_key;
 	char			*dst_key;
+	size_t			i;
 
 	node = data;
 	i = 0;

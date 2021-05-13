@@ -41,12 +41,12 @@ static int64_t	max_flow_edmonds_karp(
 	while (1)
 	{
 		edge_list = graph_bfs(&lem->graph, lem->s_key, lem->t_key);
-		parr_iter(&edge_list, lem_print_edge);
+		// parr_iter(&edge_list, lem_print_edge);
 		if (edge_list.len == 0 || !update_edge_flows(&edge_list, graph_find_node(&lem->graph, lem->t_key)))
 			break ;
 		flow++;
 		paths = lem_save_max_flow_paths(graph_find_node(&lem->graph, lem->s_key), graph_find_node(&lem->graph, lem->t_key), (size_t)flow);
-		arr_iter(&paths, lem_print_path);
+		/*arr_iter(&paths, lem_print_path);*/
 		arr_add_last(path_combinations, &paths);
 		parr_free(&edge_list);
 	}
