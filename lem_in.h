@@ -15,13 +15,13 @@ enum e_line_type
 	LINK
 };
 
-typedef struct s_coordinates
+typedef struct	s_coordinates
 {
 	int			x;
 	int			y;
 }				t_coordinates;
 
-typedef struct s_node_attr
+typedef struct		s_node_attr
 {
 	char			*name;
 	int				value;
@@ -29,18 +29,27 @@ typedef struct s_node_attr
 	t_graph_node	*org;
 }					t_node_attr;
 
-typedef struct s_edge_attr
+typedef struct		s_edge_attr
 {
 	ssize_t			flow;
 	ssize_t			capacity;
 	t_graph_edge	*reverse_edge;
 }					t_edge_attr;
 
-typedef struct s_graph_attr
+typedef struct		s_graph_attr
 {
 	t_graph_node	*source;
 	t_graph_node	*sink;
 }					t_graph_attr;
+
+typedef struct	s_lem
+{
+	t_graph		graph;
+	const char	*s_key;
+	const char	*t_key;
+	size_t		ant_count;
+}				t_lem;
+
 
 t_graph			lem_init_graph(void);
 t_edge_attr		*lem_init_edge_attr(int capacity);
