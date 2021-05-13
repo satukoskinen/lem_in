@@ -20,12 +20,9 @@ SRC = $(addprefix src/, \
 	lem_free_path_combinations.c \
 	lem_init_edge_attributes.c \
 	lem_init_node_attributes.c \
-	lem_find_node.c \
-	lem_compare_nodes.c \
 	lem_get_edge.c \
 	lem_edge_remaining_capacity.c \
 	lem_process_graph.c \
-	lem_find_max_flow_paths.c \
 	lem_save_max_flow_paths.c \
 	lem_optimise_path_use.c \
 	lem_move_ants.c \
@@ -36,6 +33,12 @@ SRC = $(addprefix src/, \
 	lem_print_path.c \
 	lem_print_string.c \
 )
+
+#	lem_find_max_flow_paths.c \
+		lem_find_node.c \
+			lem_compare_nodes.c \
+
+
 
 OBJ = $(subst $(SRC_DIR), $(OBJ_DIR), $(SRC:.c=.o))
 
