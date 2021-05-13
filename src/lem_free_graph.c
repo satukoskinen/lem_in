@@ -28,7 +28,6 @@ static ssize_t free_node(void *data, size_t i)
 
 void	lem_free_graph(t_graph *graph)
 {
-	free(graph->attr);
-	map_iter(&graph->data, free_node);
-	map_free(&graph->data);
+	map_iter(graph, free_node);
+	map_free(graph);
 }

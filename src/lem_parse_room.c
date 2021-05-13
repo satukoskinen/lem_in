@@ -20,18 +20,7 @@ static int	validate_coordinates(char *line, t_coordinates *coordinates)
 		return (0);
 }
 
-static void	update_graph_attr(t_graph *graph, char *key, enum e_line_type type)
-{
-	t_graph_node	*node;
-
-	node = graph_find_node(graph, key);
-	if (type == ROOM_SRC)
-		((t_graph_attr *)graph->attr)->source = node;
-	else if (type == ROOM_SINK)
-		((t_graph_attr *)graph->attr)->sink = node;
-}
-
-int	lem_parse_room(t_graph *graph, char *line, enum e_line_type *type)
+int	lem_parse_room(t_lem *data, char *line, enum e_line_type *type)
 {
 	char			*ptr;
 	t_node_attr		*attr;
@@ -43,7 +32,7 @@ int	lem_parse_room(t_graph *graph, char *line, enum e_line_type *type)
 	if (ptr == NULL)
 	{
 		*type = LINK;
-		return (lem_parse_link(graph, line));
+		return (lem_parse_link(data, line));
 	}
 	*ptr = '\0';
 	if (!validate_coordinates(ptr + 1, &coordinates))
@@ -51,11 +40,13 @@ int	lem_parse_room(t_graph *graph, char *line, enum e_line_type *type)
 	attr = lem_init_node_attr(line, coordinates, NULL);
 	if (attr == NULL)
 		return (-1);
-	if (graph_add_node(graph, attr->name, attr) == -1)
+	if (graph_add_node(&data->graph, attr->name, attr) == -1)
 		return (-1);
 	*ptr = ' ';
-	if (*type == ROOM_SRC || *type == ROOM_SINK)
-		update_graph_attr(graph, attr->name, *type);
+	if (*type == ROOM_SRC)
+		data->s_key = attr->name;
+	else if (*type == ROOM_SINK)
+		data->t_key = attr->name;
 	*type = ROOM;
 	return (1);
 }

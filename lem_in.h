@@ -52,16 +52,16 @@ typedef struct	s_lem
 
 typedef t_array	t_paths;
 
-t_graph			lem_init_graph(void);
+t_lem			lem_init_data(void);
 t_edge_attr		*lem_init_edge_attr(int capacity);
 t_node_attr		*lem_init_node_attr(char *name,
 					t_coordinates coordinates, t_graph_node *org);
 
-int				lem_parse_input(t_graph *graph, t_parray *input);
-int				lem_parse_line(t_graph *graph, t_parray *input,
+int				lem_parse_input(t_lem *data, t_parray *input);
+int				lem_parse_line(t_lem *data, t_parray *input,
 					enum e_line_type *type);
-int				lem_parse_link(t_graph *graph, char *line);
-int				lem_parse_room(t_graph *graph, char *line, enum e_line_type *type);
+int				lem_parse_link(t_lem *data, char *line);
+int				lem_parse_room(t_lem *data, char *line, enum e_line_type *type);
 
 int				a_to_i(const char *str);
 
