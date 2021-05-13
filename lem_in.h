@@ -65,8 +65,8 @@ int				lem_parse_room(t_lem *data, char *line, enum e_line_type *type);
 
 int				a_to_i(const char *str);
 
-int				lem_process_graph(t_parray *output, t_graph *graph);
-t_graph			lem_transform_vertex_disjoint(t_graph *src);
+int				lem_process_graph(t_parray *output, t_lem *data);
+t_lem			lem_transform_vertex_disjoint(t_lem *data);
 t_array			lem_find_max_flow_paths(t_graph *graph);
 t_array			lem_save_max_flow_paths(t_graph_node *s, t_graph_node *t,
 					size_t max_flow);
@@ -80,7 +80,7 @@ void			lem_free_path_combinations(t_array *path_combinations);
 
 int				*lem_optimise_path_use(t_array **paths_to_use,
 					t_array *path_combinations, int ants);
-int				lem_move_ants(t_graph *graph, t_array *paths,
+int				lem_move_ants(t_lem *data, t_array *paths,
 					int *ants_per_path, t_parray *output);
 
 ssize_t			lem_print_node(void *data, size_t i);
