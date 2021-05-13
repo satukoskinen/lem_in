@@ -50,6 +50,7 @@ typedef struct	s_lem
 	size_t		ant_count;
 }				t_lem;
 
+typedef t_array	t_paths;
 
 t_graph			lem_init_graph(void);
 t_edge_attr		*lem_init_edge_attr(int capacity);
