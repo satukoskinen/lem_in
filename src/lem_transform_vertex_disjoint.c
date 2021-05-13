@@ -25,6 +25,7 @@ static ssize_t	add_edges(
 	t_edge_attr		*rev_edge_attr;
 	t_graph_node	*src;
 	t_graph_node	*dst;
+	t_graph_edge	*rev_edge;
 
 	src = graph_find_node(graph, src_key);
 	dst = graph_find_node(graph, dst_key);
@@ -32,7 +33,10 @@ static ssize_t	add_edges(
 	rev_edge_attr = lem_init_edge_attr(0);
 	graph_add_edge(graph, src->key, dst->key, edge_attr);
 	graph_add_edge(graph, dst->key, src->key, rev_edge_attr);
+	rev_edge = graph_find_edge(graph, dst->key, src->key);
+	rev_edge->valid = false;
 	edge_attr->reverse_edge = graph_find_edge(graph, dst->key, src->key);
+	edge_attr->reverse_edge->valid = false;
 	rev_edge_attr->reverse_edge = graph_find_edge(graph, src->key, dst->key);
 	return (1);
 }
