@@ -80,8 +80,10 @@ static char	*split_node(void *parse_dst, void *data, const char *key)
 	node = data;
 	new_key = s_join(key, "_in");
 	in_node_attr = lem_init_node_attr(new_key, (t_coordinates){0, 0}, node);
+	free(new_key);
 	new_key = s_join(key, "_out");
 	out_node_attr = lem_init_node_attr(new_key, (t_coordinates){0, 0}, node);
+	free(new_key);
 	graph_add_node(graph, in_node_attr->name, in_node_attr);
 	graph_add_node(graph, out_node_attr->name, out_node_attr);
 	add_edges(graph, in_node_attr->name, out_node_attr->name);
