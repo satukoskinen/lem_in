@@ -15,5 +15,5 @@ jobs:
     - uses: actions/checkout@v2
     - name: make
       run: make
-    - name: output
-      run: ./lem_in < test/gen_superposition_4
+    #- name: output
+      #run: ./lem_in < test/gen_superposition_4
