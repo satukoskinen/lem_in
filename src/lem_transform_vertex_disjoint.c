@@ -17,7 +17,7 @@
  *****************************************************************************/
 
 static ssize_t	add_edges(
-	t_graph *new,
+	t_graph *graph,
 	const char *src_key,
 	const char *dst_key)
 {
@@ -25,15 +25,19 @@ static ssize_t	add_edges(
 	t_edge_attr		*rev_edge_attr;
 	t_graph_node	*src;
 	t_graph_node	*dst;
+	t_graph_edge	*rev_edge;
 
-	src = graph_find_node(new, src_key);
-	dst = graph_find_node(new, dst_key);
+	src = graph_find_node(graph, src_key);
+	dst = graph_find_node(graph, dst_key);
 	edge_attr = lem_init_edge_attr(1);
 	rev_edge_attr = lem_init_edge_attr(0);
-	graph_add_edge(new, src->key, dst->key, edge_attr);
-	graph_add_edge(new, dst->key, src->key, rev_edge_attr);
-	edge_attr->reverse_edge = graph_find_edge(new, dst->key, src->key);
-	rev_edge_attr->reverse_edge = graph_find_edge(new, src->key, dst->key);
+	graph_add_edge(graph, src->key, dst->key, edge_attr);
+	graph_add_edge(graph, dst->key, src->key, rev_edge_attr);
+	rev_edge = graph_find_edge(graph, dst->key, src->key);
+	rev_edge->valid = false;
+	edge_attr->reverse_edge = graph_find_edge(graph, dst->key, src->key);
+	edge_attr->reverse_edge->valid = false;
+	rev_edge_attr->reverse_edge = graph_find_edge(graph, src->key, dst->key);
 	return (1);
 }
 
@@ -45,17 +49,17 @@ static char	*split_edge(void *parse_dst, void *data, const char *key)
 {
 	t_graph_node	*node;
 	t_graph_edge	*edge;
-	size_t			i;
 	char			*src_key;
 	char			*dst_key;
+	size_t			i;
 
 	node = data;
 	i = 0;
 	while (i < node->in.len)
 	{
 		edge = arr_get(&node->in, i);
-		src_key = s_join(edge->src->key, "_out");
-		dst_key = s_join(edge->dst->key, "_in");
+		src_key = s_join(edge->u->key, "_out");
+		dst_key = s_join(edge->v->key, "_in");
 		add_edges((t_graph *)parse_dst, src_key, dst_key);
 		free(src_key);
 		free(dst_key);
@@ -94,20 +98,24 @@ static char	*split_node(void *parse_dst, void *data, const char *key)
  *
  *****************************************************************************/
 
-t_graph	lem_transform_vertex_disjoint(t_graph *src)
+t_lem	lem_transform_vertex_disjoint(t_lem *data)
 {
-	t_graph	new;
-	char	*source_key;
-	char	*sink_key;
+	t_lem			transformed_data;
+	char			*source_key;
+	char			*sink_key;
+	t_graph_node	*source;
+	t_graph_node	*sink;
 
-	new = lem_init_graph();
-	map_parse(&src->data, &new, split_node);
-	map_parse(&src->data, &new, split_edge);
-	source_key = s_join(((t_graph_attr *)src->attr)->source->key, "_out");
-	sink_key = s_join(((t_graph_attr *)src->attr)->sink->key, "_in");
-	((t_graph_attr *)new.attr)->source = graph_find_node(&new, source_key);
-	((t_graph_attr *)new.attr)->sink = graph_find_node(&new, sink_key);
+	transformed_data = lem_init_data();
+	map_parse(&data->graph, &transformed_data.graph, split_node);
+	map_parse(&data->graph, &transformed_data.graph, split_edge);
+	source_key = s_join(data->s_key, "_out");
+	sink_key = s_join(data->t_key, "_in");
+	source = graph_find_node(&transformed_data.graph, source_key);
+	sink = graph_find_node(&transformed_data.graph, sink_key);
+	transformed_data.s_key = source->key;
+	transformed_data.t_key = sink->key;
 	free(source_key);
 	free(sink_key);
-	return (new);
+	return (transformed_data);
 }

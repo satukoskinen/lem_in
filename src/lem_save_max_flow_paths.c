@@ -10,7 +10,7 @@ void	save_flow_path(t_parray *path, t_graph_node *src, t_graph_node *dst)
 	node = src;
 	parr_add_last(path, ((t_node_attr *)node->attr)->org);
 	add_every_other = 0;
-	while (node->id != dst->id)
+	while (strcmp(node->key, dst->key) != 0)
 	{
 		i = 0;
 		while (i < node->in.len)
@@ -20,8 +20,8 @@ void	save_flow_path(t_parray *path, t_graph_node *src, t_graph_node *dst)
 			{
 				add_every_other++;
 				if (add_every_other % 2 == 0)
-					parr_add_last(path, ((t_node_attr *)edge->src->attr)->org);
-				node = edge->src;
+					parr_add_last(path, ((t_node_attr *)edge->u->attr)->org);
+				node = edge->u;
 				break ;
 			}
 			i++;
@@ -64,7 +64,7 @@ t_array	lem_save_max_flow_paths(t_graph_node *s, t_graph_node *t,
 		{
 			path = parr_new(sizeof(t_graph_node *));
 			parr_add_last(&path, ((t_node_attr *)t->attr)->org);
-			save_flow_path(&path, sink_edge->src, s);
+			save_flow_path(&path, sink_edge->u, s);
 			insert_path_to_array(&paths, &path);
 		}
 		i++;

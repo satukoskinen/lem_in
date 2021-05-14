@@ -76,20 +76,18 @@ int	save_round_to_line(char **line, t_array *paths,
 	return (1);
 }
 
-int	lem_move_ants(t_graph *graph, t_array *paths, int *ants_per_path,
+int	lem_move_ants(t_lem *data, t_array *paths, int *ants_per_path,
 	t_parray *output)
 {
 	t_graph_node	*source;
-	int				ants;
 	char			*line;
 
-	source = ((t_graph_attr *)graph->attr)->source;
-	ants = ((t_node_attr *)source->attr)->value;
+	source = graph_find_node(&data->graph, data->s_key);
 	((t_node_attr *)source->attr)->value = 1;
 	while (1)
 	{
 		line = NULL;
-		if (!save_round_to_line(&line, paths, ants_per_path, ants))
+		if (!save_round_to_line(&line, paths, ants_per_path, data->ant_count))
 			return (-1);
 		if (line == NULL)
 			break ;
