@@ -14,26 +14,24 @@ SRC = $(addprefix src/, \
 	lem_parse_room.c \
 	lem_parse_link.c \
 	lem_parse_utils.c \
-	lem_transform_vertex_disjoint.c \
 	lem_init_data.c \
-	lem_free_graph.c \
-	lem_free_path_combinations.c \
 	lem_init_edge_attributes.c \
 	lem_init_node_attributes.c \
-	lem_get_edge.c \
-	lem_edge_remaining_capacity.c \
 	lem_process_graph.c \
+	lem_transform_vertex_disjoint.c \
+	lem_find_max_flow_paths.c \
+	lem_get_edge.c \
 	lem_save_max_flow_paths.c \
 	lem_optimise_path_use.c \
 	lem_move_ants.c \
+	lem_free_graph.c \
+	lem_free_path_combinations.c \
 	lem_print_ants_per_path.c \
 	lem_print_edge.c \
 	lem_print_node.c \
 	lem_print_path_combinations.c \
 	lem_print_path.c \
 	lem_print_string.c \
-	lem_find_max_flow_paths.c \
-	lem_compare_nodes.c \
 )
 
 OBJ = $(subst $(SRC_DIR), $(OBJ_DIR), $(SRC:.c=.o))

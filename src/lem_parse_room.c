@@ -20,6 +20,14 @@ static int	validate_coordinates(char *line, t_coordinates *coordinates)
 		return (0);
 }
 
+static void	update_lem_data(t_lem *data, char *key, enum e_line_type type)
+{
+	if (type == ROOM_SRC)
+		data->s_key = key;
+	else
+		data->t_key = key;
+}
+
 int	lem_parse_room(t_lem *data, char *line, enum e_line_type *type)
 {
 	char			*ptr;
@@ -43,10 +51,8 @@ int	lem_parse_room(t_lem *data, char *line, enum e_line_type *type)
 	if (graph_add_node(&data->graph, attr->name, attr) == -1)
 		return (-1);
 	*ptr = ' ';
-	if (*type == ROOM_SRC)
-		data->s_key = attr->name;
-	else if (*type == ROOM_SINK)
-		data->t_key = attr->name;
+	if (*type == ROOM_SRC || *type == ROOM_SINK)
+		update_lem_data(data, attr->name, *type);
 	*type = ROOM;
 	return (1);
 }

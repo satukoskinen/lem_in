@@ -7,7 +7,7 @@ static int	error(char *msg)
 	return (1);
 }
 
-ssize_t free_string(void *str, size_t i)
+static ssize_t	free_string(void *str, size_t i)
 {
 	free(str);
 	return ((ssize_t)i);
@@ -67,7 +67,6 @@ int	main(void)
 		free_resources(&data, &input, &output);
 		return (error("Error on processing graph"));
 	}
-	// map_iter(&data.graph, lem_print_node);
 	parr_iter(&input, lem_print_string);
 	print("\n");
 	parr_iter(&output, lem_print_string);

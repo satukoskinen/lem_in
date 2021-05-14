@@ -1,7 +1,7 @@
 #include "lem_in.h"
 #include <stdlib.h>
 
-static ssize_t free_edge(void *data, size_t i)
+static ssize_t	free_edge(void *data, size_t i)
 {
 	t_graph_edge	*edge;
 
@@ -10,7 +10,7 @@ static ssize_t free_edge(void *data, size_t i)
 	return ((ssize_t)i);
 }
 
-static ssize_t free_node(void *data, size_t i)
+static ssize_t	free_node(void *data, size_t i)
 {
 	t_graph_node	*node;
 	t_node_attr		*attr;
