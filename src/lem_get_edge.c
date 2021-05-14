@@ -9,7 +9,7 @@ t_graph_edge	*lem_get_edge(t_graph_node *src, t_graph_node *dst)
 	while (i < src->out.len)
 	{
 		edge = arr_get(&src->out, i);
-		if (edge->dst->id == dst->id)
+		if (!s_cmp(edge->v->key, dst->key))
 			return (edge);
 		i++;
 	}

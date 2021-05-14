@@ -1,6 +1,6 @@
 #include "lem_in.h"
 
-static ssize_t free_path(void *data, size_t i)
+static ssize_t	free_path(void *data, size_t i)
 {
 	t_parray	*path;
 
@@ -9,7 +9,7 @@ static ssize_t free_path(void *data, size_t i)
 	return ((ssize_t)i);
 }
 
-static ssize_t free_paths(void *data, size_t i)
+static ssize_t	free_paths(void *data, size_t i)
 {
 	t_array	*paths;
 

@@ -24,31 +24,23 @@ static int	parse_ant_count(t_parray *input)
 	return (ant_count);
 }
 
-int	lem_parse_input(t_graph *graph, t_parray *input)
+int	lem_parse_input(t_lem *data, t_parray *input)
 {
 	int					ant_count;
 	int					ret;
 	enum e_line_type	type;
-	t_graph_node		*src;
-	size_t				line_nbr;
 
-	line_nbr = 0;
 	ant_count = parse_ant_count(input);
 	if (ant_count == -1)
 		return (-1);
+	data->ant_count = ant_count;
 	type = ROOM;
 	ret = 1;
 	while (ret == 1)
-	{
-		ret = lem_parse_line(graph, input, &type);
-		line_nbr++;
-	}
+		ret = lem_parse_line(data, input, &type);
 	if (ret == -1)
 		return (-1);
-	if (((t_graph_attr *)graph->attr)->sink == NULL
-		|| ((t_graph_attr *)graph->attr)->source == NULL)
+	if (data->s_key == NULL || data->t_key == NULL)
 		return (-1);
-	src = ((t_graph_attr *)graph->attr)->source;
-	((t_node_attr *)src->attr)->value = ant_count;
 	return (1);
 }
