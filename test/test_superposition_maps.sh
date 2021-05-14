@@ -16,7 +16,7 @@ do
 	./test/generator --big-superposition > $map
 	grep "Here" -m 1 $map
 	output="$subdir/output_$i"
-	time ./lem_in < $map > $output
+	time ./lem-in < $map > $output
 	./lem_in_validator/lem_in_validator < $output
 	echo "----------------------------------------------"
 done

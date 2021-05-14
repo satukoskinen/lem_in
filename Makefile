@@ -1,4 +1,4 @@
-NAME = lem_in
+NAME = lem-in
 
 OBJ_DIR = obj
 SRC_DIR = src
@@ -37,11 +37,11 @@ SRC = $(addprefix src/, \
 OBJ = $(subst $(SRC_DIR), $(OBJ_DIR), $(SRC:.c=.o))
 
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Werror # -fsanitize=address
-#CFLAGS = -g -Wall -Wextra -Werror -Wpedantic -Wtype-limits -Wunused \
+#CFLAGS = -g -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS = -g -Wall -Wextra -Werror -Wpedantic -Wtype-limits -Wunused \
                 -Wunreachable-code -Wshadow -fPIC -Wconversion
-CPPFLAGS = -I . -I core
-LDLIBS = -lcore -lm -lpthread
+CPPFLAGS = -I . -I include -I core
+LDLIBS = -lcore #-lm -lpthread
 LDFLAGS = -L core #-fsanitize=address
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP_DIR)/$*.d
 COMPILE.c = $(CC) $(DEPFLAGS) $(CFLAGS) $(CPPFLAGS) -c

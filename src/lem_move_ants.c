@@ -1,4 +1,4 @@
-#include "lem_in.h"
+#include "lem-in.h"
 #include <stdlib.h>
 
 static void	move_to_line(char **line, int ant, const char *node_key)
@@ -19,17 +19,17 @@ static void	move_to_line(char **line, int ant, const char *node_key)
 }
 
 static void	move_ant(t_node_attr *src_attr,
-	t_node_attr *dst_attr, int ants, int prev_is_source)
+	t_node_attr *dst_attr, size_t ants, int prev_is_source)
 {
 	dst_attr->value = src_attr->value;
-	if (prev_is_source && src_attr->value < ants)
+	if (prev_is_source && src_attr->value < (int)ants)
 		src_attr->value++;
 	else
 		src_attr->value = 0;
 }
 
 static int	move_ants_in_path(t_parray *path,
-	char **line, int ants_per_path, int ants)
+	char **line, int ants_per_path, size_t ants)
 {
 	t_graph_node	*node;
 	t_graph_node	*prev;
@@ -58,7 +58,7 @@ static int	move_ants_in_path(t_parray *path,
 }
 
 int	save_round_to_line(char **line, t_array *paths,
-	int *ants_per_path, int ants)
+	int *ants_per_path, size_t ants)
 {
 	t_parray	*path;
 	size_t		i;

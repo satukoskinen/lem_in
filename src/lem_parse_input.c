@@ -1,4 +1,4 @@
-#include "lem_in.h"
+#include "lem-in.h"
 
 static int	parse_ant_count(t_parray *input)
 {
@@ -33,7 +33,7 @@ int	lem_parse_input(t_lem *data, t_parray *input)
 	ant_count = parse_ant_count(input);
 	if (ant_count == -1)
 		return (-1);
-	data->ant_count = ant_count;
+	data->ant_count = (size_t)ant_count;
 	type = ROOM;
 	ret = 1;
 	while (ret == 1)

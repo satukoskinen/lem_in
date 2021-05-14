@@ -1,4 +1,4 @@
-#include "lem_in.h"
+#include "lem-in.h"
 
 t_edge_attr	*lem_init_edge_attr(int capacity)
 {
