@@ -1,4 +1,4 @@
-#include "lem-in.h"
+#include "lem_in.h"
 
 void	lem_print_result(t_parray *input, t_parray *output)
 {

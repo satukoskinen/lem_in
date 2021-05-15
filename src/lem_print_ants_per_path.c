@@ -1,4 +1,4 @@
-#include "lem-in.h"
+#include "lem_in.h"
 
 void	lem_print_ants_per_path(int *ants_per_path, t_array *paths)
 {

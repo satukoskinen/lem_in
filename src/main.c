@@ -1,4 +1,4 @@
-#include "lem-in.h"
+#include "lem_in.h"
 #include <stdlib.h>
 
 static int	error(char *msg)
@@ -56,11 +56,11 @@ int	main(int argc, char **argv)
 	t_parray	input;
 	t_parray	output;
 
-	if (!lem_parse_flags(&flags, argc, argv))
+	if (lem_parse_flags(&flags, argc, argv) != 1)
 		return (error("Error on parsing flags"));
 	if (flags.usage)
 		return (lem_print_usage());
-	if (!init_resources(&data, &input, &output))
+	if (init_resources(&data, &input, &output) != 1)
 		return (error("Error"));
 	if (lem_parse_input(&data, &input, flags) != 1)
 	{

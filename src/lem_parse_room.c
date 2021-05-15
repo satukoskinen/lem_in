@@ -1,4 +1,4 @@
-#include "lem-in.h"
+#include "lem_in.h"
 
 static int	validate_coordinates(char *line, t_coordinates *coordinates)
 {

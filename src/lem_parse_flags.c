@@ -1,4 +1,4 @@
-#include "lem-in.h"
+#include "lem_in.h"
 
 static int	save_flag(t_flags *flags, t_flag flag, char **argv, int *i)
 {
@@ -26,7 +26,7 @@ static int	parse_option(t_flags *flags, char **argv, int *i)
 		{"help", "h", false},
 		{"verbose", "v", false},
 		{"file", "f", true},
-		{NULL, 0, 0}
+		{NULL, NULL, 0}
 	};
 	size_t				j;
 

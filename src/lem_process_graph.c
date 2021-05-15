@@ -1,4 +1,4 @@
-#include "lem-in.h"
+#include "lem_in.h"
 
 int	lem_process_graph(t_parray *output, t_lem *data, t_flags flags)
 {
