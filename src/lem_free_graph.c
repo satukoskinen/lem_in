@@ -7,6 +7,7 @@ static ssize_t	free_edge(void *data, size_t i)
 
 	edge = data;
 	free(edge->attr);
+	free(edge);
 	return ((ssize_t)i);
 }
 
@@ -19,9 +20,9 @@ static ssize_t	free_node(void *data, size_t i)
 	attr = node->attr;
 	free(attr->name);
 	free(attr);
-	arr_iter(&node->in, free_edge);
-	arr_free(&node->in);
-	arr_free(&node->out);
+	parr_iter(&node->in, free_edge);
+	parr_free(&node->in);
+	parr_free(&node->out);
 	free(node);
 	return ((ssize_t)i);
 }
