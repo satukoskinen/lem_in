@@ -1,4 +1,4 @@
-#include "lem_in.h"
+#include "lem-in.h"
 
 ssize_t	update_edge(t_graph_edge *e)
 {
@@ -66,7 +66,7 @@ t_paths	lem_find_max_flow_paths(t_lem *lem)
 
 	path_combinations = arr_new(1, sizeof(t_array));
 	max_flow = max_flow_edmonds_karp(&lem->graph,
-		lem->s_key, lem->t_key, &path_combinations);
+			lem->s_key, lem->t_key, &path_combinations);
 	if (max_flow <= 0)
 	{
 		arr_free(&path_combinations);

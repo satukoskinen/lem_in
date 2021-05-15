@@ -15,13 +15,13 @@ enum e_line_type
 	LINK
 };
 
-typedef struct	s_coordinates
+typedef struct s_coordinates
 {
 	int			x;
 	int			y;
 }				t_coordinates;
 
-typedef struct		s_node_attr
+typedef struct s_node_attr
 {
 	char			*name;
 	int				value;
@@ -29,20 +29,20 @@ typedef struct		s_node_attr
 	t_graph_node	*org;
 }					t_node_attr;
 
-typedef struct		s_edge_attr
+typedef struct s_edge_attr
 {
 	ssize_t			flow;
 	ssize_t			capacity;
 	t_graph_edge	*reverse_edge;
 }					t_edge_attr;
 
-typedef struct		s_graph_attr
+typedef struct s_graph_attr
 {
 	t_graph_node	*source;
 	t_graph_node	*sink;
 }					t_graph_attr;
 
-typedef struct	s_lem
+typedef struct s_lem
 {
 	t_graph		graph;
 	const char	*s_key;
@@ -78,7 +78,7 @@ void			lem_free_graph(t_graph *graph);
 void			lem_free_path_combinations(t_array *path_combinations);
 
 int				*lem_optimise_path_use(t_array **paths_to_use,
-					t_array *path_combinations, int ants);
+					t_array *path_combinations, size_t ants);
 int				lem_move_ants(t_lem *data, t_array *paths,
 					int *ants_per_path, t_parray *output);
 

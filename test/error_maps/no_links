@@ -1,0 +1,9 @@
+5
+##start
+start 0 0
+a 1 1
+b 2 1
+d 1 0
+c 2 0
+##end
+sink 3 0

@@ -1,17 +1,21 @@
-#include "lem_in.h"
+#include "lem-in.h"
 
 static int	parse_ant_count(t_parray *input)
 {
 	char	*line;
 	int		ret;
 	int		ant_count;
+	size_t	i;
 
 	line = NULL;
 	ret = s_readline(0, &line);
 	if (ret != 1)
 		return (-1);
 	ant_count = a_to_i(line);
-	if (ant_count == 0 && line[0] != '0')
+	i = 0;
+	while (is_digit(line[i]))
+		i++;
+	if (line[i] != '\0')
 	{
 		free(line);
 		return (-1);
@@ -31,9 +35,9 @@ int	lem_parse_input(t_lem *data, t_parray *input)
 	enum e_line_type	type;
 
 	ant_count = parse_ant_count(input);
-	if (ant_count == -1)
+	if (ant_count < 0)
 		return (-1);
-	data->ant_count = ant_count;
+	data->ant_count = (size_t)ant_count;
 	type = ROOM;
 	ret = 1;
 	while (ret == 1)

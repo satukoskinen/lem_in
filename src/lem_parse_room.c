@@ -1,4 +1,4 @@
-#include "lem_in.h"
+#include "lem-in.h"
 
 static int	validate_coordinates(char *line, t_coordinates *coordinates)
 {
@@ -34,7 +34,7 @@ int	lem_parse_room(t_lem *data, char *line, enum e_line_type *type)
 	t_node_attr		*attr;
 	t_coordinates	coordinates;
 
-	if (line[0] == 'L')
+	if (line[0] == 'L' || line[0] == '#')
 		return (-1);
 	ptr = s_chr(line, ' ');
 	if (ptr == NULL)

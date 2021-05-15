@@ -1,0 +1,18 @@
+5
+##start
+start 0 0
+a 1 1
+b 2 1 #invalid comment here
+d 1 0
+c 2 0
+##end
+sink 3 0
+start-a
+start-d
+a-d
+a-c
+a-b
+b-c
+b-sink
+d-c
+c-sink

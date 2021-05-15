@@ -7,9 +7,9 @@ d 1 0
 c 2 0
 ##end
 sink 3 0
+
 start-a
 start-d
-a-d
 a-d
 a-c
 a-b

@@ -1,10 +1,9 @@
 #!/bin/bash
 
-output_dir="gen_test_output"
+output_dir="valid_test_output"
+test_map_dir="test/other_maps"
 
 mkdir -p $output_dir
-
-repeat=10
 
 make
 make re -C lem_in_validator
@@ -14,21 +13,18 @@ then
 	exit 1
 fi
 
-for (( i=0; i < $repeat; i++ ))
+for map in $test_map_dir/*
 do
 	echo "----------------------------------------------"
-	echo $i
-	subdir="$output_dir/$i"
+	echo $map
+	subdir="$output_dir/$map"
 	mkdir -p $subdir
-	map="$subdir/map_$i"
-	./test/generator --big-superposition > $map
 	if [ $? != 0 ]
 	then
 		echo "Generating a map failed"
 		exit 1
 	fi
-	grep "Here" -m 1 $map
-	output="$subdir/output_$i"
+	output="$subdir/output"
 	time ./lem-in < $map > $output
 	if [ $? != 0 ]
 	then
