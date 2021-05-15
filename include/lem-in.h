@@ -5,8 +5,6 @@
 # include <pthread.h>
 # include <unistd.h>
 
-# define PRINT_DEBUG 0
-
 enum e_line_type
 {
 	ROOM,
@@ -42,6 +40,21 @@ typedef struct s_graph_attr
 	t_graph_node	*sink;
 }					t_graph_attr;
 
+typedef struct s_flag
+{
+	char	*name_long;
+	char	*name_short;
+	bool	argument_required;
+}			t_flag;
+
+typedef struct s_flags
+{
+	bool	usage;
+	bool	verbose;
+	bool	read_from_file;
+	char	*file;
+}			t_flags;
+
 typedef struct s_lem
 {
 	t_graph		graph;
@@ -57,15 +70,16 @@ t_edge_attr		*lem_init_edge_attr(int capacity);
 t_node_attr		*lem_init_node_attr(char *name,
 					t_coordinates coordinates, t_graph_node *org);
 
-int				lem_parse_input(t_lem *data, t_parray *input);
-int				lem_parse_line(t_lem *data, t_parray *input,
+int				lem_parse_flags(t_flags *flags, int argc, char **argv);
+int				lem_parse_input(t_lem *data, t_parray *input, t_flags flags);
+int				lem_parse_line(t_lem *data, t_parray *input, int fd,
 					enum e_line_type *type);
 int				lem_parse_link(t_lem *data, char *line);
 int				lem_parse_room(t_lem *data, char *line, enum e_line_type *type);
 
 int				a_to_i(const char *str);
 
-int				lem_process_graph(t_parray *output, t_lem *data);
+int				lem_process_graph(t_parray *output, t_lem *data, t_flags flags);
 t_lem			lem_transform_vertex_disjoint(t_lem *data);
 t_paths			lem_find_max_flow_paths(t_lem *lem);
 t_array			lem_save_max_flow_paths(t_graph_node *s, t_graph_node *t,
@@ -82,6 +96,8 @@ int				*lem_optimise_path_use(t_array **paths_to_use,
 int				lem_move_ants(t_lem *data, t_array *paths,
 					int *ants_per_path, t_parray *output);
 
+int				lem_print_usage(void);
+void			lem_print_result(t_parray *input, t_parray *output);
 ssize_t			lem_print_node(void *data, size_t i);
 ssize_t			lem_print_edge(void *data, size_t i);
 ssize_t			lem_print_string(void *data, size_t i);

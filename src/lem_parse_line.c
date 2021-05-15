@@ -18,13 +18,13 @@ static int	parse_command(t_lem *data, char *cmd, enum e_line_type *type)
 	return (1);
 }
 
-int	lem_parse_line(t_lem *data, t_parray *input, enum e_line_type *type)
+int	lem_parse_line(t_lem *data, t_parray *input, int fd, enum e_line_type *type)
 {
 	char	*line;
 	int		ret;
 
 	line = NULL;
-	ret = s_readline(0, &line);
+	ret = s_readline(fd, &line);
 	if (!ret)
 		return (ret);
 	if (*type == ROOM_SRC || *type == ROOM_SINK)
