@@ -15,7 +15,7 @@ void	save_flow_path(t_parray *path, t_graph_node *src, t_graph_node *dst)
 		i = 0;
 		while (i < node->in.len)
 		{
-			edge = arr_get(&node->in, i);
+			edge = parr_get(&node->in, i);
 			if (((t_edge_attr *)edge->attr)->flow > 0)
 			{
 				add_every_other++;
@@ -59,7 +59,7 @@ t_array	lem_save_max_flow_paths(t_graph_node *s, t_graph_node *t,
 	i = 0;
 	while (i < t->in.len)
 	{
-		sink_edge = arr_get(&t->in, i);
+		sink_edge = parr_get(&t->in, i);
 		if (((t_edge_attr *)sink_edge->attr)->flow > 0)
 		{
 			path = parr_new(sizeof(t_graph_node *));
