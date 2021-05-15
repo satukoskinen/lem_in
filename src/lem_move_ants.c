@@ -70,7 +70,7 @@ int	save_round_to_line(char **line, t_array *paths,
 		ants_per_path[i] = move_ants_in_path(path, line,
 				ants_per_path[i], ants);
 		if (ants_per_path[i] == -1)
-			return (-1);
+			return (0);
 		i++;
 	}
 	return (1);
