@@ -24,9 +24,9 @@ static ssize_t	update_edge_flows(t_parray *edge_list, t_graph_node *t)
 	t_nodes	res;
 
 	res = graph_edge_backtrack(edge_list, t->key, update_edge);
-	if (arr_null(&res))
+	if (parr_null(&res))
 		return (false);
-	arr_free(&res);
+	parr_free(&res);
 	return (true);
 }
 

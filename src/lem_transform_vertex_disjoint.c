@@ -57,7 +57,7 @@ static char	*split_edge(void *parse_dst, void *data, const char *key)
 	i = 0;
 	while (i < node->in.len)
 	{
-		edge = arr_get(&node->in, i);
+		edge = parr_get(&node->in, i);
 		src_key = s_join(edge->u->key, "_out");
 		dst_key = s_join(edge->v->key, "_in");
 		add_edges((t_graph *)parse_dst, src_key, dst_key);
