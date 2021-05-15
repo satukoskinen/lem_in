@@ -22,5 +22,5 @@ jobs:
         git submodule update --init --recursive
     - name: make
       run: make
-    #- name: output
-      #run: ./lem_in < test/gen_superposition_4
+    - name: test valid maps
+      run: ./test/test_valid_maps.sh
