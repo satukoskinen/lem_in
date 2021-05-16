@@ -19,11 +19,6 @@ do
 	echo $map
 	subdir="$output_dir/$map"
 	mkdir -p $subdir
-	if [ $? != 0 ]
-	then
-		echo "Generating a map failed"
-		exit 1
-	fi
 	output="$subdir/output"
 	time ./lem-in < $map > $output
 	if [ $? != 0 ]

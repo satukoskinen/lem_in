@@ -54,7 +54,7 @@ $(NAME): $(CORE) $(OBJ)
 	@echo "Link $@"
 	@$(CC) $(CFLAGS) -o $@ $(OBJ) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(DEP_DIR) $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(DEP_DIR)/%.d | $(DEP_DIR) $(OBJ_DIR)
 	@echo "Compile $<"
 	@$(COMPILE.c) -o $@ $<
 
