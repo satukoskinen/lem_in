@@ -15,7 +15,7 @@ int	lem_process_graph(t_parray *output, t_lem *data)
 	if (parr_null(path_combinations))
 		return (-1);
 	if (PRINT_DEBUG)
-		parr_iter(&path_combinations, lem_print_path_combinations);
+		parr_iter(path_combinations, lem_print_path_combinations);
 	ants_per_path = lem_optimise_path_use(&paths_to_use,
 			path_combinations, data->ant_count);
 	if (PRINT_DEBUG)

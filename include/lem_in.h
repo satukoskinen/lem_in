@@ -5,7 +5,7 @@
 # include <pthread.h>
 # include <unistd.h>
 
-# define PRINT_DEBUG 1
+# define PRINT_DEBUG 0
 
 enum e_line_type
 {
