@@ -12,7 +12,7 @@ int	lem_process_graph(t_parray *output, t_lem *data)
 		return (-1);
 	path_combinations = lem_find_max_flow_paths(&transformed_data);
 	lem_free_graph(&transformed_data.graph);
-	if (parr_null(path_combinations))
+	if (path_combinations == NULL)
 		return (-1);
 	if (PRINT_DEBUG)
 		parr_iter(path_combinations, lem_print_path_combinations);

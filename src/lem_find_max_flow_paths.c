@@ -71,7 +71,7 @@ t_parray	*lem_find_max_flow_paths(t_lem *lem)
 	if (max_flow <= 0)
 	{
 		parr_free(path_combinations);
-		return (&CR_PARR_NULL);
+		return (NULL);
 	}
 	return (path_combinations);
 }

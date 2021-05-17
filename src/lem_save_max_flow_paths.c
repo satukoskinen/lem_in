@@ -54,9 +54,11 @@ t_parray	*lem_save_max_flow_paths(t_graph_node *s, t_graph_node *t,
 	t_graph_edge	*sink_edge;
 
 	paths = malloc(sizeof(t_parray));
+	if (paths == NULL)
+		return (NULL);
 	*paths = parr_new(max_flow);
 	if (parr_null(paths))
-		return (&CR_PARR_NULL);
+		return (NULL);
 	i = 0;
 	while (i < t->in.len)
 	{
