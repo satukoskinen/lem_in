@@ -29,7 +29,7 @@ void	save_flow_path(t_parray *path, t_graph_node *src, t_graph_node *dst)
 	}
 }
 
-static ssize_t	insert_path_to_array(t_array *paths, t_parray *path_to_add)
+static ssize_t	insert_path_to_array(t_parray *paths, t_parray *path_to_add)
 {
 	size_t		i;
 	t_parray	*path;
@@ -37,35 +37,37 @@ static ssize_t	insert_path_to_array(t_array *paths, t_parray *path_to_add)
 	i = 0;
 	while (i < paths->len)
 	{
-		path = arr_get(paths, i);
+		path = parr_get(paths, i);
 		if (path->len > path_to_add->len)
-			return (arr_add(paths, path_to_add, i));
+			return (parr_add(paths, path_to_add, i));
 		i++;
 	}
-	return (arr_add_last(paths, path_to_add));
+	return (parr_add_last(paths, path_to_add));
 }
 
-t_array	lem_save_max_flow_paths(t_graph_node *s, t_graph_node *t,
+t_parray	*lem_save_max_flow_paths(t_graph_node *s, t_graph_node *t,
 	size_t max_flow)
 {
-	t_array			paths;
-	t_parray		path;
+	t_parray		*paths;
+	t_parray		*path;
 	size_t			i;
 	t_graph_edge	*sink_edge;
 
-	paths = arr_new(max_flow, sizeof(t_parray));
-	if (paths.data == NULL)
-		return (CR_ARR_NULL);
+	paths = malloc(sizeof(t_parray));
+	*paths = parr_new(max_flow);
+	if (parr_null(paths))
+		return (&CR_PARR_NULL);
 	i = 0;
 	while (i < t->in.len)
 	{
 		sink_edge = parr_get(&t->in, i);
 		if (((t_edge_attr *)sink_edge->attr)->flow > 0)
 		{
-			path = parr_new(sizeof(t_graph_node *));
-			parr_add_last(&path, ((t_node_attr *)t->attr)->org);
-			save_flow_path(&path, sink_edge->u, s);
-			insert_path_to_array(&paths, &path);
+			path = malloc(sizeof(t_parray));
+			*path = parr_new(sizeof(t_graph_node *));
+			parr_add_last(path, ((t_node_attr *)t->attr)->org);
+			save_flow_path(path, sink_edge->u, s);
+			insert_path_to_array(paths, path);
 		}
 		i++;
 	}

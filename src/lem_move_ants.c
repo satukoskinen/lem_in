@@ -57,7 +57,7 @@ static int	move_ants_in_path(t_parray *path,
 	return (ants_per_path);
 }
 
-int	save_round_to_line(char **line, t_array *paths,
+int	save_round_to_line(char **line, t_parray *paths,
 	int *ants_per_path, size_t ants)
 {
 	t_parray	*path;
@@ -66,7 +66,7 @@ int	save_round_to_line(char **line, t_array *paths,
 	i = 0;
 	while (i < paths->len)
 	{
-		path = arr_get(paths, i);
+		path = parr_get(paths, i);
 		ants_per_path[i] = move_ants_in_path(path, line,
 				ants_per_path[i], ants);
 		if (ants_per_path[i] == -1)
@@ -76,7 +76,7 @@ int	save_round_to_line(char **line, t_array *paths,
 	return (1);
 }
 
-int	lem_move_ants(t_lem *data, t_array *paths, int *ants_per_path,
+int	lem_move_ants(t_lem *data, t_parray *paths, int *ants_per_path,
 	t_parray *output)
 {
 	t_graph_node	*source;
