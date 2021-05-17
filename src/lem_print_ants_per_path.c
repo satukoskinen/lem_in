@@ -1,11 +1,11 @@
 #include "lem_in.h"
 
-void	lem_print_ants_per_path(int *ants_per_path, t_array *paths)
+void	lem_print_ants_per_path(int *ants_per_path, t_parray *paths)
 {
-	size_t	i;
-	t_array	*max_flow_paths;
+	size_t		i;
+	t_parray	*max_flow_paths;
 
-	max_flow_paths = arr_get_last(paths);
+	max_flow_paths = parr_get_last(paths);
 	i = 0;
 	while (i < max_flow_paths->len)
 	{

@@ -34,11 +34,11 @@ static int64_t	max_flow_edmonds_karp(
 	t_graph *graph,
 	const char *s_key,
 	const char *t_key,
-	t_array *path_combinations)
+	t_parray *path_combinations)
 {
 	int64_t			flow;
 	t_parray		edge_list;
-	t_array			paths;
+	t_parray		*paths;
 	t_graph_node	*s;
 	t_graph_node	*t;
 
@@ -52,25 +52,26 @@ static int64_t	max_flow_edmonds_karp(
 			break ;
 		flow++;
 		paths = lem_save_max_flow_paths(s, t, (size_t)flow);
-		arr_add_last(path_combinations, &paths);
+		parr_add_last(path_combinations, paths);
 		parr_free(&edge_list);
 	}
 	parr_free(&edge_list);
 	return (flow);
 }
 
-t_paths	lem_find_max_flow_paths(t_lem *lem)
+t_parray	*lem_find_max_flow_paths(t_lem *lem)
 {
-	int64_t	max_flow;
-	t_array	path_combinations;
+	int64_t		max_flow;
+	t_parray	*path_combinations;
 
-	path_combinations = arr_new(1, sizeof(t_array));
+	path_combinations = malloc(sizeof(t_parray));
+	*path_combinations = parr_new(1);
 	max_flow = max_flow_edmonds_karp(&lem->graph,
-			lem->s_key, lem->t_key, &path_combinations);
+			lem->s_key, lem->t_key, path_combinations);
 	if (max_flow <= 0)
 	{
-		arr_free(&path_combinations);
-		return (CR_ARR_NULL);
+		parr_free(path_combinations);
+		return (NULL);
 	}
 	return (path_combinations);
 }
