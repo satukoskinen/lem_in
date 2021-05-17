@@ -1,4 +1,4 @@
-#include "lem-in.h"
+#include "lem_in.h"
 
 int	a_to_i(const char *str)
 {

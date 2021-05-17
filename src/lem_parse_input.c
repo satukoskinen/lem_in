@@ -1,4 +1,4 @@
-#include "lem-in.h"
+#include "lem_in.h"
 
 static int	parse_ant_count(t_parray *input)
 {

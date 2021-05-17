@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "lem-in.h"
+#include "lem_in.h"
 
 static int	parse_command(t_lem *data, char *cmd, enum e_line_type *type)
 {

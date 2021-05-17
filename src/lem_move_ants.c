@@ -1,4 +1,4 @@
-#include "lem-in.h"
+#include "lem_in.h"
 #include <stdlib.h>
 
 static void	move_to_line(char **line, int ant, const char *node_key)
