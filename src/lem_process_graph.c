@@ -1,5 +1,12 @@
 #include "lem_in.h"
 
+/*
+ *	Transform the graph to turn node capacities into edge capacities,
+ *	find the max flow paths for the transformed graph (if there are any),
+ *	choose the combination of paths to use and the amount of ants to send
+ *	down each path, and finally move the ants and save the rounds to output.
+ */
+
 int	lem_process_graph(t_parray *output, t_lem *data)
 {
 	t_lem		transformed_data;

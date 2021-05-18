@@ -1,5 +1,9 @@
 #include "lem_in.h"
 
+/*
+ *	Initialize variables in the lem struct.
+ */
+
 t_lem	lem_init_data(void)
 {
 	t_lem	lem;

@@ -1,5 +1,11 @@
 #include "lem_in.h"
 
+/*
+ *	Increase the given edge flow by 1 and decrease the flow if its
+ *	reverse edge by 1, and then update the validity of both edges
+ *	according to whether the edge flow < capacity.
+ */
+
 ssize_t	update_edge(t_graph_edge *e)
 {
 	t_graph_edge	*rev_e;
@@ -19,6 +25,10 @@ ssize_t	update_edge(t_graph_edge *e)
 	return (1);
 }
 
+/*
+ *	Comment
+ */
+
 static ssize_t	update_edge_flows(t_parray *edge_list, const char *t_key)
 {
 	t_nodes	res;
@@ -29,6 +39,10 @@ static ssize_t	update_edge_flows(t_parray *edge_list, const char *t_key)
 	parr_free(&res);
 	return (true);
 }
+
+/*
+ *	Comment
+ */
 
 static int64_t	max_flow_edmonds_karp(
 	t_graph *graph,
@@ -59,6 +73,10 @@ static int64_t	max_flow_edmonds_karp(
 	parr_free(&edge_list);
 	return (flow);
 }
+
+/*
+ *	Comment
+ */
 
 t_parray	lem_find_max_flow_paths(t_lem *lem)
 {

@@ -1,5 +1,11 @@
 #include "lem_in.h"
 
+/*
+ *	Calculate the cost (in rounds) of each path determined by its length
+ *	and by how many ants will be sent down that path. The maximum cost
+ *	determines the total cost in rounds for the set of paths.
+ */
+
 static size_t	get_path_cost(t_parray *paths, int *ants_per_path)
 {
 	size_t		max_path_cost;
@@ -20,6 +26,10 @@ static size_t	get_path_cost(t_parray *paths, int *ants_per_path)
 	return (max_path_cost);
 }
 
+/*
+ *	Divide the remaining ants evenly over all the paths.
+ */
+
 static void	add_remaining_ants(
 	t_parray *paths,
 	int *ants_per_path,
@@ -38,6 +48,14 @@ static void	add_remaining_ants(
 		}
 	}
 }
+
+/*
+ *	Optimize the amount of ants per path for the given set of paths,
+ *	assuming that all paths will be used, by first adding to each path
+ *	the difference between the path lengths of that path and the longest
+ *	path (the last one in the array of paths). If there are still ants
+ *	to be distributed after this, add them evenly for each path.
+ */
 
 static size_t	optimise_ants_per_path(
 	t_parray *paths,
@@ -68,6 +86,11 @@ static size_t	optimise_ants_per_path(
 	return (get_path_cost(paths, ants_per_path));
 }
 
+/*
+ *	Choose the optimal amount of ants per path for the path
+ *	combination i to minimize the total path cost.
+ */
+
 static size_t	optimise_i_paths(t_parray *path_combinations,
 	size_t i, int *ants_per_path, size_t ants)
 {
@@ -79,6 +102,15 @@ static size_t	optimise_i_paths(t_parray *path_combinations,
 	path_cost = optimise_ants_per_path(i_paths, ants_per_path, ants);
 	return (path_cost);
 }
+
+/*
+ *	Optimise path use by choosing the combination of paths to use
+ *	as well as the amount of ants to send down each path. This happens
+ *	by iterating over all path combinations, starting with the smallest
+ *	amount of paths (1), and choosing the optimal amount of ants for each
+ *	path to minimize the total cost measured in rounds. Once the path cost
+ *	stops decreasing, the minimum path cost has been found.
+ */
 
 void	lem_optimise_path_use(
 	int		*ants_per_path,

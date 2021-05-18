@@ -1,5 +1,12 @@
 #include "lem_in.h"
 
+/*
+ *	Save the path from the dst node to the src node by moving backward
+ *	over the edges that have a positive flow. Paths are saved using the
+ *	original nodes (org in the attributes), so only every other node is added,
+ *	as there is an incoming and an outgoing node for each original node.
+ */
+
 void	save_flow_path(t_parray *path, t_graph_node *src, t_graph_node *dst)
 {
 	t_graph_node	*node;
@@ -29,6 +36,11 @@ void	save_flow_path(t_parray *path, t_graph_node *src, t_graph_node *dst)
 	}
 }
 
+/*
+ *	Insert a path to the array containing all paths so that
+ *	paths remain sorted in ascending order.
+ */
+
 static void	insert_path_to_array(t_parray *paths, t_parray *path_to_add)
 {
 	size_t		i;
@@ -46,6 +58,10 @@ static void	insert_path_to_array(t_parray *paths, t_parray *path_to_add)
 		lem_exit_error("ERROR");
 }
 
+/*
+ *	Initialize the pointer array.
+ */
+
 static t_parray	*init_path_array(size_t	arr_size)
 {
 	t_parray	*array;
@@ -58,6 +74,12 @@ static t_parray	*init_path_array(size_t	arr_size)
 		lem_exit_error("ERROR");
 	return (array);
 }
+
+/*
+ *	Save all paths found on an iteration of the max flow algorithm by
+ *	iterating the incoming edges of the sink. If an edge has a positive flow,
+ *	save the path that flows from source through that edge to sink.
+ */
 
 t_parray	*lem_save_max_flow_paths(t_graph_node *s, t_graph_node *t,
 	size_t max_flow)

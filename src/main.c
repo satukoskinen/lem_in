@@ -7,6 +7,10 @@ static ssize_t	free_string(void *str, size_t i)
 	return ((ssize_t)i);
 }
 
+/*
+ *	Free variables.
+ */
+
 static void	free_resources(t_lem *data, t_parray *input, t_parray *output)
 {
 	lem_free_graph(&data->graph);
@@ -22,6 +26,10 @@ static void	free_resources(t_lem *data, t_parray *input, t_parray *output)
 	}
 }
 
+/*
+ *	Initialize needed variables.
+ */
+
 static void	init_resources(t_lem *data, t_parray *input, t_parray *output)
 {
 	*data = lem_init_data();
@@ -34,6 +42,10 @@ static void	init_resources(t_lem *data, t_parray *input, t_parray *output)
 	if (parr_null(output))
 		lem_exit_error("ERROR");
 }
+
+/*
+ *	Main maining.
+ */
 
 int	main(void)
 {

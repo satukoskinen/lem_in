@@ -1,6 +1,10 @@
 #include "lem_in.h"
 #include <stdlib.h>
 
+/*
+ *	Add one move to the line that constitutes one round.
+ */
+
 static void	move_to_line(char **line, int ant, const char *node_key)
 {
 	char	*move;
@@ -17,6 +21,13 @@ static void	move_to_line(char **line, int ant, const char *node_key)
 	*line = new;
 }
 
+/*
+ *	Move an ant (or the value that its designated by) from src
+ *	to dst. If src is the source node, increase the value
+ *	by 1 to indicate the next ant to be taken from source.
+ *	Otherwise set the src value to zero.
+ */
+
 static void	move_ant(t_node_attr *src_attr,
 	t_node_attr *dst_attr, size_t ants, int prev_is_source)
 {
@@ -26,6 +37,12 @@ static void	move_ant(t_node_attr *src_attr,
 	else
 		src_attr->value = 0;
 }
+
+/*
+ *	Move ants in a single path by iterating over the nodes in the path,
+ *	and if there are ants left for the path, take a new one
+ *	from the source node.
+ */
 
 static int	move_ants_in_path(t_parray *path,
 	char **line, int ants_per_path, size_t ants)
@@ -54,6 +71,12 @@ static int	move_ants_in_path(t_parray *path,
 	return (ants_per_path);
 }
 
+/*
+ *	Iterate over all the paths and move the ants along each path,
+ *	updating the amount of remaining ants to be sent from source
+ *	down that path. 
+ */
+
 void	save_round_to_line(char **line, t_parray *paths,
 	int *ants_per_path, size_t ants)
 {
@@ -69,6 +92,11 @@ void	save_round_to_line(char **line, t_parray *paths,
 		i++;
 	}
 }
+
+/*
+ *	Move all ants down the paths to use round by round, saving
+ *	each round to output.
+ */
 
 void	lem_move_ants(t_lem *data, t_parray *paths, int *ants_per_path,
 	t_parray *output)

@@ -1,5 +1,9 @@
 #include "lem_in.h"
 
+/*
+ *	Atoi.
+ */
+
 int	a_to_i(const char *str)
 {
 	int	i;
