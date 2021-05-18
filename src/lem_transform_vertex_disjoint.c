@@ -16,7 +16,7 @@
  *
  *****************************************************************************/
 
-static ssize_t	add_edges(
+static void	add_edges(
 	t_graph *graph,
 	const char *src_key,
 	const char *dst_key)
@@ -31,14 +31,16 @@ static ssize_t	add_edges(
 	dst = graph_find_node(graph, dst_key);
 	edge_attr = lem_init_edge_attr(1);
 	rev_edge_attr = lem_init_edge_attr(0);
-	graph_add_edge(graph, src->key, dst->key, edge_attr);
-	graph_add_edge(graph, dst->key, src->key, rev_edge_attr);
+	if (!edge_attr || !rev_edge_attr)
+		lem_exit_error("ERROR");
+	if (!graph_add_edge(graph, src->key, dst->key, edge_attr)
+		|| !graph_add_edge(graph, dst->key, src->key, rev_edge_attr))
+		lem_exit_error("ERROR");
 	rev_edge = graph_find_edge(graph, dst->key, src->key);
 	rev_edge->valid = false;
 	edge_attr->reverse_edge = graph_find_edge(graph, dst->key, src->key);
 	edge_attr->reverse_edge->valid = false;
 	rev_edge_attr->reverse_edge = graph_find_edge(graph, src->key, dst->key);
-	return (1);
 }
 
 /******************************************************************************
@@ -60,6 +62,8 @@ static char	*split_edge(void *parse_dst, void *data, const char *key)
 		edge = parr_get(&node->in, i);
 		src_key = s_join(edge->u->key, "_out");
 		dst_key = s_join(edge->v->key, "_in");
+		if (!src_key || !dst_key)
+			lem_exit_error("ERROR");
 		add_edges((t_graph *)parse_dst, src_key, dst_key);
 		free(src_key);
 		free(dst_key);
@@ -84,12 +88,17 @@ static char	*split_node(void *parse_dst, void *data, const char *key)
 	node = data;
 	new_key = s_join(key, "_in");
 	in_node_attr = lem_init_node_attr(new_key, (t_coordinates){0, 0}, node);
+	if (!new_key || !in_node_attr)
+		lem_exit_error("ERROR");
 	free(new_key);
 	new_key = s_join(key, "_out");
 	out_node_attr = lem_init_node_attr(new_key, (t_coordinates){0, 0}, node);
+	if (!new_key || !out_node_attr)
+		lem_exit_error("ERROR");
 	free(new_key);
-	graph_add_node(graph, in_node_attr->name, in_node_attr);
-	graph_add_node(graph, out_node_attr->name, out_node_attr);
+	if (graph_add_node(graph, in_node_attr->name, in_node_attr) != 1
+		|| graph_add_node(graph, out_node_attr->name, out_node_attr) != 1)
+		lem_exit_error("ERROR");
 	add_edges(graph, in_node_attr->name, out_node_attr->name);
 	return ((char *)key);
 }
@@ -107,12 +116,18 @@ t_lem	lem_transform_vertex_disjoint(t_lem *data)
 	t_graph_node	*sink;
 
 	transformed_data = lem_init_data();
+	if (graph_null(&transformed_data.graph))
+		lem_exit_error("ERROR");
 	map_parse(&data->graph, &transformed_data.graph, split_node);
 	map_parse(&data->graph, &transformed_data.graph, split_edge);
 	source_key = s_join(data->s_key, "_out");
 	sink_key = s_join(data->t_key, "_in");
+	if (!source_key || !sink_key)
+		lem_exit_error("ERROR");
 	source = graph_find_node(&transformed_data.graph, source_key);
 	sink = graph_find_node(&transformed_data.graph, sink_key);
+	if (!source || !sink)
+		lem_exit_error("ERROR");
 	transformed_data.s_key = source->key;
 	transformed_data.t_key = sink->key;
 	free(source_key);
