@@ -1,5 +1,9 @@
 #include "lem_in.h"
 
+/*
+ *	Initialize edge attributes.
+ */
+
 t_edge_attr	*lem_init_edge_attr(int capacity)
 {
 	t_edge_attr	*attr;

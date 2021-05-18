@@ -1,5 +1,10 @@
 #include "lem_in.h"
 
+/*
+ *	Validate and save a link between two rooms (nodes) as an edge
+ *	in the graph.
+ */
+
 int	lem_parse_link(t_lem *data, char *line)
 {
 	char			*ptr;

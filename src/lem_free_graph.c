@@ -1,6 +1,10 @@
 #include "lem_in.h"
 #include <stdlib.h>
 
+/*
+ *	Free the edge attributes and the pointer.
+ */
+
 static ssize_t	free_edge(void *data, size_t i)
 {
 	t_graph_edge	*edge;
@@ -10,6 +14,11 @@ static ssize_t	free_edge(void *data, size_t i)
 	free(edge);
 	return ((ssize_t)i);
 }
+
+/*
+ *	Free the node attributes, incoming edges and both edge
+ *	lists, and the pointer.
+ */
 
 static ssize_t	free_node(void *data, size_t i)
 {
@@ -26,6 +35,10 @@ static ssize_t	free_node(void *data, size_t i)
 	free(node);
 	return ((ssize_t)i);
 }
+
+/*
+ *	Free the node structs contained in the map and the map itself.
+ */
 
 void	lem_free_graph(t_graph *graph)
 {

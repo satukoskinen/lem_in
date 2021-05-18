@@ -1,6 +1,10 @@
 #include "lem_in.h"
 #include <stdlib.h>
 
+/*
+ *	Add one move to the line that constitutes one round.
+ */
+
 static void	move_to_line(char **line, int ant, const char *node_key)
 {
 	char	*move;
@@ -8,15 +12,21 @@ static void	move_to_line(char **line, int ant, const char *node_key)
 
 	move = format("L%d-%s ", ant, node_key);
 	if (move == NULL)
-	{
-		free(*line);
-		*line = NULL;
-	}
+		lem_exit_error("ERROR");
 	new = s_join(*line, move);
+	if (new == NULL)
+		lem_exit_error("ERROR");
 	free(move);
 	free(*line);
 	*line = new;
 }
+
+/*
+ *	Move an ant (or the value that its designated by) from src
+ *	to dst. If src is the source node, increase the value
+ *	by 1 to indicate the next ant to be taken from source.
+ *	Otherwise set the src value to zero.
+ */
 
 static void	move_ant(t_node_attr *src_attr,
 	t_node_attr *dst_attr, size_t ants, int prev_is_source)
@@ -27,6 +37,12 @@ static void	move_ant(t_node_attr *src_attr,
 	else
 		src_attr->value = 0;
 }
+
+/*
+ *	Move ants in a single path by iterating over the nodes in the path,
+ *	and if there are ants left for the path, take a new one
+ *	from the source node.
+ */
 
 static int	move_ants_in_path(t_parray *path,
 	char **line, int ants_per_path, size_t ants)
@@ -49,15 +65,19 @@ static int	move_ants_in_path(t_parray *path,
 			else
 				move_ant(prev->attr, node->attr, ants, 0);
 			move_to_line(line, ((t_node_attr *)node->attr)->value, node->key);
-			if (*line == NULL)
-				return (-1);
 		}
 		j++;
 	}
 	return (ants_per_path);
 }
 
-int	save_round_to_line(char **line, t_array *paths,
+/*
+ *	Iterate over all the paths and move the ants along each path,
+ *	updating the amount of remaining ants to be sent from source
+ *	down that path. 
+ */
+
+void	save_round_to_line(char **line, t_parray *paths,
 	int *ants_per_path, size_t ants)
 {
 	t_parray	*path;
@@ -66,17 +86,19 @@ int	save_round_to_line(char **line, t_array *paths,
 	i = 0;
 	while (i < paths->len)
 	{
-		path = arr_get(paths, i);
+		path = parr_get(paths, i);
 		ants_per_path[i] = move_ants_in_path(path, line,
 				ants_per_path[i], ants);
-		if (ants_per_path[i] == -1)
-			return (0);
 		i++;
 	}
-	return (1);
 }
 
-int	lem_move_ants(t_lem *data, t_array *paths, int *ants_per_path,
+/*
+ *	Move all ants down the paths to use round by round, saving
+ *	each round to output.
+ */
+
+void	lem_move_ants(t_lem *data, t_parray *paths, int *ants_per_path,
 	t_parray *output)
 {
 	t_graph_node	*source;
@@ -87,15 +109,10 @@ int	lem_move_ants(t_lem *data, t_array *paths, int *ants_per_path,
 	while (1)
 	{
 		line = NULL;
-		if (!save_round_to_line(&line, paths, ants_per_path, data->ant_count))
-			return (-1);
+		save_round_to_line(&line, paths, ants_per_path, data->ant_count);
 		if (line == NULL)
 			break ;
-		if (!parr_add_last(output, line))
-		{
-			free(line);
-			return (-1);
-		}
+		if (parr_add_last(output, line) != 1)
+			lem_exit_error("ERROR");
 	}
-	return (1);
 }

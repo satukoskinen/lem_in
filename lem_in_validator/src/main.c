@@ -14,9 +14,9 @@ int	main(void)
 
 	graph = graph_new();
 	if (graph == NULL)
-		return (error("Error occurred\n", -1));
+		return (error("Error occurred (validator)\n", -1));
 	if (parse_input(graph) != 1)
-		return (error("Error parsing input\n", 1));
+		return (error("Error parsing input (validator)\n", 1));
 	ant_count = graph->source->value;
 	if (validate_output(graph, ant_count) == 1)
 		ft_printf("OK\n");

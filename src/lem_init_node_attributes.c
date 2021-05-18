@@ -1,5 +1,9 @@
 #include "lem_in.h"
 
+/*
+ *	Initialize node attributes.
+ */
+
 t_node_attr	*lem_init_node_attr(
 	char *name,
 	t_coordinates coords,

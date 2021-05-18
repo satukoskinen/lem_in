@@ -1,5 +1,11 @@
 #include "lem_in.h"
 
+/*
+ *	Increase the given edge flow by 1 and decrease the flow if its
+ *	reverse edge by 1, and then update the validity of both edges
+ *	according to whether the edge flow < capacity.
+ */
+
 ssize_t	update_edge(t_graph_edge *e)
 {
 	t_graph_edge	*rev_e;
@@ -19,26 +25,34 @@ ssize_t	update_edge(t_graph_edge *e)
 	return (1);
 }
 
-static ssize_t	update_edge_flows(t_parray *edge_list, t_graph_node *t)
+/*
+ *	Comment
+ */
+
+static ssize_t	update_edge_flows(t_parray *edge_list, const char *t_key)
 {
 	t_nodes	res;
 
-	res = graph_edge_backtrack(edge_list, t->key, update_edge);
+	res = graph_edge_backtrack(edge_list, t_key, update_edge);
 	if (parr_null(&res))
 		return (false);
 	parr_free(&res);
 	return (true);
 }
 
+/*
+ *	Comment
+ */
+
 static int64_t	max_flow_edmonds_karp(
 	t_graph *graph,
 	const char *s_key,
 	const char *t_key,
-	t_array *path_combinations)
+	t_parray *path_combinations)
 {
 	int64_t			flow;
 	t_parray		edge_list;
-	t_array			paths;
+	t_parray		*paths;
 	t_graph_node	*s;
 	t_graph_node	*t;
 
@@ -48,29 +62,36 @@ static int64_t	max_flow_edmonds_karp(
 	while (1)
 	{
 		edge_list = graph_bfs(graph, s_key, t_key);
-		if (edge_list.len == 0 || !update_edge_flows(&edge_list, t))
+		if (edge_list.len == 0 || !update_edge_flows(&edge_list, t_key))
 			break ;
 		flow++;
 		paths = lem_save_max_flow_paths(s, t, (size_t)flow);
-		arr_add_last(path_combinations, &paths);
+		if (parr_add_last(path_combinations, paths) != 1)
+			lem_exit_error("ERROR");
 		parr_free(&edge_list);
 	}
 	parr_free(&edge_list);
 	return (flow);
 }
 
-t_paths	lem_find_max_flow_paths(t_lem *lem)
-{
-	int64_t	max_flow;
-	t_array	path_combinations;
+/*
+ *	Comment
+ */
 
-	path_combinations = arr_new(1, sizeof(t_array));
+t_parray	lem_find_max_flow_paths(t_lem *lem)
+{
+	int64_t		max_flow;
+	t_parray	path_combinations;
+
+	path_combinations = parr_new(1);
+	if (parr_null(&path_combinations))
+		lem_exit_error("ERROR");
 	max_flow = max_flow_edmonds_karp(&lem->graph,
 			lem->s_key, lem->t_key, &path_combinations);
 	if (max_flow <= 0)
 	{
-		arr_free(&path_combinations);
-		return (CR_ARR_NULL);
+		parr_free(&path_combinations);
+		return (CR_PARR_NULL);
 	}
 	return (path_combinations);
 }

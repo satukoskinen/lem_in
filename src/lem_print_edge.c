@@ -1,5 +1,9 @@
 #include "lem_in.h"
 
+/*
+ *	Print an edge, its flow and capacity.
+ */
+
 ssize_t	lem_print_edge(void *data, size_t i)
 {
 	t_graph_edge	*tmp;
