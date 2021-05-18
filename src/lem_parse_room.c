@@ -32,12 +32,14 @@ static int	validate_coordinates(char *line, t_coordinates *coordinates)
  *	save the room key in the data struct.
  */
 
-static void	update_lem_data(t_lem *data, char *key, enum e_line_type type)
+static void	update_lem_data_and_type(t_lem *data, char *key,
+	enum e_line_type *type)
 {
-	if (type == ROOM_SRC)
+	if (*type == ROOM_SRC)
 		data->s_key = key;
 	else
 		data->t_key = key;
+	*type = ROOM;
 }
 
 /*
@@ -60,19 +62,17 @@ int	lem_parse_room(t_lem *data, char *line, enum e_line_type *type)
 		*type = LINK;
 		return (lem_parse_link(data, line));
 	}
-	*ptr = '\0';
 	if (!validate_coordinates(ptr + 1, &coordinates))
 		return (-1);
-	attr = lem_init_node_attr(line, coordinates, NULL);
+	attr = lem_init_node_attr(s_sub(line, 0, (uint64_t)(ptr - line)),
+			coordinates, NULL);
 	if (!attr || graph_add_node(&data->graph, attr->name, attr) != 1)
 	{
 		free(attr->name);
 		free(attr);
 		return (-1);
 	}
-	*ptr = ' ';
 	if (*type == ROOM_SRC || *type == ROOM_SINK)
-		update_lem_data(data, attr->name, *type);
-	*type = ROOM;
+		update_lem_data_and_type(data, attr->name, type);
 	return (1);
 }

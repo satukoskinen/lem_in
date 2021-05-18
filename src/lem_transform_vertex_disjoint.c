@@ -82,20 +82,17 @@ static char	*split_node(void *parse_dst, void *data, const char *key)
 	t_graph_node	*node;
 	t_node_attr		*in_node_attr;
 	t_node_attr		*out_node_attr;
-	char			*new_key;
 
 	graph = parse_dst;
 	node = data;
-	new_key = s_join(key, "_in");
-	in_node_attr = lem_init_node_attr(new_key, (t_coordinates){0, 0}, node);
-	if (!new_key || !in_node_attr)
+	in_node_attr = lem_init_node_attr(s_join(key, "_in"),
+			(t_coordinates){0, 0}, node);
+	if (!in_node_attr)
 		lem_exit_error("ERROR");
-	free(new_key);
-	new_key = s_join(key, "_out");
-	out_node_attr = lem_init_node_attr(new_key, (t_coordinates){0, 0}, node);
-	if (!new_key || !out_node_attr)
+	out_node_attr = lem_init_node_attr(s_join(key, "_out"),
+			(t_coordinates){0, 0}, node);
+	if (!out_node_attr)
 		lem_exit_error("ERROR");
-	free(new_key);
 	if (graph_add_node(graph, in_node_attr->name, in_node_attr) != 1
 		|| graph_add_node(graph, out_node_attr->name, out_node_attr) != 1)
 		lem_exit_error("ERROR");
