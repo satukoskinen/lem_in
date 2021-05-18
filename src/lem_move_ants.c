@@ -8,11 +8,10 @@ static void	move_to_line(char **line, int ant, const char *node_key)
 
 	move = format("L%d-%s ", ant, node_key);
 	if (move == NULL)
-	{
-		free(*line);
-		*line = NULL;
-	}
+		lem_exit_error("ERROR");
 	new = s_join(*line, move);
+	if (new == NULL)
+		lem_exit_error("ERROR");
 	free(move);
 	free(*line);
 	*line = new;
@@ -49,15 +48,13 @@ static int	move_ants_in_path(t_parray *path,
 			else
 				move_ant(prev->attr, node->attr, ants, 0);
 			move_to_line(line, ((t_node_attr *)node->attr)->value, node->key);
-			if (*line == NULL)
-				return (-1);
 		}
 		j++;
 	}
 	return (ants_per_path);
 }
 
-int	save_round_to_line(char **line, t_parray *paths,
+void	save_round_to_line(char **line, t_parray *paths,
 	int *ants_per_path, size_t ants)
 {
 	t_parray	*path;
@@ -69,14 +66,11 @@ int	save_round_to_line(char **line, t_parray *paths,
 		path = parr_get(paths, i);
 		ants_per_path[i] = move_ants_in_path(path, line,
 				ants_per_path[i], ants);
-		if (ants_per_path[i] == -1)
-			return (-1);
 		i++;
 	}
-	return (1);
 }
 
-int	lem_move_ants(t_lem *data, t_parray *paths, int *ants_per_path,
+void	lem_move_ants(t_lem *data, t_parray *paths, int *ants_per_path,
 	t_parray *output)
 {
 	t_graph_node	*source;
@@ -87,15 +81,10 @@ int	lem_move_ants(t_lem *data, t_parray *paths, int *ants_per_path,
 	while (1)
 	{
 		line = NULL;
-		if (!save_round_to_line(&line, paths, ants_per_path, data->ant_count))
-			return (-1);
+		save_round_to_line(&line, paths, ants_per_path, data->ant_count);
 		if (line == NULL)
 			break ;
-		if (!parr_add_last(output, line))
-		{
-			free(line);
-			return (-1);
-		}
+		if (parr_add_last(output, line) != 1)
+			lem_exit_error("ERROR");
 	}
-	return (1);
 }

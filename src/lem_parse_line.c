@@ -37,7 +37,7 @@ int	lem_parse_line(t_lem *data, t_parray *input, enum e_line_type *type)
 		ret = lem_parse_link(data, line);
 	else
 		ret = lem_parse_room(data, line, type);
-	if (ret == -1 || !parr_add_last(input, line))
+	if (ret == -1 || parr_add_last(input, line) != 1)
 	{
 		free(line);
 		return (-1);

@@ -52,6 +52,8 @@ typedef struct s_lem
 
 typedef t_array	t_paths;
 
+void			lem_exit_error(char *msg);
+
 t_lem			lem_init_data(void);
 t_edge_attr		*lem_init_edge_attr(int capacity);
 t_node_attr		*lem_init_node_attr(char *name,
@@ -67,7 +69,7 @@ int				a_to_i(const char *str);
 
 int				lem_process_graph(t_parray *output, t_lem *data);
 t_lem			lem_transform_vertex_disjoint(t_lem *data);
-t_parray		*lem_find_max_flow_paths(t_lem *lem);
+t_parray		lem_find_max_flow_paths(t_lem *lem);
 t_parray		*lem_save_max_flow_paths(t_graph_node *s, t_graph_node *t,
 					size_t max_flow);
 
@@ -77,9 +79,9 @@ ssize_t			lem_edge_remaining_capacity(t_graph_edge *edge);
 void			lem_free_graph(t_graph *graph);
 void			lem_free_path_combinations(t_parray *path_combinations);
 
-int				*lem_optimise_path_use(t_parray **paths_to_use,
+void			lem_optimise_path_use(int *ants_per_path, t_parray **paths_to_use,
 					t_parray *path_combinations, size_t ants);
-int				lem_move_ants(t_lem *data, t_parray *paths,
+void			lem_move_ants(t_lem *data, t_parray *paths,
 					int *ants_per_path, t_parray *output);
 
 ssize_t			lem_print_node(void *data, size_t i);
@@ -88,5 +90,6 @@ ssize_t			lem_print_string(void *data, size_t i);
 ssize_t			lem_print_path(void *data, size_t i);
 ssize_t			lem_print_path_combinations(void *data, size_t i);
 void			lem_print_ants_per_path(int *ants_per_path, t_parray *paths);
+void			lem_print_result(t_parray *input, t_parray *output);
 
 #endif

@@ -80,21 +80,18 @@ static size_t	optimise_i_paths(t_parray *path_combinations,
 	return (path_cost);
 }
 
-int	*lem_optimise_path_use(
+void	lem_optimise_path_use(
+	int		*ants_per_path,
 	t_parray **paths_to_use,
 	t_parray *path_combinations,
 	size_t ants)
 {
-	int		*ants_per_path;
 	size_t	max_flow;
 	size_t	i;
 	size_t	min_path_cost;
 	size_t	path_cost;
 
 	max_flow = path_combinations->len;
-	ants_per_path = (int *)malloc(sizeof(int) * max_flow);
-	if (ants_per_path == NULL)
-		return (NULL);
 	min_path_cost = (size_t)-1;
 	i = 0;
 	while (i < max_flow)
@@ -108,5 +105,4 @@ int	*lem_optimise_path_use(
 	}
 	*paths_to_use = parr_get(path_combinations, i - 1);
 	optimise_i_paths(path_combinations, i - 1, ants_per_path, ants);
-	return (ants_per_path);
 }

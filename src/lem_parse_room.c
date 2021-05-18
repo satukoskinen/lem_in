@@ -46,10 +46,12 @@ int	lem_parse_room(t_lem *data, char *line, enum e_line_type *type)
 	if (!validate_coordinates(ptr + 1, &coordinates))
 		return (-1);
 	attr = lem_init_node_attr(line, coordinates, NULL);
-	if (attr == NULL)
+	if (!attr || graph_add_node(&data->graph, attr->name, attr) != 1)
+	{
+		free(attr->name);
+		free(attr);
 		return (-1);
-	if (graph_add_node(&data->graph, attr->name, attr) == -1)
-		return (-1);
+	}
 	*ptr = ' ';
 	if (*type == ROOM_SRC || *type == ROOM_SINK)
 		update_lem_data(data, attr->name, *type);

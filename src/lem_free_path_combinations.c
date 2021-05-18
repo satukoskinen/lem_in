@@ -6,6 +6,7 @@ static ssize_t	free_path(void *data, size_t i)
 
 	path = data;
 	parr_free(path);
+	free(path);
 	return ((ssize_t)i);
 }
 
@@ -16,6 +17,7 @@ static ssize_t	free_paths(void *data, size_t i)
 	paths = data;
 	parr_iter(paths, free_path);
 	parr_free(paths);
+	free(paths);
 	return ((ssize_t)i);
 }
 
