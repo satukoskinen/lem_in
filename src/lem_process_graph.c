@@ -27,7 +27,7 @@ int	lem_process_graph(t_parray *output, t_lem *data, t_flags flags)
 	lem_optimise_path_use(ants_per_path, &paths_to_use,
 		&path_combinations, data->ant_count);
 	if (flags.verbose)
-		lem_print_ants_per_path(ants_per_path, &path_combinations);
+		lem_print_ants_per_path(ants_per_path, paths_to_use);
 	lem_move_ants(data, paths_to_use, ants_per_path, output);
 	free(ants_per_path);
 	lem_free_path_combinations(&path_combinations);
