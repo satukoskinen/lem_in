@@ -9,6 +9,7 @@ CORE = $(CORE_DIR)/libcore.a
 
 SRC = $(addprefix src/, \
 	main.c \
+	lem_parse_flags.c \
 	lem_exit_error.c \
 	lem_parse_input.c \
 	lem_parse_line.c \
@@ -27,6 +28,7 @@ SRC = $(addprefix src/, \
 	lem_move_ants.c \
 	lem_free_graph.c \
 	lem_free_path_combinations.c \
+	lem_print_usage.c \
 	lem_print_ants_per_path.c \
 	lem_print_edge.c \
 	lem_print_node.c \

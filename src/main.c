@@ -47,19 +47,24 @@ static void	init_resources(t_lem *data, t_parray *input, t_parray *output)
  *	Main maining.
  */
 
-int	main(void)
+int	main(int argc, char **argv)
 {
+	t_flags		flags;
 	t_lem		data;
 	t_parray	input;
 	t_parray	output;
 
+	if (lem_parse_flags(&flags, argc, argv) != 1)
+		lem_exit_error("Error on parsing flags");
+	if (flags.usage)
+		return (lem_print_usage());
 	init_resources(&data, &input, &output);
-	if (lem_parse_input(&data, &input) != 1)
+	if (lem_parse_input(&data, &input, flags) != 1)
 	{
 		free_resources(&data, &input, &output);
 		lem_exit_error("Error on parsing input");
 	}
-	if (lem_process_graph(&output, &data) != 1)
+	if (lem_process_graph(&output, &data, flags) != 1)
 	{
 		free_resources(&data, &input, &output);
 		lem_exit_error("Error on processing graph");

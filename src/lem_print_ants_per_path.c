@@ -6,14 +6,14 @@
 
 void	lem_print_ants_per_path(int *ants_per_path, t_parray *paths)
 {
-	size_t		i;
-	t_parray	*max_flow_paths;
+	size_t	i;
 
-	max_flow_paths = parr_get_last(paths);
+	print("Using %d paths:\n", (int)paths->len);
 	i = 0;
-	while (i < max_flow_paths->len)
+	while (i < paths->len)
 	{
 		print("path %d: %d ants\n", (int)i, ants_per_path[i]);
 		i++;
 	}
+	print("\n");
 }

@@ -6,7 +6,7 @@
  *	characters, return an error.
  */
 
-static int	parse_ant_count(t_parray *input)
+static int	parse_ant_count(t_parray *input, int fd)
 {
 	char	*line;
 	int		ret;
@@ -14,7 +14,7 @@ static int	parse_ant_count(t_parray *input)
 	size_t	i;
 
 	line = NULL;
-	ret = s_readline(0, &line);
+	ret = s_readline(fd, &line);
 	if (ret != 1)
 		return (-1);
 	ant_count = a_to_i(line);
@@ -40,20 +40,27 @@ static int	parse_ant_count(t_parray *input)
  *	or a source or a sink node has not been saved, return an error.
  */
 
-int	lem_parse_input(t_lem *data, t_parray *input)
+int	lem_parse_input(t_lem *data, t_parray *input, t_flags flags)
 {
+	int					fd;
 	int					ant_count;
 	int					ret;
 	enum e_line_type	type;
 
-	ant_count = parse_ant_count(input);
+	if (flags.read_from_file)
+		fd = open(flags.file, O_RDONLY);
+	else
+		fd = 0;
+	if (fd == -1)
+		return (-1);
+	ant_count = parse_ant_count(input, fd);
 	if (ant_count < 0)
 		return (-1);
 	data->ant_count = (size_t)ant_count;
 	type = ROOM;
 	ret = 1;
 	while (ret == 1)
-		ret = lem_parse_line(data, input, &type);
+		ret = lem_parse_line(data, input, fd, &type);
 	if (ret == -1)
 		return (-1);
 	if (data->s_key == NULL || data->t_key == NULL)
