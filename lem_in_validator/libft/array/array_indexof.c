@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   array_indexof.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skoskine <skoskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jkoskela <jkoskela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 08:58:01 by skoskine          #+#    #+#             */
-/*   Updated: 2021/03/28 12:26:39 by skoskine         ###   ########.fr       */
+/*   Updated: 2021/06/22 13:51:25 by jkoskela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	array_indexof(t_array *array, void *data)
 {
-	size_t	i;
+	t_size	i;
 
 	i = 0;
 	while (i < array->size)

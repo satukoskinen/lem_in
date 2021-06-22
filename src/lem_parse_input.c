@@ -11,7 +11,7 @@ static int	parse_ant_count(t_parray *input, int fd)
 	char	*line;
 	int		ret;
 	int		ant_count;
-	size_t	i;
+	t_size	i;
 
 	line = NULL;
 	ret = s_readline(fd, &line);
@@ -56,7 +56,7 @@ int	lem_parse_input(t_lem *data, t_parray *input, t_flags flags)
 	ant_count = parse_ant_count(input, fd);
 	if (ant_count < 0)
 		return (-1);
-	data->ant_count = (size_t)ant_count;
+	data->ant_count = (t_size)ant_count;
 	type = ROOM;
 	ret = 1;
 	while (ret == 1)

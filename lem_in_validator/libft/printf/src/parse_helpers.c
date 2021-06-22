@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_helpers.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skoskine <skoskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jkoskela <jkoskela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 12:56:17 by skoskine          #+#    #+#             */
-/*   Updated: 2021/04/09 10:58:26 by skoskine         ###   ########.fr       */
+/*   Updated: 2021/06/22 13:51:25 by jkoskela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include "libft.h"
 #include <stdlib.h>
 
-size_t	add_number(t_data *specs, char *number, char *result)
+t_size	add_number(t_data *specs, char *number, char *result)
 {
-	size_t	i;
+	t_size	i;
 
 	i = 0;
 	if (specs->is_negative)
@@ -29,9 +29,9 @@ size_t	add_number(t_data *specs, char *number, char *result)
 	return (i);
 }
 
-size_t	add_padding(size_t len, char c, char *result)
+t_size	add_padding(t_size len, char c, char *result)
 {
-	size_t	i;
+	t_size	i;
 
 	i = 0;
 	while (i < len)
@@ -39,9 +39,9 @@ size_t	add_padding(size_t len, char c, char *result)
 	return (i);
 }
 
-size_t	add_prefix(t_data *specs, char *result)
+t_size	add_prefix(t_data *specs, char *result)
 {
-	size_t	i;
+	t_size	i;
 
 	i = 0;
 	if (specs->is_negative)
@@ -67,10 +67,10 @@ size_t	add_prefix(t_data *specs, char *result)
 	return (i);
 }
 
-char	*parse_int_result(t_data *specs, char *number, size_t result_len)
+char	*parse_int_result(t_data *specs, char *number, t_size result_len)
 {
 	char	*result;
-	size_t	i;
+	t_size	i;
 
 	result = (char *)malloc(sizeof(char) * (result_len + 1));
 	if (result == NULL)

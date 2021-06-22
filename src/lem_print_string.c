@@ -4,8 +4,8 @@
  *	You guessed it. It prints a string.
  */
 
-ssize_t	lem_print_string(void *data, size_t i)
+t_ssize	lem_print_string(void *data, t_size i)
 {
 	print("%s\n", (char *)data);
-	return ((ssize_t)i);
+	return ((t_ssize)i);
 }

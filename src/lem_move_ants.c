@@ -29,7 +29,7 @@ static void	move_to_line(char **line, int ant, const char *node_key)
  */
 
 static void	move_ant(t_node_attr *src_attr,
-	t_node_attr *dst_attr, size_t ants, int prev_is_source)
+	t_node_attr *dst_attr, t_size ants, int prev_is_source)
 {
 	dst_attr->value = src_attr->value;
 	if (prev_is_source && src_attr->value < (int)ants)
@@ -45,11 +45,11 @@ static void	move_ant(t_node_attr *src_attr,
  */
 
 static int	move_ants_in_path(t_parray *path,
-	char **line, int ants_per_path, size_t ants)
+	char **line, int ants_per_path, t_size ants)
 {
 	t_graph_node	*node;
 	t_graph_node	*prev;
-	size_t			j;
+	t_size			j;
 
 	j = 0;
 	while (j < path->len - 1)
@@ -78,10 +78,10 @@ static int	move_ants_in_path(t_parray *path,
  */
 
 void	save_round_to_line(char **line, t_parray *paths,
-	int *ants_per_path, size_t ants)
+	int *ants_per_path, t_size ants)
 {
 	t_parray	*path;
-	size_t		i;
+	t_size		i;
 
 	i = 0;
 	while (i < paths->len)

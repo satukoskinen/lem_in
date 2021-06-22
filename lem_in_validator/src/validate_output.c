@@ -5,7 +5,7 @@
 static int	ants_in_graph(t_graph *graph)
 {
 	t_vertex	*vertex;
-	size_t		i;
+	t_size		i;
 
 	graph->source->value = 0;
 	i = 0;

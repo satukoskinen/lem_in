@@ -4,7 +4,7 @@
  *	Print a node and its incoming and outgoing edges.
  */
 
-ssize_t	lem_print_node(void *data, size_t i)
+t_ssize	lem_print_node(void *data, t_size i)
 {
 	t_graph_node	*tmp;
 	t_node_attr		*attr;
@@ -15,5 +15,5 @@ ssize_t	lem_print_node(void *data, size_t i)
 		tmp->key, attr->value);
 	parr_iter(&tmp->in, lem_print_edge);
 	parr_iter(&tmp->out, lem_print_edge);
-	return ((ssize_t)i);
+	return ((t_ssize)i);
 }

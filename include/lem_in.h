@@ -29,8 +29,8 @@ typedef struct s_node_attr
 
 typedef struct s_edge_attr
 {
-	ssize_t			flow;
-	ssize_t			capacity;
+	t_ssize			flow;
+	t_ssize			capacity;
 	t_graph_edge	*reverse_edge;
 }					t_edge_attr;
 
@@ -44,14 +44,14 @@ typedef struct s_flag
 {
 	char	*name_long;
 	char	*name_short;
-	bool	argument_required;
+	t_bool	argument_required;
 }			t_flag;
 
 typedef struct s_flags
 {
-	bool	usage;
-	bool	verbose;
-	bool	read_from_file;
+	t_bool	usage;
+	t_bool	verbose;
+	t_bool	read_from_file;
 	char	*file;
 }			t_flags;
 
@@ -60,7 +60,7 @@ typedef struct s_lem
 	t_graph		graph;
 	const char	*s_key;
 	const char	*t_key;
-	size_t		ant_count;
+	t_size		ant_count;
 }				t_lem;
 
 typedef t_array	t_paths;
@@ -85,26 +85,26 @@ int				lem_process_graph(t_parray *output, t_lem *data, t_flags flags);
 t_lem			lem_transform_vertex_disjoint(t_lem *data);
 t_parray		lem_find_max_flow_paths(t_lem *lem);
 t_parray		*lem_save_max_flow_paths(t_graph_node *s, t_graph_node *t,
-					size_t max_flow);
+					t_size max_flow);
 
 t_graph_edge	*lem_get_edge(t_graph_node *src, t_graph_node *dst);
-ssize_t			lem_compare_nodes(t_graph_node *n1, t_graph_node *n2);
-ssize_t			lem_edge_remaining_capacity(t_graph_edge *edge);
+t_ssize			lem_compare_nodes(t_graph_node *n1, t_graph_node *n2);
+t_ssize			lem_edge_remaining_capacity(t_graph_edge *edge);
 void			lem_free_graph(t_graph *graph);
 void			lem_free_path_combinations(t_parray *path_combinations);
 
 void			lem_optimise_path_use(int *ants_per_path, t_parray **paths_to_use,
-					t_parray *path_combinations, size_t ants);
+					t_parray *path_combinations, t_size ants);
 void			lem_move_ants(t_lem *data, t_parray *paths,
 					int *ants_per_path, t_parray *output);
 
 int				lem_print_usage(void);
 void			lem_print_result(t_parray *input, t_parray *output);
-ssize_t			lem_print_node(void *data, size_t i);
-ssize_t			lem_print_edge(void *data, size_t i);
-ssize_t			lem_print_string(void *data, size_t i);
-ssize_t			lem_print_path(void *data, size_t i);
-ssize_t			lem_print_path_combinations(void *data, size_t i);
+t_ssize			lem_print_node(void *data, t_size i);
+t_ssize			lem_print_edge(void *data, t_size i);
+t_ssize			lem_print_string(void *data, t_size i);
+t_ssize			lem_print_path(void *data, t_size i);
+t_ssize			lem_print_path_combinations(void *data, t_size i);
 void			lem_print_ants_per_path(int *ants_per_path, t_parray *paths);
 void			lem_print_result(t_parray *input, t_parray *output);
 

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void	ft_del1(void *content, size_t size)
+void	ft_del1(void *content, t_size size)
 {
 	if (size != 0)
 		free(content);

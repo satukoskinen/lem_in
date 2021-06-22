@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skoskine <skoskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jkoskela <jkoskela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 13:20:52 by skoskine          #+#    #+#             */
-/*   Updated: 2021/03/24 21:17:26 by skoskine         ###   ########.fr       */
+/*   Updated: 2021/06/22 13:51:25 by jkoskela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strncat(char *s1, const char *s2, size_t n)
+char	*ft_strncat(char *s1, const char *s2, t_size n)
 {
-	size_t	s1_len;
-	size_t	s2_len;
+	t_size	s1_len;
+	t_size	s2_len;
 
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);

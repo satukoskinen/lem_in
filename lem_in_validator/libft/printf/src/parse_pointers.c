@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_pointers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skoskine <skoskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jkoskela <jkoskela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 19:08:42 by skoskine          #+#    #+#             */
-/*   Updated: 2021/04/09 09:56:12 by skoskine         ###   ########.fr       */
+/*   Updated: 2021/06/22 13:51:25 by jkoskela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	parse_pointer(t_data *specs, void *ptr, char **result)
 {
 	uintmax_t	value;
 	char		*value_str;
-	size_t		result_len;
+	t_size		result_len;
 
 	value = (uintmax_t)ptr;
 	value_str = ft_uintmax_itoa_base(value, 16, 0);

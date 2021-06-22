@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void	ft_free_content(void *content, size_t size);
+void	ft_free_content(void *content, t_size size);
 
 int		lstadd_test(void)
 {

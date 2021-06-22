@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_doubles.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skoskine <skoskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jkoskela <jkoskela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 09:38:46 by skoskine          #+#    #+#             */
-/*   Updated: 2021/04/09 10:20:13 by skoskine         ###   ########.fr       */
+/*   Updated: 2021/06/22 13:51:25 by jkoskela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ static int	get_int_part_len(char *value_str)
 	return (len);
 }
 
-char	*parse_double_result(t_data *specs, char *value_str, size_t len)
+char	*parse_double_result(t_data *specs, char *value_str, t_size len)
 {
 	char	*result;
-	size_t	i;
+	t_size	i;
 
 	result = (char *)malloc(sizeof(char) * (len + 1));
 	if (result == NULL)
@@ -54,7 +54,7 @@ char	*parse_double_result(t_data *specs, char *value_str, size_t len)
 
 int	get_result_length(t_data *specs, double value, char *value_str)
 {
-	size_t	len;
+	t_size	len;
 
 	if (ft_isnan(value) || ft_isposinf(value) || ft_isneginf(value))
 		len = 3;
@@ -96,7 +96,7 @@ int	parse_doubles(t_data *specs, va_list *ap, char **result)
 {
 	double		value;
 	char		*value_str;
-	size_t		len;
+	t_size		len;
 
 	if (specs->length_modifier[0] == '\0' || specs->length_modifier[0] == 'l')
 		value = va_arg(*ap, double);

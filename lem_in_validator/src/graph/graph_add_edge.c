@@ -5,7 +5,7 @@
 int	graph_contains_edge(t_graph *graph, char *src_id, char *dst_id)
 {
 	t_edge	*edge;
-	size_t	i;
+	t_size	i;
 
 	i = 0;
 	while (i < array_size(graph->edges))

@@ -6,7 +6,7 @@
  *	according to whether the edge flow < capacity.
  */
 
-ssize_t	update_edge(t_graph_edge *e)
+t_ssize	update_edge(t_graph_edge *e)
 {
 	t_graph_edge	*rev_e;
 
@@ -29,15 +29,15 @@ ssize_t	update_edge(t_graph_edge *e)
  *	Comment
  */
 
-static ssize_t	update_edge_flows(t_parray *edge_list, const char *t_key)
+static t_ssize	update_edge_flows(t_parray *edge_list, const char *t_key)
 {
 	t_nodes	res;
 
 	res = graph_edge_backtrack(edge_list, t_key, update_edge);
 	if (parr_null(&res))
-		return (false);
+		return (FALSE);
 	parr_free(&res);
-	return (true);
+	return (TRUE);
 }
 
 /*
@@ -65,7 +65,7 @@ static int64_t	max_flow_edmonds_karp(
 		if (edge_list.len == 0 || !update_edge_flows(&edge_list, t_key))
 			break ;
 		flow++;
-		paths = lem_save_max_flow_paths(s, t, (size_t)flow);
+		paths = lem_save_max_flow_paths(s, t, (t_size)flow);
 		if (parr_add_last(path_combinations, paths) != 1)
 			lem_exit_error("ERROR");
 		parr_free(&edge_list);
@@ -91,7 +91,7 @@ t_parray	lem_find_max_flow_paths(t_lem *lem)
 	if (max_flow <= 0)
 	{
 		parr_free(&path_combinations);
-		return (CR_PARR_NULL);
+		return ((t_parray){NULL, 0, 0});
 	}
 	return (path_combinations);
 }

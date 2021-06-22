@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_chars.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skoskine <skoskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jkoskela <jkoskela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 14:40:23 by skoskine          #+#    #+#             */
-/*   Updated: 2021/04/09 10:49:09 by skoskine         ###   ########.fr       */
+/*   Updated: 2021/06/22 13:51:25 by jkoskela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include "libft.h"
 #include <stdlib.h>
 
-static char	*parse_str_result(t_data *specs, char *str, size_t str_len)
+static char	*parse_str_result(t_data *specs, char *str, t_size str_len)
 {
-	size_t	result_len;
-	size_t	i;
-	size_t	j;
+	t_size	result_len;
+	t_size	i;
+	t_size	j;
 	char	*result;
 
 	result_len = str_len + specs->min_field_width;
@@ -41,9 +41,9 @@ static char	*parse_str_result(t_data *specs, char *str, size_t str_len)
 	return (result);
 }
 
-static size_t	update_str_specs(t_data *specs, char *str)
+static t_size	update_str_specs(t_data *specs, char *str)
 {
-	size_t	len;
+	t_size	len;
 
 	if (str == NULL)
 	{
@@ -67,7 +67,7 @@ static size_t	update_str_specs(t_data *specs, char *str)
 
 int	parse_string(t_data *specs, char *str, char **result)
 {
-	size_t	str_len;
+	t_size	str_len;
 
 	str_len = update_str_specs(specs, str);
 	if (str == NULL)

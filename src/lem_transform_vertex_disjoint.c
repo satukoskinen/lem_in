@@ -37,9 +37,9 @@ static void	add_edges(
 		|| !graph_add_edge(graph, dst->key, src->key, rev_edge_attr))
 		lem_exit_error("ERROR");
 	rev_edge = graph_find_edge(graph, dst->key, src->key);
-	rev_edge->valid = false;
+	rev_edge->valid = FALSE;
 	edge_attr->reverse_edge = graph_find_edge(graph, dst->key, src->key);
-	edge_attr->reverse_edge->valid = false;
+	edge_attr->reverse_edge->valid = FALSE;
 	rev_edge_attr->reverse_edge = graph_find_edge(graph, src->key, dst->key);
 }
 
@@ -53,7 +53,7 @@ static char	*split_edge(void *parse_dst, void *data, const char *key)
 	t_graph_edge	*edge;
 	char			*src_key;
 	char			*dst_key;
-	size_t			i;
+	t_size			i;
 
 	node = data;
 	i = 0;

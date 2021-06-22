@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skoskine <skoskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jkoskela <jkoskela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/07 17:16:18 by skoskine          #+#    #+#             */
-/*   Updated: 2021/04/09 10:10:26 by skoskine         ###   ########.fr       */
+/*   Updated: 2021/06/22 13:51:25 by jkoskela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static int	count_strings(char const *s, char c)
 {
 	int		string_count;
-	size_t	i;
+	t_size	i;
 
 	string_count = 0;
 	i = 0;
@@ -34,9 +34,9 @@ static int	count_strings(char const *s, char c)
 	return (string_count);
 }
 
-static size_t	next_word_length(char const *s, char c)
+static t_size	next_word_length(char const *s, char c)
 {
-	size_t	len;
+	t_size	len;
 
 	len = 0;
 	while (s[len] != c && s[len] != '\0')
@@ -57,7 +57,7 @@ static char	**free_char_arr(char **arr, int size)
 
 char	*add_next_str(char const *s, char c)
 {
-	size_t	len;
+	t_size	len;
 	char	*str;
 
 	len = next_word_length(s, c);

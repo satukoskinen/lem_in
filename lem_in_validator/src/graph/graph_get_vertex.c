@@ -4,7 +4,7 @@
 t_vertex	*graph_get_vertex(t_graph *graph, char *id)
 {
 	t_vertex	*vertex;
-	size_t		i;
+	t_size		i;
 
 	if (graph == NULL || graph->vertices == NULL)
 		return (NULL);

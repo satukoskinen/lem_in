@@ -5,14 +5,14 @@
  *	Free the edge attributes and the pointer.
  */
 
-static ssize_t	free_edge(void *data, size_t i)
+static t_ssize	free_edge(void *data, t_size i)
 {
 	t_graph_edge	*edge;
 
 	edge = data;
 	free(edge->attr);
 	free(edge);
-	return ((ssize_t)i);
+	return ((t_ssize)i);
 }
 
 /*
@@ -20,7 +20,7 @@ static ssize_t	free_edge(void *data, size_t i)
  *	lists, and the pointer.
  */
 
-static ssize_t	free_node(void *data, size_t i)
+static t_ssize	free_node(void *data, t_size i)
 {
 	t_graph_node	*node;
 	t_node_attr		*attr;
@@ -33,7 +33,7 @@ static ssize_t	free_node(void *data, size_t i)
 	parr_free(&node->in);
 	parr_free(&node->out);
 	free(node);
-	return ((ssize_t)i);
+	return ((t_ssize)i);
 }
 
 /*

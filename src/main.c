@@ -1,10 +1,10 @@
 #include "lem_in.h"
 #include <stdlib.h>
 
-static ssize_t	free_string(void *str, size_t i)
+static t_ssize	free_string(void *str, t_size i)
 {
 	free(str);
-	return ((ssize_t)i);
+	return ((t_ssize)i);
 }
 
 /*
