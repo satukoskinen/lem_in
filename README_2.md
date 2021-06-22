@@ -9,6 +9,7 @@ You are given an "ant farm", a network of rooms with links connecting the rooms.
 Input to the program is comprised of the amount of ants followed by rooms (nodes) and links (edges) connecting the rooms. The source and sink nodes are designated by preceding ``##start`` and ``##end`` commands. Each node has a unique name and coordinates. Each (undirected) link is saved as two directed edges between the nodes, producing a directed graph.
 
 ```
+
 10 // Number of ants
 ##start // Next line is the source node.
 1 23 3 // Room ID, X, Y
@@ -35,6 +36,7 @@ Input to the program is comprised of the amount of ants followed by rooms (nodes
 7-4
 6-5
 #another comment
+
 ```
 
 ## Algorithm
@@ -80,7 +82,9 @@ If the input file does not have the correct form, the program displays ``ERROR``
 For example, the example input given above would produce the following output:
 
 ```
-10
+
+// Input part
+
 ##start
 1 23 3
 2 16 7
@@ -107,6 +111,8 @@ For example, the example input given above would produce the following output:
 6-5
 #another comment
 
+// Output part
+
 L1-2 L2-3
 L1-4 L3-2 L2-5 L4-3
 L1-0 L3-4 L5-2 L2-6 L4-5 L6-3
@@ -115,6 +121,7 @@ L5-0 L7-4 L9-2 L4-0 L6-6 L8-5
 L7-0 L9-4 L10-2 L6-0 L8-6
 L9-0 L10-4 L8-0
 L10-0
+
 ```
 
 ## Compiling and running the program
