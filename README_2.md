@@ -47,6 +47,7 @@ To solve the problem, the program proceeds as follows:
 2. Transform the input graph into the form required by the max flow algorithm and the restrictions imposed by the subject
 3. Run the Edmonds-Karp maximum flow algorithm on the transformed graph to find the possible path combinations up to the maximum flow
 4. Given the number of ants, determine the optimal combination of paths to use and how many ants to send down each individual path
+5. Print rounds of moves that move all ants from source to sink along the determined paths
 
 ### Transforming the graph
 
