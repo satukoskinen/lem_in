@@ -44,7 +44,7 @@ OBJ = $(subst $(SRC_DIR), $(OBJ_DIR), $(SRC:.c=.o))
 
 CC = gcc
 #CFLAGS = -g -Wall -Wextra -Werror #-fsanitize=address
-CFLAGS = -Wall -Wextra -Werror -Wpedantic -Wtype-limits -Wunused \
+CFLAGS = -O3 -Wall -Wextra -Werror -Wpedantic -Wtype-limits -Wunused \
                 -Wunreachable-code -Wshadow -fPIC -Wconversion
 CPPFLAGS = -I . -I include -I core/inc
 LDLIBS = -lcore #-lm -lpthread

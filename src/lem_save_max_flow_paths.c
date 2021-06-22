@@ -15,6 +15,7 @@ void	save_flow_path(t_parray *path, t_graph_node *src, t_graph_node *dst)
 	int				add_every_other;
 
 	node = src;
+	edge = NULL;
 	parr_add_last(path, ((t_node_attr *)node->attr)->org);
 	add_every_other = 1;
 	while (strcmp(node->key, dst->key) != 0)
