@@ -26,7 +26,9 @@ t_ssize	update_edge(t_graph_edge *e)
 }
 
 /*
- *	Comment
+ *	Backtracks the edges in the edge list returned by the breadth first search
+ *	and updated the edge flows. The updating function is passed as a function
+ *	pointer to the core library function graph_edge_backtrack.
  */
 
 static t_ssize	update_edge_flows(t_parray *edge_list, const char *t_key)
@@ -41,7 +43,13 @@ static t_ssize	update_edge_flows(t_parray *edge_list, const char *t_key)
 }
 
 /*
- *	Comment
+ *	Iterate a breadth first search over the network increasing the flow by
+ *	1 each iteration. The breadth first search returns a list of edges that
+ *	lead from sink to source. The loop continues until the breadth first seacrh
+ *	doesn't return any more edges or if the edge list couldn't be track back to
+ *	the source node. Calls lem_save_max_flow_paths which returns a list of paths
+ *	associated with the corresponding flow. That combination of paths is then
+ *	added to `path_combinations` for future porcessing.
  */
 
 static int64_t	max_flow_edmonds_karp(
@@ -75,7 +83,9 @@ static int64_t	max_flow_edmonds_karp(
 }
 
 /*
- *	Comment
+ *	Constructs the max flow paths for a range of flows from
+ *	0 to max flow. Returns an array of pointers to array of
+ *	paths for different flows.
  */
 
 t_parray	lem_find_max_flow_paths(t_lem *lem)
