@@ -23,7 +23,7 @@ int	lem_process_graph(t_parray *output, t_lem *data, t_flags flags)
 		parr_iter(&path_combinations, lem_print_path_combinations);
 	ants_per_path = (int *)malloc(sizeof(int) * path_combinations.len);
 	if (!ants_per_path)
-		lem_exit_error("ERROR");
+		lem_exit_error("ants per path");
 	lem_optimise_path_use(ants_per_path, &paths_to_use,
 		&path_combinations, data->ant_count);
 	if (flags.verbose)

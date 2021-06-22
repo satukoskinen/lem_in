@@ -33,14 +33,14 @@ static void	free_resources(t_lem *data, t_parray *input, t_parray *output)
 static void	init_resources(t_lem *data, t_parray *input, t_parray *output)
 {
 	*data = lem_init_data();
-	if (graph_null(&data->graph))
-		lem_exit_error("ERROR");
+	if (map_null(&data->graph))
+		lem_exit_error("graph null");
 	*input = parr_new(1);
 	if (parr_null(input))
-		lem_exit_error("ERROR");
+		lem_exit_error("input null");
 	*output = parr_new(1);
 	if (parr_null(output))
-		lem_exit_error("ERROR");
+		lem_exit_error("output null");
 }
 
 /*

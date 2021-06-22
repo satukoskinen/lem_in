@@ -11,7 +11,7 @@ t_ssize	lem_print_edge(void *data, t_size i)
 
 	tmp = data;
 	attr = tmp->attr;
-	print("%-10s -> %-10s F = %d, C = %d\n",
+	print("%-10s -> %-10s flow = %d, capacity = %d\n",
 		tmp->u->key, tmp->v->key, attr->flow, attr->capacity);
 	return ((t_ssize)i);
 }

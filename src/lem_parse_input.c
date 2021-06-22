@@ -1,40 +1,6 @@
 #include "lem_in.h"
 
 /*
- *	Parse the ant count received as the first line of input
- *	from stdin. If it is invalid, negative or contains non-digit
- *	characters, return an error.
- */
-
-static int	parse_ant_count(t_parray *input, int fd)
-{
-	char	*line;
-	int		ret;
-	int		ant_count;
-	t_size	i;
-
-	line = NULL;
-	ret = s_readline(fd, &line);
-	if (ret != 1)
-		return (-1);
-	ant_count = a_to_i(line);
-	i = 0;
-	while (is_digit(line[i]))
-		i++;
-	if (line[i] != '\0')
-	{
-		free(line);
-		return (-1);
-	}
-	if (!parr_add_last(input, line))
-	{
-		free(line);
-		return (-1);
-	}
-	return (ant_count);
-}
-
-/*
  *	First parse ant count, then rooms and links one line at a time.
  *	If the ant count is invalid, an error occurs during parsing lines,
  *	or a source or a sink node has not been saved, return an error.

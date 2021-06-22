@@ -67,7 +67,7 @@ static int64_t	max_flow_edmonds_karp(
 		flow++;
 		paths = lem_save_max_flow_paths(s, t, (t_size)flow);
 		if (parr_add_last(path_combinations, paths) != 1)
-			lem_exit_error("ERROR");
+			lem_exit_error("parr add last");
 		parr_free(&edge_list);
 	}
 	parr_free(&edge_list);
@@ -85,7 +85,7 @@ t_parray	lem_find_max_flow_paths(t_lem *lem)
 
 	path_combinations = parr_new(1);
 	if (parr_null(&path_combinations))
-		lem_exit_error("ERROR");
+		lem_exit_error("parr null");
 	max_flow = max_flow_edmonds_karp(&lem->graph,
 			lem->s_key, lem->t_key, &path_combinations);
 	if (max_flow <= 0)

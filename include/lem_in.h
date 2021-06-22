@@ -1,8 +1,7 @@
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-# include "core/inc/core.h"
-# include <pthread.h>
+# include "core.h"
 # include <unistd.h>
 
 enum e_line_type
@@ -74,8 +73,10 @@ t_node_attr		*lem_init_node_attr(char *name,
 
 int				lem_parse_flags(t_flags *flags, int argc, char **argv);
 int				lem_parse_input(t_lem *data, t_parray *input, t_flags flags);
+int				parse_ant_count(t_parray *input, int fd);
 int				lem_parse_line(t_lem *data, t_parray *input, int fd,
 					enum e_line_type *type);
+int				parse_command(t_lem *data, char *cmd, enum e_line_type *type);
 int				lem_parse_link(t_lem *data, char *line);
 int				lem_parse_room(t_lem *data, char *line, enum e_line_type *type);
 
@@ -93,8 +94,10 @@ t_ssize			lem_edge_remaining_capacity(t_graph_edge *edge);
 void			lem_free_graph(t_graph *graph);
 void			lem_free_path_combinations(t_parray *path_combinations);
 
-void			lem_optimise_path_use(int *ants_per_path, t_parray **paths_to_use,
-					t_parray *path_combinations, t_size ants);
+void			lem_optimise_path_use(int *ants_per_path,
+					t_parray **paths_to_use,
+					t_parray *path_combinations,
+					t_size ants);
 void			lem_move_ants(t_lem *data, t_parray *paths,
 					int *ants_per_path, t_parray *output);
 

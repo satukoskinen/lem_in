@@ -124,7 +124,7 @@ void	lem_optimise_path_use(
 	t_size	path_cost;
 
 	max_flow = path_combinations->len;
-	min_path_cost = (t_size)-1;
+	min_path_cost = (t_size)(-1);
 	i = 0;
 	while (i < max_flow)
 	{
