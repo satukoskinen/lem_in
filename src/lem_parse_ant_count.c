@@ -46,12 +46,7 @@ int	parse_ant_count(t_parray *input, int fd)
 	i = 0;
 	while (is_digit(line[i]))
 		i++;
-	if (line[i] != '\0')
-	{
-		free(line);
-		return (-1);
-	}
-	if (!parr_add_last(input, line))
+	if (line[i] != '\0' || !parr_add_last(input, line))
 	{
 		free(line);
 		return (-1);
