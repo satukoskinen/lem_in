@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   array.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkoskela <jkoskela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skoskine <skoskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 22:17:11 by skoskine          #+#    #+#             */
-/*   Updated: 2021/06/22 13:51:25 by jkoskela         ###   ########.fr       */
+/*   Updated: 2021/06/22 14:13:49 by skoskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@
 typedef struct s_array
 {
 	void		*data;
-	t_size		elem_size;
-	t_size		capacity;
-	t_size		size;
+	size_t		elem_size;
+	size_t		capacity;
+	size_t		size;
 }				t_array;
 
-t_array			*array_new(t_size capacity, t_size elem_size);
-void			*array_get(t_array *array, t_size i);
+t_array			*array_new(size_t capacity, size_t elem_size);
+void			*array_get(t_array *array, size_t i);
 int				array_indexof(t_array *array, void *data);
 t_array			*array_add(t_array **array, void *data);
-t_array			*array_insert(t_array **array, void *data, t_size i);
-void			array_remove(t_array *array, t_size i);
+t_array			*array_insert(t_array **array, void *data, size_t i);
+void			array_remove(t_array *array, size_t i);
 void			array_del(t_array **array);
 int				array_is_empty(t_array *array);
-t_size			array_size(t_array *array);
+size_t			array_size(t_array *array);
 t_array			*array_add(t_array **array, void *data);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkoskela <jkoskela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skoskine <skoskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 14:25:56 by skoskine          #+#    #+#             */
-/*   Updated: 2021/06/22 13:51:25 by jkoskela         ###   ########.fr       */
+/*   Updated: 2021/06/22 14:13:49 by skoskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strstr(const char *haystack, const char *needle)
 {
-	t_size	i;
-	t_size	j;
+	size_t	i;
+	size_t	j;
 
 	if (needle[0] == '\0')
 		return ((char *)haystack);

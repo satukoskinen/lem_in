@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   round_double.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkoskela <jkoskela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skoskine <skoskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/28 14:25:12 by skoskine          #+#    #+#             */
-/*   Updated: 2021/06/22 13:51:25 by jkoskela         ###   ########.fr       */
+/*   Updated: 2021/06/22 14:13:49 by skoskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	has_exact_fraction(double nbr, t_size precision, double div)
+static int	has_exact_fraction(double nbr, size_t precision, double div)
 {
 	double		int_part;
 	double		frac_part;
@@ -26,7 +26,7 @@ static int	has_exact_fraction(double nbr, t_size precision, double div)
 		return (0);
 }
 
-int	rounds_half_to_even(double nbr, t_size precision)
+int	rounds_half_to_even(double nbr, size_t precision)
 {
 	double	div;
 
@@ -39,7 +39,7 @@ int	rounds_half_to_even(double nbr, t_size precision)
 		return (0);
 }
 
-static double	round_half_to_even(double nbr, double div, t_size precision)
+static double	round_half_to_even(double nbr, double div, size_t precision)
 {
 	double	tmp;
 	double	int_part;
@@ -64,9 +64,9 @@ static double	round_half_to_even(double nbr, double div, t_size precision)
 		return (nbr + 0.5 / div);
 }
 
-long double	round_double(double nbr, t_size precision)
+long double	round_double(double nbr, size_t precision)
 {
-	t_size		i;
+	size_t		i;
 	double		div;
 	long double	long_nbr;
 

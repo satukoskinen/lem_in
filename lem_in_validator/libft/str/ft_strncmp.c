@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkoskela <jkoskela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skoskine <skoskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 15:41:14 by skoskine          #+#    #+#             */
-/*   Updated: 2021/06/22 13:51:25 by jkoskela         ###   ########.fr       */
+/*   Updated: 2021/06/22 14:13:49 by skoskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string.h>
 
-int	ft_strncmp(const char *s1, const char *s2, t_size n)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	t_size	i;
+	size_t	i;
 
 	i = 0;
 	while (s1[i] != '\0' && s2[i] != '\0' && i < n && s1[i] == s2[i])

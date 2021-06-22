@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_signed_integers.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkoskela <jkoskela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skoskine <skoskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 09:39:00 by skoskine          #+#    #+#             */
-/*   Updated: 2021/06/22 13:51:25 by jkoskela         ###   ########.fr       */
+/*   Updated: 2021/06/22 14:13:49 by skoskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ static intmax_t	get_signed_arg(t_data *specs, va_list *ap)
 	return (value);
 }
 
-static t_size	update_int_specs(t_data *specs, intmax_t value, char *value_str)
+static size_t	update_int_specs(t_data *specs, intmax_t value, char *value_str)
 {
-	t_size	len;
+	size_t	len;
 
 	if (value == 0)
 		specs->is_zero = 1;
@@ -63,7 +63,7 @@ int	parse_signed_ints(t_data *specs, va_list *ap, char **result)
 {
 	intmax_t	value;
 	char		*value_str;
-	t_size		len;
+	size_t		len;
 
 	value = get_signed_arg(specs, ap);
 	value_str = ft_intmax_itoa_base(value, 10);

@@ -14,8 +14,8 @@ int strlcat_test(void)
     s1[0] = '\0';
     s2[0] = '\0';
 
-    t_size ret1 = ft_strlcat(s1, "this first", 20);
-    t_size ret2 = strlcat(s2, "this first", 20);
+    size_t ret1 = ft_strlcat(s1, "this first", 20);
+    size_t ret2 = strlcat(s2, "this first", 20);
 
     if (ret1 == ret2)
         tests_passed++;

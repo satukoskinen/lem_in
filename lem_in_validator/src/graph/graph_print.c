@@ -3,7 +3,7 @@
 
 void	graph_print_vertices(t_graph *graph)
 {
-	t_size		i;
+	size_t		i;
 	t_vertex	*vertex;
 
 	i = 0;
@@ -22,7 +22,7 @@ void	graph_print_vertices(t_graph *graph)
 
 void	graph_print_edges(t_graph *graph)
 {
-	t_size		i;
+	size_t		i;
 	t_edge		*edge;
 
 	i = 0;

@@ -4,7 +4,7 @@
 
 static void	free_str_array(char **arr)
 {
-	t_size	i;
+	size_t	i;
 
 	if (arr == NULL)
 		return ;
@@ -22,7 +22,7 @@ static t_vertex	*check_current_vertex(int ant, t_array *adj_list)
 {
 	t_vertex	*vertex;
 	t_vertex	*source;
-	t_size		i;
+	size_t		i;
 
 	source = NULL;
 	i = 0;
@@ -73,7 +73,7 @@ static int	check_vertex(char *id, t_graph *graph, int ant)
 static int	check_move(char *move, t_graph *graph, int *ant_moved, int ants)
 {
 	int			ant;
-	t_size		j;
+	size_t		j;
 
 	j = 0;
 	if (move[j] != 'L')
@@ -96,7 +96,7 @@ static int	check_move(char *move, t_graph *graph, int *ant_moved, int ants)
 int	validate_round(char *line, t_graph *graph, int ants)
 {
 	char		**moves;
-	t_size		i;
+	size_t		i;
 	int			ret;
 	int			*ant_moved;
 

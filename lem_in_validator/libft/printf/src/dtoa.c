@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dtoa.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkoskela <jkoskela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skoskine <skoskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 16:02:24 by skoskine          #+#    #+#             */
-/*   Updated: 2021/06/22 13:51:25 by jkoskela         ###   ########.fr       */
+/*   Updated: 2021/06/22 14:13:49 by skoskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int precision)
 	return (i);
 }
 
-static int	result_len(double int_part, t_size precision)
+static int	result_len(double int_part, size_t precision)
 {
 	int	len;
 
@@ -88,7 +88,7 @@ static int	result_len(double int_part, t_size precision)
 	return (len);
 }
 
-char	*ft_dtoa(double nbr, t_size precision)
+char	*ft_dtoa(double nbr, size_t precision)
 {
 	char		*result;
 	double		int_part;

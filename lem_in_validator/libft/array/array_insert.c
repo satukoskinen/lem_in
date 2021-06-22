@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   array_insert.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkoskela <jkoskela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skoskine <skoskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 08:57:50 by skoskine          #+#    #+#             */
-/*   Updated: 2021/06/22 13:51:25 by jkoskela         ###   ########.fr       */
+/*   Updated: 2021/06/22 14:13:49 by skoskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static t_array	*array_resize(t_array **array)
 	return (*array);
 }
 
-t_array	*array_insert(t_array **array, void *data, t_size i)
+t_array	*array_insert(t_array **array, void *data, size_t i)
 {
 	if ((*array)->size == (*array)->capacity)
 		*array = array_resize(array);

@@ -4,7 +4,7 @@
 
 void	graph_del(t_graph **graph)
 {
-	t_size		i;
+	size_t		i;
 	t_vertex	*vertex;
 
 	i = 0;

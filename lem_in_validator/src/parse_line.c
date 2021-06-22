@@ -25,7 +25,7 @@ static int	parse_link(t_graph *graph, char *line)
 static int	parse_special_room(t_graph *graph, enum e_line_type *type)
 {
 	t_vertex	*vertex;
-	t_size		index;
+	size_t		index;
 
 	index = array_size(graph->vertices) - 1;
 	vertex = *(t_vertex **)array_get(graph->vertices, index);

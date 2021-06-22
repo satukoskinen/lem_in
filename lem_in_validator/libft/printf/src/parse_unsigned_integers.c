@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_unsigned_integers.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkoskela <jkoskela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skoskine <skoskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 09:06:28 by skoskine          #+#    #+#             */
-/*   Updated: 2021/06/22 13:51:25 by jkoskela         ###   ########.fr       */
+/*   Updated: 2021/06/22 14:13:49 by skoskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static uintmax_t	get_unsigned_arg(t_data *specs, va_list *ap)
 
 static int	update_uint_specs(t_data *specs, uintmax_t value, char *value_str)
 {
-	t_size	len;
+	size_t	len;
 
 	if (value == 0)
 		specs->is_zero = 1;
@@ -79,7 +79,7 @@ int	parse_unsigned_ints(t_data *specs, va_list *ap, char **result)
 {
 	uintmax_t	value;
 	char		*value_str;
-	t_size		len;
+	size_t		len;
 
 	value = get_unsigned_arg(specs, ap);
 	value_str = get_value_string(specs, value);

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void	ft_free_content(void *content, t_size size);
+void	ft_free_content(void *content, size_t size);
 
 t_list	*ft_f2(t_list *elem)
 {
