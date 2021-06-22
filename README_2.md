@@ -71,7 +71,7 @@ In this case, we run the Edmonds-Karp algorithm on the transformed graph with a 
 
 The goal of the project is to minimize the rounds needed to move the ants from the source to the sink. At each round, each ant in the graph can be moved once, with no collisions among the ants. The amount of ants to send through the network thus determines how many paths should be used, and the relative lengths of the paths in a specific set of paths determines how many ants should be sent down each path.
 
-xxx
+The choice of the set of paths and ants per path is done as follows: started from the path combination with least amount of paths (one, shortest path of the network), the overall "cost" of moving ants (number of rounds needed) is calculated for each combination of paths, assuming that all the paths in the combination are used. That is, if the max flow is n, first the cost of moving the ants is calculated for using the 1 shortest path, then the combination of 2 shortest paths, and so on. Among these, the paths with the lowest overall cost are chosen.
 
 ## Output
 
