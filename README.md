@@ -20,7 +20,7 @@ Uses the [core](https://github.com/juliuskoskela/core) library.
 
 Input to the program is comprised of the amount of ants followed by rooms (nodes) and links (edges) connecting the rooms. The source and sink nodes are designated by preceding ``##start`` and ``##end`` commands. Each node has a unique name and coordinates. Each [undirected edge](https://mathinsight.org/definition/undirected_graph) link is saved as two directed edges between the nodes, producing a [directed graph](https://en.wikipedia.org/wiki/Directed_graph).
 
-```
+```c
 
 10 // Number of ants
 ##start // Next line is the source node.
@@ -93,7 +93,7 @@ If the input file does not have the correct form, the program displays ``ERROR``
 
 For example, the example input given above would produce the following output:
 
-```
+```c
 
 // Input part
 
