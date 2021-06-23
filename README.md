@@ -1,12 +1,19 @@
 # Lem-in
 
+Authors:
+
+Satu Koskinen https://github.com/satukoskinen
+Julius Koskela https://github.com/juliuskoskela
+
+A [42 school](https://en.wikipedia.org/wiki/42_(school)) project completed as a part of studies at [Hive Helsinki](https://www.hive.fi/en/).
+
 ## Project summary
 
 You are given an "ant farm", a network of rooms with links connecting the rooms. Each network will have a source and a destination (sink) room. The task is to optimize the flow of ants through the network from source to sink with any given number of ants.
 
 ## Input
 
-Input to the program is comprised of the amount of ants followed by rooms (nodes) and links (edges) connecting the rooms. The source and sink nodes are designated by preceding ``##start`` and ``##end`` commands. Each node has a unique name and coordinates. Each (undirected) link is saved as two directed edges between the nodes, producing a directed graph.
+Input to the program is comprised of the amount of ants followed by rooms (nodes) and links (edges) connecting the rooms. The source and sink nodes are designated by preceding ``##start`` and ``##end`` commands. Each node has a unique name and coordinates. Each [undirected edge](https://mathinsight.org/definition/undirected_graph) link is saved as two directed edges between the nodes, producing a [directed graph](https://en.wikipedia.org/wiki/Directed_graph).
 
 ```
 
@@ -41,7 +48,7 @@ Input to the program is comprised of the amount of ants followed by rooms (nodes
 
 ## Algorithm
 
-The assignment can be interpreted as a special case of finding the maximum flow of a graph. The goal, however, is not only to find the maximum flow through the network (in this case, to be precise, the maximum amount of vertex-disjoint paths), but to determine the optimal combinations of paths through which to move the given amount of ants.
+The assignment can be interpreted as a special case of finding the [maximum flow](https://en.wikipedia.org/wiki/Maximum_flow_problem) of a graph. The goal, however, is not only to find the maximum flow through the network (in this case, to be precise, the maximum amount of [vertex-disjoint paths](https://courses.helsinki.fi/sites/default/files/course-material/4671514/max-flow-reductions.pdf)), but to determine the optimal combinations of paths through which to move the given amount of ants.
 
 To solve the problem, the program proceeds as follows:
 
@@ -65,7 +72,7 @@ The second transformation relates to the particular maximum flow algorithm that 
 
 The Edmonds-Karp algorithm is an algorithm that finds a maximum flow for a given network of nodes, connected by edges with capacities. All edges of the graph are associated with a flow that is initialized to 0. The algorithm operates by repeating a search for an _augmenting flow_ in the graph until no more augmenting flows are found. If an augmenting flow is found (a path from the source to the sink along which, for all edges ``e``, ``current flow through e < capacity of e``), the flows of the edges and their corresponding reverse edges along the path are updated.
 
-What guarantees that the Edmonds-Karp algorithm always finds the maximum flow is the use of reverse edges. Whenever flow is added to an edge, the negative of the same amount is added its reverse edge: intuitively, this makes it possible to change the already found paths by _reversing_ or canceling flow on an edge. In addition, Edmonds-Karp searches for augmenting paths with a breadth-first search, ensuring that at each iteration it will find the shortest possible augmenting path.
+What guarantees that the [Edmonds-Karp algorithm](https://en.wikipedia.org/wiki/Edmonds–Karp_algorithm) always finds the maximum flow is the use of reverse edges. Whenever flow is added to an edge, the negative of the same amount is added its reverse edge: intuitively, this makes it possible to change the already found paths by _reversing_ or canceling flow on an edge. In addition, Edmonds-Karp searches for augmenting paths with a breadth-first search, ensuring that at each iteration it will find the shortest possible augmenting path.
 
 In this case, we run the Edmonds-Karp algorithm on the transformed graph with a slight modification. Normally, Edmonds-Karp only returns the value of the maximum flow. Our implementation of the algorithm returns an array that contains the combinations of paths that the algorithm has found at each iteration of searching for an augmenting path. This means that for a graph with a max flow of n (n disjoint paths), our result is an array that contains n combinations of paths, the amount of paths ranging from 1 to n. This is done so that we can later optimize the path use for different amounts of ants.
 
