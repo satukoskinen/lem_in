@@ -1,7 +1,7 @@
 #!/bin/bash
 
 output_dir="valid_test_output"
-test_map_dir="test/other_maps"
+test_map_dir="test/generator_maps"
 
 mkdir -p $output_dir
 
@@ -26,6 +26,6 @@ do
 		echo "Error occurred"
 		exit 1
 	fi
-	./lem_in_validator/lem_in_validator < $output
+	#./lem_in_validator/lem_in_validator < $output
 	echo "----------------------------------------------"
 done

@@ -45,7 +45,7 @@ $(NAME): $(LIBFT) $(OBJ)
 	@$(CC) $(CFLAGS) -o $@ $(OBJ) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(DEP_DIR) $(OBJ_DIR)
-	@echo "Compile $<"
+#	@echo "Compile $<"
 	@$(COMPILE.c) -o $@ $<
 
 $(DEP_DIR): ; @mkdir -p $(addprefix $@/, $(SRC_SUBDIRS))

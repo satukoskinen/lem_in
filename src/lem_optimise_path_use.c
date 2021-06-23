@@ -6,11 +6,11 @@
  *	determines the total cost in rounds for the set of paths.
  */
 
-static size_t	get_path_cost(t_parray *paths, int *ants_per_path)
+static t_size	get_path_cost(t_parray *paths, int *ants_per_path)
 {
-	size_t		max_path_cost;
-	size_t		path_cost;
-	size_t		i;
+	t_size		max_path_cost;
+	t_size		path_cost;
+	t_size		i;
 	t_parray	*path;
 
 	max_path_cost = 0;
@@ -18,7 +18,7 @@ static size_t	get_path_cost(t_parray *paths, int *ants_per_path)
 	while (i < paths->len)
 	{
 		path = parr_get(paths, i);
-		path_cost = path->len + (size_t)ants_per_path[i] - 1;
+		path_cost = path->len + (t_size)ants_per_path[i] - 1;
 		if (path_cost > max_path_cost)
 			max_path_cost = path_cost;
 		i++;
@@ -33,9 +33,9 @@ static size_t	get_path_cost(t_parray *paths, int *ants_per_path)
 static void	add_remaining_ants(
 	t_parray *paths,
 	int *ants_per_path,
-	size_t ants)
+	t_size ants)
 {
-	size_t	i;
+	t_size	i;
 
 	while (ants > 0)
 	{
@@ -57,14 +57,14 @@ static void	add_remaining_ants(
  *	to be distributed after this, add them evenly for each path.
  */
 
-static size_t	optimise_ants_per_path(
+static t_size	optimise_ants_per_path(
 	t_parray *paths,
 	int *ants_per_path,
-	size_t ants)
+	t_size ants)
 {
-	size_t		i;
-	size_t		longest_path_len;
-	size_t		len_diff;
+	t_size		i;
+	t_size		longest_path_len;
+	t_size		len_diff;
 	t_parray	*path;
 
 	path = parr_get_last(paths);
@@ -78,7 +78,7 @@ static size_t	optimise_ants_per_path(
 			ants_per_path[i] = (int)ants;
 		else
 			ants_per_path[i] = (int)len_diff;
-		ants -= (size_t)ants_per_path[i];
+		ants -= (t_size)ants_per_path[i];
 		i++;
 	}
 	if (ants > 0)
@@ -91,13 +91,13 @@ static size_t	optimise_ants_per_path(
  *	combination i to minimize the total path cost.
  */
 
-static size_t	optimise_i_paths(t_parray *path_combinations,
-	size_t i, int *ants_per_path, size_t ants)
+static t_size	optimise_i_paths(t_parray *path_combinations,
+	t_size i, int *ants_per_path, t_size ants)
 {
 	t_parray	*i_paths;
-	size_t		path_cost;
+	t_size		path_cost;
 
-	mem_set(ants_per_path, 0, sizeof(int) * path_combinations->len);
+	mset(ants_per_path, 0, sizeof(int) * path_combinations->len);
 	i_paths = parr_get(path_combinations, i);
 	path_cost = optimise_ants_per_path(i_paths, ants_per_path, ants);
 	return (path_cost);
@@ -116,15 +116,15 @@ void	lem_optimise_path_use(
 	int		*ants_per_path,
 	t_parray **paths_to_use,
 	t_parray *path_combinations,
-	size_t ants)
+	t_size ants)
 {
-	size_t	max_flow;
-	size_t	i;
-	size_t	min_path_cost;
-	size_t	path_cost;
+	t_size	max_flow;
+	t_size	i;
+	t_size	min_path_cost;
+	t_size	path_cost;
 
 	max_flow = path_combinations->len;
-	min_path_cost = (size_t)-1;
+	min_path_cost = (t_size)(-1);
 	i = 0;
 	while (i < max_flow)
 	{

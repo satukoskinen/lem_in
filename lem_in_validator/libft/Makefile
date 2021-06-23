@@ -144,11 +144,11 @@ COMPILE.c = $(CC) $(DEPFLAGS) $(CFLAGS) $(CPPFLAGS) -c
 all: $(NAME)
 
 $(NAME): $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
-	@echo "Create $@"
+#	@echo "Create $@"
 	@ar rc $@ $^
 
 $(OBJ_DIR)/%.o: %.c $(DEP_DIR)/%.d | $(DEP_DIR) $(OBJ_DIR)
-	@echo "Compile $<"
+#	@echo "Compile $<"
 	@$(COMPILE.c) -o $@ $<
 
 $(DEP_DIR): ; @mkdir -p $(addprefix $@/, $(SRC_DIRS))

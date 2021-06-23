@@ -7,7 +7,7 @@
 
 t_graph_edge	*lem_get_edge(t_graph_node *src, t_graph_node *dst)
 {
-	size_t			i;
+	t_size			i;
 	t_graph_edge	*edge;
 
 	i = 0;

@@ -11,10 +11,11 @@ void	save_flow_path(t_parray *path, t_graph_node *src, t_graph_node *dst)
 {
 	t_graph_node	*node;
 	t_graph_edge	*edge;
-	size_t			i;
+	t_size			i;
 	int				add_every_other;
 
 	node = src;
+	edge = NULL;
 	parr_add_last(path, ((t_node_attr *)node->attr)->org);
 	add_every_other = 1;
 	while (strcmp(node->key, dst->key) != 0)
@@ -43,7 +44,7 @@ void	save_flow_path(t_parray *path, t_graph_node *src, t_graph_node *dst)
 
 static void	insert_path_to_array(t_parray *paths, t_parray *path_to_add)
 {
-	size_t		i;
+	t_size		i;
 	t_parray	*path;
 
 	i = 0;
@@ -62,7 +63,7 @@ static void	insert_path_to_array(t_parray *paths, t_parray *path_to_add)
  *	Initialize the pointer array.
  */
 
-static t_parray	*init_path_array(size_t	arr_size)
+static t_parray	*init_path_array(t_size	arr_size)
 {
 	t_parray	*array;
 
@@ -82,11 +83,11 @@ static t_parray	*init_path_array(size_t	arr_size)
  */
 
 t_parray	*lem_save_max_flow_paths(t_graph_node *s, t_graph_node *t,
-	size_t max_flow)
+	t_size max_flow)
 {
 	t_parray		*paths;
 	t_parray		*path;
-	size_t			i;
+	t_size			i;
 	t_graph_edge	*t_adj_edge;
 
 	paths = init_path_array(max_flow);

@@ -8,11 +8,13 @@ CORE_DIR = core
 CORE = $(CORE_DIR)/libcore.a
 
 SRC = $(addprefix src/, \
-	main.c \
+	lem_main.c \
 	lem_parse_flags.c \
 	lem_exit_error.c \
 	lem_parse_input.c \
+	lem_parse_ant_count.c \
 	lem_parse_line.c \
+	lem_parse_command.c \
 	lem_parse_room.c \
 	lem_parse_link.c \
 	lem_parse_utils.c \
@@ -42,9 +44,9 @@ OBJ = $(subst $(SRC_DIR), $(OBJ_DIR), $(SRC:.c=.o))
 
 CC = gcc
 #CFLAGS = -g -Wall -Wextra -Werror #-fsanitize=address
-CFLAGS = -Wall -Wextra -Werror -Wpedantic -Wtype-limits -Wunused \
+CFLAGS = -O3 -Wall -Wextra -Werror -Wpedantic -Wtype-limits -Wunused \
                 -Wunreachable-code -Wshadow -fPIC -Wconversion
-CPPFLAGS = -I . -I include -I core
+CPPFLAGS = -I . -I inc -I core/inc
 LDLIBS = -lcore #-lm -lpthread
 LDFLAGS = -L core #-fsanitize=address
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP_DIR)/$*.d

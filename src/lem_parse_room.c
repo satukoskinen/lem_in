@@ -64,7 +64,7 @@ int	lem_parse_room(t_lem *data, char *line, enum e_line_type *type)
 	}
 	if (!validate_coordinates(ptr + 1, &coordinates))
 		return (-1);
-	attr = lem_init_node_attr(s_sub(line, 0, (uint64_t)(ptr - line)),
+	attr = lem_init_node_attr(s_sub(line, 0, (t_uint64)(ptr - line)),
 			coordinates, NULL);
 	if (!attr || graph_add_node(&data->graph, attr->name, attr) != 1)
 	{

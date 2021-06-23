@@ -4,21 +4,21 @@
  *	Free one path.
  */
 
-static ssize_t	free_path(void *data, size_t i)
+static t_ssize	free_path(void *data, t_size i)
 {
 	t_parray	*path;
 
 	path = data;
 	parr_free(path);
 	free(path);
-	return ((ssize_t)i);
+	return ((t_ssize)i);
 }
 
 /*
  *	Free all paths in an array of paths.
  */
 
-static ssize_t	free_paths(void *data, size_t i)
+static t_ssize	free_paths(void *data, t_size i)
 {
 	t_parray	*paths;
 
@@ -26,7 +26,7 @@ static ssize_t	free_paths(void *data, size_t i)
 	parr_iter(paths, free_path);
 	parr_free(paths);
 	free(paths);
-	return ((ssize_t)i);
+	return ((t_ssize)i);
 }
 
 /*
