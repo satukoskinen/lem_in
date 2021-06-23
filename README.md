@@ -12,6 +12,8 @@ Julius Koskela https://github.com/juliuskoskela
 
 You are given an "ant farm", a network of rooms with links connecting the rooms. Each network will have a source and a destination (sink) room. The task is to optimize the flow of ants through the network from source to sink with any given number of ants.
 
+Uses the [core](https://github.com/juliuskoskela/core) library.
+
 ## Input
 
 Input to the program is comprised of the amount of ants followed by rooms (nodes) and links (edges) connecting the rooms. The source and sink nodes are designated by preceding ``##start`` and ``##end`` commands. Each node has a unique name and coordinates. Each [undirected edge](https://mathinsight.org/definition/undirected_graph) link is saved as two directed edges between the nodes, producing a [directed graph](https://en.wikipedia.org/wiki/Directed_graph).
