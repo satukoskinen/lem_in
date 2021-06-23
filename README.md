@@ -8,7 +8,7 @@ Julius Koskela https://github.com/juliuskoskela
 
 A [42 school](https://en.wikipedia.org/wiki/42_(school)) project completed as a part of studies at [Hive Helsinki](https://www.hive.fi/en/).
 
-## Project summary
+## Project Summary
 
 You are given an "ant farm", a network of rooms with links connecting the rooms. Each network will have a source and a destination (sink) room. The task is to optimize the flow of ants through the network from source to sink with any given number of ants.
 
