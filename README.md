@@ -12,6 +12,7 @@ Julius Koskela https://github.com/juliuskoskela
 
 You are given an "ant farm", a network of rooms with links connecting the rooms. Each network will have a source and a destination (sink) room. The task is to optimize the flow of ants through the network from source to sink with any given number of ants.
 
+[Subject](https://github.com/satukoskinen/lem_in/blob/master/lem-in.en.pdf) pdf.
 Uses the [core](https://github.com/juliuskoskela/core) library.
 
 ## Input
