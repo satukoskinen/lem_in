@@ -59,7 +59,7 @@ To solve the problem, the program proceeds as follows:
 4. Given the number of ants, determine the optimal combination of paths to use and how many ants to send down each individual path
 5. Print rounds of moves that move all ants from source to sink along the determined paths
 
-### Transforming the graph
+### Transforming the Graph
 
 In order to apply the max flow algorithm on the graph, the input graph needs to go through two different transformations.
 
@@ -69,7 +69,7 @@ To ensure that the paths found by the max flow algorithm will be vertex disjoint
 
 The second transformation relates to the particular maximum flow algorithm that is employed, the Edmonds-Karp algorithm. The algorithm relies on so-called _reverse edges_. These are constructed by adding for every edge ``u -> v`` in the graph a corresponding reverse edge going in the opposite direction, ``v -> u``, with a capacity of 0.
 
-### The Edmonds-Karp algorithm
+### The Edmonds-Karp Algorithm
 
 The Edmonds-Karp algorithm is an algorithm that finds a maximum flow for a given network of nodes, connected by edges with capacities. All edges of the graph are associated with a flow that is initialized to 0. The algorithm operates by repeating a search for an _augmenting flow_ in the graph until no more augmenting flows are found. If an augmenting flow is found (a path from the source to the sink along which, for all edges ``e``, ``current flow through e < capacity of e``), the flows of the edges and their corresponding reverse edges along the path are updated.
 
@@ -77,7 +77,7 @@ What guarantees that the [Edmonds-Karp algorithm](https://en.wikipedia.org/wiki/
 
 In this case, we run the Edmonds-Karp algorithm on the transformed graph with a slight modification. Normally, Edmonds-Karp only returns the value of the maximum flow. Our implementation of the algorithm returns an array that contains the combinations of paths that the algorithm has found at each iteration of searching for an augmenting path. This means that for a graph with a max flow of n (n disjoint paths), our result is an array that contains n combinations of paths, the amount of paths ranging from 1 to n. This is done so that we can later optimize the path use for different amounts of ants.
 
-### Optimising the path use
+### Optimising Path Use
 
 The goal of the project is to minimize the rounds needed to move the ants from the source to the sink. At each round, each ant in the graph can be moved once, with no collisions among the ants. The amount of ants to send through the network thus determines how many paths should be used, and the relative lengths of the paths in a specific set of paths determines how many ants should be sent down each path.
 
@@ -132,11 +132,11 @@ L10-0
 
 ```
 
-## Compiling and running the program
+## Compiling and Running the Program
 
 Running ``make`` in the root of the repository compiles the program and produces an executable named ``lem-in``. Its usage options can be seen by running ``./lem-in -h`` or ``./lem-in --help``. The simplest way to run it is with ``./lem-in < input_file``.
 
-## Relevant reading:
+## Relevant Reading:
 
 [Maximum flow problem](https://en.wikipedia.org/wiki/Maximum_flow_problem)
 
