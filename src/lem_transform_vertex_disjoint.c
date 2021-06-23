@@ -1,20 +1,8 @@
-/******************************************************************************
- *
- * \authors Satu Koskinen, Julius Koskela
- *
- * \brief Create a vertex disjoint transformation of a graph.
- *
- * \param src Source graph.
- *
- * \return A new transformed graph.
- *
- *****************************************************************************/
-
 #include "lem_in.h"
 
-/******************************************************************************
- *
- *****************************************************************************/
+/*
+ * Add edges and reverse edges to the graph.
+ */
 
 static void	add_edges(
 	t_graph *graph,
@@ -43,9 +31,9 @@ static void	add_edges(
 	rev_edge_attr->reverse_edge = graph_find_edge(graph, src->key, dst->key);
 }
 
-/******************************************************************************
- *
- *****************************************************************************/
+/*
+ * Iterate the incoming edges of a node and split them into two
+ */
 
 static char	*split_edge(void *parse_dst, void *data, const char *key)
 {
@@ -72,9 +60,10 @@ static char	*split_edge(void *parse_dst, void *data, const char *key)
 	return ((char *)key);
 }
 
-/******************************************************************************
- *
- *****************************************************************************/
+/*
+ * Split a node into two nodes node_in and node_out and add them to the new
+ * graph passed as a parameter. Add the original edges to the new nodes.
+ */
 
 static char	*split_node(void *parse_dst, void *data, const char *key)
 {
@@ -100,9 +89,12 @@ static char	*split_node(void *parse_dst, void *data, const char *key)
 	return ((char *)key);
 }
 
-/******************************************************************************
- *
- *****************************************************************************/
+/*
+ *	Transform a directed graph into a vertex disjoint graph. This is done in
+ *	two passes, first by splitting the nodes and then by splitting the edges.
+ *	The splitting is done by passing the splitter functions to the map_parse
+ *	iterator.
+ */
 
 t_lem	lem_transform_vertex_disjoint(t_lem *data)
 {
