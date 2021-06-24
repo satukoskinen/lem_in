@@ -20,6 +20,4 @@ python3 -m venv visualizer/venv-vis
 source visualizer/venv-vis/bin/activate
 pip3 install -r visualizer/requirements.txt
 
-cp visualizer/vis.sh .
-
 deactivate

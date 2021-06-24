@@ -85,7 +85,6 @@ fclean: clean
 	@rm -f $(NAME)
 	@$(MAKE) -C core fclean
 	@rm -rf visualizer/venv-vis
-	@rm -f vis.sh
 
 re: fclean all
 

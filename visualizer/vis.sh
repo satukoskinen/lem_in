@@ -11,26 +11,27 @@ fi
 for i in $@; do :; done
 input_file=$i
 html_output="graph_visualization.html"
-optstring=":o:a"
+lem_output="lem_output.txt"
+optstring="o:a:"
+OFLAG=0
 while getopts $optstring arg;
 do
 	case $arg in
 	o)
-		html_output="$OPTARG.html"
-		mv graph_visualization.html $html_output
-		mv graph_visualization.txt "$OPTARG.txt"
+		html_output="${OPTARG}.html"
+		OFLAG=1
 		;;
 	a)
-		ant_count=$OPTARG
-		echo $OPTARG
-		sed -i '' "1s/.*/$ant_count/" $input_file
+		ant_count=${OPTARG}
+		sed -i "1s/.*/$ant_count/" $input_file
 		;;
 	esac
 done
 
 # Run lem-in and put output to a file
 
-./lem-in < $input_file > graph_visualization.txt
+./lem-in < $input_file > $lem_output
+
 if [ $? != 0 ]
 then
 	exit 1
@@ -40,12 +41,16 @@ fi
 
 source visualizer/venv-vis/bin/activate
 
-python3 visualizer/visualize.py graph_visualization.txt --show-menu
-
+python3 visualizer/visualize.py $lem_output --width 4000 --height 2000 ##--show-menu
 deactivate
 
+if [ $OFLAG == 1 ]
+then
+	mv graph_visualization.html $html_output
+fi
+
 case "$OSTYPE" in
-  darwin*)  open $html_output ;; 
+  darwin*)  open $html_output ;;
   linux*)   xdg-open $html_output ;;
   msys*)    start $html_output ;;
   *)        echo "unknown: $OSTYPE" ;;
