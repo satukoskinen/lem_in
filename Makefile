@@ -74,6 +74,9 @@ $(CORE): $(CORE_DIR)
 DEPFILES = $(subst $(SRC_DIR), $(DEP_DIR), $(SRC:.c=.d))
 $(DEPFILES):
 
+vis: all
+	@bash visualizer/vis_env.sh
+
 clean:
 	@rm -rf $(OBJ_DIR) $(DEP_DIR)
 	@$(MAKE) -C core clean
@@ -81,6 +84,8 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 	@$(MAKE) -C core fclean
+	@rm -rf visualizer/venv-vis
+	@rm vis.sh
 
 re: fclean all
 
