@@ -136,8 +136,8 @@ def	main():
 	network.bgcolor=BACKGROUND_COLOR
 	network.from_nx(graph)
 	set_colors(network, unique_paths, start_node, sink_node)
-	set_node_name(network, start_node, "source")
-	set_node_name(network, sink_node, "sink")
+	set_node_name(network, start_node, "S")
+	set_node_name(network, sink_node, "T")
 	# set_node_attribute(network, start_node, "shape", "circle")
 	# set_node_attribute(network, sink_node, "shape", "circle")
 	set_node_size(network, start_node, 20)
