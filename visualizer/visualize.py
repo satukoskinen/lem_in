@@ -7,20 +7,33 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from pyvis.network import Network
 
-START_COLOR="pink"
-SINK_COLOR="pink"
-PATH_NODE_COLOR="red"
-PATH_EDGE_COLOR="red"
-OTHER_COLOR="blue"
-BACKGROUND_COLOR="white"
+START_COLOR="#7a04eb"
+SINK_COLOR="#7a04eb"
+PATH_NODE_COLOR="#ff2a6d"
+PATH_EDGE_COLOR="#ff2a6d"
+OTHER_COLOR="#05d9e8"
+BACKGROUND_COLOR="#01012b"
+NODE_FONT_COLOR="#d1f7ff"
+IMG_HEIGHT_DEFAULT="750px"
+IMG_WIDTH_DEFAULT="750px"
 
 def	plot_nx(G, nodes):
 	plt.gca().invert_yaxis()
 	plt.gca().invert_xaxis()
 	nx.draw(G, nodes, with_labels = True)
 
+def	get_img_dimensions():
+	img_height = IMG_HEIGHT_DEFAULT
+	img_width = IMG_WIDTH_DEFAULT
+	for i in range(0, len(sys.argv)):
+		if sys.argv[i] == "--height" and i != len(sys.argv) - 1:
+			img_height = "{}px".format(sys.argv[i + 1])
+		elif sys.argv[i] == "--width" and i != len(sys.argv) - 1:
+			img_width = "{}px".format(sys.argv[i + 1])
+	return (img_height, img_width)
+
 def	open_file():
-	if (len(sys.argv) != 2):
+	if (len(sys.argv) < 2):
 		print("Pass lem-in output file as argument")
 		sys.exit(1)
 	try:
@@ -75,6 +88,10 @@ def	parse_graph(file):
 	G.add_edges_from(edges)
 	return G, unique_paths, start_node, sink_node
 
+def	set_node_attribute(nt, node_id, attribute, value):
+	node = nt.get_node(node_id)
+	node[attribute] = value
+
 def	set_node_name(nt, node_id, name):
 	node = nt.get_node(node_id)
 	node["label"] = name
@@ -82,6 +99,10 @@ def	set_node_name(nt, node_id, name):
 def	set_node_color(nt, node_id, color):
 	node = nt.get_node(node_id)
 	node["color"] = color
+
+def	set_node_size(nt, node_id, size):
+	node = nt.get_node(node_id)
+	node["size"] = size
 
 def	get_node_color(nt, node_id):
 	node = nt.get_node(node_id)
@@ -103,44 +124,27 @@ def	set_colors(nt, unique_paths, start_node, sink_node):
 				if ((edge["from"] == path[i - 1] and edge["to"] == path[i]) or
 					(edge["to"] == path[i - 1] and edge["from"] == path[i])):
 						edge["color"] = PATH_EDGE_COLOR
-	# for edge in nt.edges:
-	# 	if get_node_color(nt, edge["from"]) != PATH_NODE_COLOR or get_node_color(nt, edge["to"]) != PATH_NODE_COLOR:
-	# 		edge["color"] = OTHER_COLOR
 	set_node_color(nt, start_node, START_COLOR)
 	set_node_color(nt, sink_node, SINK_COLOR)
 
 def	main():
 	file = open_file()
 	graph, unique_paths, start_node, sink_node = parse_graph(file)
-	print(unique_paths)
-	network = Network(height="750px", width="750px")
+	img_height, img_width = get_img_dimensions()
+	network = Network(height=img_height, width=img_width)
+	network.font_color=NODE_FONT_COLOR
+	network.bgcolor=BACKGROUND_COLOR
 	network.from_nx(graph)
 	set_colors(network, unique_paths, start_node, sink_node)
-	set_node_name(network, start_node, "S")
-	set_node_name(network, sink_node, "T")
-	network.show_buttons(filter_=['physics'])
-	# network.set_options("""
-	# var options = {
-	# 	"nodes": {
-	# 	"font": {
-	# 		"color": "rgba(250,255,254,1)"
-	# 		}
-	# 	}
-	# }
-	# """)
-# 	network.set_options("""
-# var options = {
-#   "physics": {
-#     "enabled": false,
-#     "hierarchicalRepulsion": {
-#       "centralGravity": 0
-#     },
-#     "minVelocity": 0.75,
-#     "solver": "hierarchicalRepulsion"
-#   }
-# }
-# 	""")
-	network.bgcolor=BACKGROUND_COLOR
+	set_node_name(network, start_node, "source")
+	set_node_name(network, sink_node, "sink")
+	# set_node_attribute(network, start_node, "shape", "circle")
+	# set_node_attribute(network, sink_node, "shape", "circle")
+	set_node_size(network, start_node, 20)
+	set_node_size(network, sink_node, 20)
+
+	if "--show-menu" in sys.argv:
+		network.show_buttons(filter_=['physics'])
 	network.show("graph_visualization.html")
 
 if __name__ == "__main__":

@@ -20,7 +20,7 @@ fi
 
 source visualizer/venv-vis/bin/activate
 
-python3 visualizer/visualize.py graph_visualization.txt
+python3 visualizer/visualize.py graph_visualization.txt --width 2560 --height 1600
 
 deactivate
 
