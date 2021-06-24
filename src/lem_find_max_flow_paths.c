@@ -52,13 +52,13 @@ static t_ssize	update_edge_flows(t_parray *edge_list, const char *t_key)
  *	added to `path_combinations` for future porcessing.
  */
 
-static int64_t	max_flow_edmonds_karp(
+static t_int64	max_flow_edmonds_karp(
 	t_graph *graph,
 	const char *s_key,
 	const char *t_key,
 	t_parray *path_combinations)
 {
-	int64_t			flow;
+	t_int64			flow;
 	t_parray		edge_list;
 	t_parray		*paths;
 	t_graph_node	*s;
@@ -90,14 +90,14 @@ static int64_t	max_flow_edmonds_karp(
 
 t_parray	lem_find_max_flow_paths(t_lem *lem)
 {
-	int64_t		max_flow;
+	t_int64		max_flow;
 	t_parray	path_combinations;
 
 	path_combinations = parr_new(1);
 	if (parr_null(&path_combinations))
 		lem_exit_error("parr null");
 	max_flow = max_flow_edmonds_karp(&lem->graph,
-			lem->s_key, lem->t_key, &path_combinations);
+		lem->s_key, lem->t_key, &path_combinations);
 	if (max_flow <= 0)
 	{
 		parr_free(&path_combinations);
