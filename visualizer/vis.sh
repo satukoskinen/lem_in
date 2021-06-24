@@ -41,8 +41,8 @@ fi
 
 source visualizer/venv-vis/bin/activate
 
-python3 visualizer/visualize.py $lem_output --width 4000 --height 2000 ##--show-menu
-deactivate
+python3 visualizer/visualize.py $lem_output --width 1280 --height 720 ##--show-menu
+
 
 if [ $OFLAG == 1 ]
 then
