@@ -18,7 +18,7 @@ fi
 
 cd visualizer
 python3 -m venv venv-vis
-source venv-name/bin/activate
+source venv-vis/bin/activate
 pip3 install -r requirements.txt
 cd ..
 
@@ -34,7 +34,7 @@ python3 visualizer/test.py graph_visualization.txt
 
 HTML=".html"
 TXT=".txt"
-if [ $2 = "-o" ];
+if [[ $2 == "-o" ]];
 then
 	mv graph_visualization.html "$3$HTML"
 	mv graph_visualization.txt "$3$TXT"
@@ -45,4 +45,5 @@ fi
 
 # Deactivate
 
+rm -rf visualizer/venv-vis
 deactivate
