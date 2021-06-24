@@ -8,8 +8,9 @@ then
 	exit 1
 fi
 
+for i in $@; do :; done
+input_file=$i
 html_output="graph_visualization.html"
-
 optstring=":o:a"
 while getopts $optstring arg;
 do
@@ -22,15 +23,14 @@ do
 	a)
 		ant_count=$OPTARG
 		echo $OPTARG
-		for i in $@; do :; done
-		sed -i '' "1s/.*/$ant_count/" $i
+		sed -i '' "1s/.*/$ant_count/" $input_file
 		;;
 	esac
 done
 
 # Run lem-in and put output to a file
 
-./lem-in < $i > graph_visualization.txt
+./lem-in < $input_file > graph_visualization.txt
 if [ $? != 0 ]
 then
 	exit 1
@@ -43,9 +43,6 @@ source visualizer/venv-vis/bin/activate
 python3 visualizer/visualize.py graph_visualization.txt --show-menu
 
 deactivate
-
-# Check for -o flag for renaming output files and open html in browser
-
 
 case "$OSTYPE" in
   darwin*)  open $html_output ;; 
