@@ -1,5 +1,15 @@
 # Lem-in
 
+![alt test](https://github.com/satukoskinen/lem_in/blob/ddc144eff875d2fdf5ff5d9692cb75f4a5389148/pic/subject_3_flow2.png "Network")
+
+A [42 school](https://en.wikipedia.org/wiki/42_(school)) project completed as a part of studies at [Hive Helsinki](https://www.hive.fi/en/).
+
+Authors:
+
+Satu Koskinen https://github.com/satukoskinen
+
+Julius Koskela https://github.com/juliuskoskela
+
 - [Lem-in](#lem-in)
 	- [Project Summary](#project-summary)
 	- [Input](#input)
@@ -14,16 +24,6 @@
 		- [Validator](#validator)
 		- [Test scripts](#test-scripts)
 	- [Relevant Reading](#relevant-reading)
-
-![alt test](https://github.com/satukoskinen/lem_in/blob/ddc144eff875d2fdf5ff5d9692cb75f4a5389148/pic/subject_3_flow2.png "Network")
-
-A [42 school](https://en.wikipedia.org/wiki/42_(school)) project completed as a part of studies at [Hive Helsinki](https://www.hive.fi/en/).
-
-Authors:
-
-Satu Koskinen https://github.com/satukoskinen
-
-Julius Koskela https://github.com/juliuskoskela
 
 ## Project Summary
 
