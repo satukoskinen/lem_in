@@ -86,11 +86,11 @@ In order to apply the max flow algorithm on the graph, the input graph needs to 
 
 In a typical formulation of computing a max flow through a flow network, only the edges between the nodes have capacity constraints that specify how much flow can simultaneously pass through an edge. On a given path from source to sink, the maximum amount of flow that can be sent through that one path is therefore determined by the edge with the smallest capacity. However, in this particular application, both the edges _and_ the nodes have capacity constraints: there can be at most one ant at a time in a node, which implies that the edges also have a capacity of 1. Given this requirement, what we want to find is the maximum amount of _vertex disjoint paths_ from the source node to the sink node. Here, "vertex disjoint" means that paths do not share any nodes.
 
-![Basic input graph](https://github.com/satukoskinen/lem_in/blob/master/pic/bottleneck_graph.png)
+![Basic input graph](pic/bottleneck_graph.png)
 
 To ensure that the paths found by the max flow algorithm will be vertex disjoint, the following transformation is applied: each of the nodes ``n`` of the input graph is split into to two nodes, ``n_in`` and ``n_out``. All the incoming edges of the original node ``n`` will be connected to the ``n_in`` node, and all outgoing edges of ``n`` will be connected to ``n_out``. In addition, an edge from ``n_in`` to ``n_out`` is added. This operation transforms the node capacities into edge capacities, making it possible to employ a "regular" max flow algorithm that is only concerned with edge capacities.
 
-![Transformed input graph](https://github.com/satukoskinen/lem_in/blob/master/pic/bottleneck_transformed_graph.png)
+![Transformed input graph](pic/bottleneck_transformed_graph.png)
 
 The second transformation relates to the particular maximum flow algorithm that is employed, the Edmonds-Karp algorithm. The algorithm relies on so-called _reverse edges_. These are constructed by adding for every edge ``u -> v`` in the graph a corresponding reverse edge going in the opposite direction, ``v -> u``, with a capacity of 0.
 
