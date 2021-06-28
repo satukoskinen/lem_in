@@ -1,5 +1,20 @@
 # Lem-in
 
+- [Lem-in](#lem-in)
+	- [Project Summary](#project-summary)
+	- [Input](#input)
+	- [Algorithm](#algorithm)
+		- [Transforming the Graph](#transforming-the-graph)
+		- [The Edmonds-Karp Algorithm](#the-edmonds-karp-algorithm)
+		- [Optimising Path Use](#optimising-path-use)
+	- [Output](#output)
+	- [Compiling and Running the Program](#compiling-and-running-the-program)
+	- [Additional Tools](#additional-tools)
+		- [Visualizer](#visualizer)
+		- [Validator](#validator)
+		- [Test scripts](#test-scripts)
+	- [Relevant Reading](#relevant-reading)
+
 ![alt test](https://github.com/satukoskinen/lem_in/blob/ddc144eff875d2fdf5ff5d9692cb75f4a5389148/pic/subject_3_flow2.png "Network")
 
 A [42 school](https://en.wikipedia.org/wiki/42_(school)) project completed as a part of studies at [Hive Helsinki](https://www.hive.fi/en/).
@@ -144,9 +159,36 @@ L10-0
 
 ## Compiling and Running the Program
 
-Running ``make`` in the root of the repository compiles the program and produces an executable named ``lem-in``. Its usage options can be seen by running ``./lem-in -h`` or ``./lem-in --help``. The simplest way to run it is with ``./lem-in < input_file``.
+Running ``make`` in the root of the repository compiles the program and produces an executable named ``lem-in``. Its usage options can be seen by running ``./lem-in -h`` or ``./lem-in --help``. The simplest way to run it is with ``./lem-in < input_file``, piping the input file to the standard input of the program.
 
-## Relevant Reading:
+## Additional Tools
+
+### Visualizer
+
+We have set up a simple Python script to create a visualization of the graph and paths that have been used. It makes use of the ``networkx`` and ``pyvis`` libraries. To run it, you need to have at least Python3.3.x, pip and venv installed. Running the script ``vis_env.sh`` from the ``visualizer`` directory sets up a new virtual environment in which it installs the packages needed by the Python program. Then, you can run the visualizer by running ``visualizer/vis.sh input_file`` from the root of the repository where the input file is equivalent to one you would pass on to the lem-in program. The script runs lem-in with the input file and passes the output to the Python program, which creates a visualization of it as an html file (``graph_visualization.html`` by default) that the script then opens in the browser.
+
+Alternatively, the Python program can be directly run with e.g. ``python3 visualizer/visualize.py output_file`` where output_file contains the output of the lem-in program. The generic usage is the following (assuming that ``vis_env.sh`` has been run):
+```
+source visualizer/venv_vis/bin/activate
+python3 visualizer/visualize.py output_file [--width img_width] [--height img_height] [--show-menu]
+deactivate
+```
+
+In the resulting visualization, the nodes and edges that belong to a path that is used to move the ants are coloured red, and unused nodes and edges are blue. Source and sink node names have been replaced with ``S`` and ``T``, respectively, and are colored violet. By giving the ``--show-menu`` option, the "physics" setup of the visualization can be altered in the browser. 
+
+### Validator
+
+The validator program goes through the output produced by the lem-in program and checks that the output is valid: all ants are moved from source to destination, ants do not collide (get moved to the same node), and proper paths that connect the source node to the sink node are used. It can be compiled and run from the root of the repository as follows:
+```sh
+make -C validator
+./lem-in < input_file | ./validator/lem_in_validator #or ./validator/lem_in_validator < output_file
+```
+
+### Test scripts
+
+There are three test scripts in the ``test`` directory that can be run from the root of the repository. ``test_error_maps.sh`` runs all the invalid input files from the ``test/error_maps`` directory, ``test_valid_maps.sh`` runs all valid input files from a particular directory (by default ``test/generator_maps``) and ``test_superposition_maps.sh`` runs the map/input generator program, runs it, and then passes the result to the validator. Note that the ``generator`` executable in the ``test`` directory only works on macOS.  
+
+## Relevant Reading
 
 [Maximum flow problem](https://en.wikipedia.org/wiki/Maximum_flow_problem)
 
