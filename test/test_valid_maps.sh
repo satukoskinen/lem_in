@@ -26,6 +26,6 @@ do
 		echo "Error occurred"
 		exit 1
 	fi
-	#./validator/lem_in_validator < $output
+	./validator/lem_in_validator < $output
 	echo "----------------------------------------------"
 done
