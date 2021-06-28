@@ -174,7 +174,9 @@ python3 visualizer/visualize.py output_file [--width img_width] [--height img_he
 deactivate
 ```
 
-In the resulting visualization, the nodes and edges that belong to a path that is used to move the ants are coloured red, and unused nodes and edges are blue. Source and sink node names have been replaced with ``S`` and ``T``, respectively, and are colored violet. By giving the ``--show-menu`` option, the "physics" setup of the visualization can be altered in the browser. 
+![Part of a visualization of a larger input map](pic/big_2.png)
+
+In the resulting visualization, the nodes and edges that belong to a path that is used to move the ants are coloured red, and unused nodes and edges are blue. Source and sink node names have been replaced with ``S`` and ``T``, respectively, and are colored violet. By giving the ``--show-menu`` option, the "physics" setup of the visualization can be altered in the browser.
 
 ### Validator
 
