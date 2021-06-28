@@ -6,7 +6,7 @@ test_map_dir="test/generator_maps"
 mkdir -p $output_dir
 
 make
-make re -C lem_in_validator
+make re -C validator
 if [ $? != 0 ]
 then
 	echo "Compiling lem_in_validator failed"
@@ -26,6 +26,6 @@ do
 		echo "Error occurred"
 		exit 1
 	fi
-	#./lem_in_validator/lem_in_validator < $output
+	#./validator/lem_in_validator < $output
 	echo "----------------------------------------------"
 done
